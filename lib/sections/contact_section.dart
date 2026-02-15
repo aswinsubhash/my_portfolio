@@ -8,161 +8,232 @@ class ContactSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
-    final backgroundColor = isDark ? Colors.black87 : Colors.grey.shade100;
     final textColor = Theme.of(context).textTheme.bodyLarge?.color;
+    // Use scaffold background color as requested (same as About section usually)
+    final backgroundColor = Theme.of(context).scaffoldBackgroundColor;
 
     return Container(
       width: double.infinity,
       color: backgroundColor,
       padding: const EdgeInsets.symmetric(vertical: 80, horizontal: 20),
-      child: Column(
-        children: [
-          Text(
-            "Get In Touch",
-            style: GoogleFonts.outfit(
-              fontSize: 40,
-              fontWeight: FontWeight.bold,
-              color: textColor,
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          bool isDesktop = constraints.maxWidth > 800;
+          return Center(
+            // Center content nicely
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 1200),
+              child: Flex(
+                direction: isDesktop ? Axis.horizontal : Axis.vertical,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment:
+                    CrossAxisAlignment.center, // Align vertical centers
+                children: [
+                  // IMAGE (Left on Desktop, Top on Mobile)
+                  Expanded(
+                    flex: isDesktop ? 1 : 0,
+                    child: Center(
+                      child: Container(
+                        width: isDesktop ? 400 : 250,
+                        height: isDesktop ? 400 : 250,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.blueAccent.withOpacity(0.3),
+                              blurRadius: 50,
+                              spreadRadius: 10,
+                            ),
+                          ],
+                        ),
+                        child: ClipOval(
+                          child: Image.asset(
+                            'assets/images/profile.png',
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(
+                    width: isDesktop ? 60 : 0,
+                    height: isDesktop ? 0 : 40,
+                  ),
+
+                  // FORM (Right on Desktop, Bottom on Mobile)
+                  Expanded(
+                    flex: isDesktop ? 1 : 0,
+                    child: Container(
+                      padding: const EdgeInsets.all(30),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).cardColor,
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            blurRadius: 20,
+                            offset: const Offset(0, 10),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Get In Touch",
+                            style: GoogleFonts.outfit(
+                              fontSize: 32,
+                              fontWeight: FontWeight.bold,
+                              color: textColor,
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          Text(
+                            "Have a project in mind? Let's talk.",
+                            style: GoogleFonts.inter(
+                              fontSize: 16,
+                              color: textColor?.withOpacity(0.7),
+                            ),
+                          ),
+                          const SizedBox(height: 30),
+                          _ContactTextField(label: "Name", hint: "Your Name"),
+                          const SizedBox(height: 20),
+                          _ContactTextField(
+                            label: "Email",
+                            hint: "your.email@example.com",
+                          ),
+                          const SizedBox(height: 20),
+                          _ContactTextField(
+                            label: "Message",
+                            hint: "Tell me about your project",
+                            maxLines: 4,
+                          ),
+                          const SizedBox(height: 30),
+                          SizedBox(
+                            width: double.infinity,
+                            height: 50,
+                            child: ElevatedButton(
+                              onPressed: () {},
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.blueAccent,
+                                foregroundColor: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                elevation: 5,
+                              ),
+                              child: Text(
+                                "Send Message",
+                                style: GoogleFonts.inter(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 30),
+                          Wrap(
+                            spacing: 15,
+                            runSpacing: 15,
+                            children: const [
+                              _SocialIconButton(
+                                icon: FontAwesomeIcons.github,
+                                url: "https://github.com/aswinsubhash",
+                              ),
+                              _SocialIconButton(
+                                icon: FontAwesomeIcons.linkedin,
+                                url: "https://www.linkedin.com/in/aswinsubhash",
+                              ),
+                              _SocialIconButton(
+                                icon: FontAwesomeIcons.envelope,
+                                url: "mailto:aswinofficial3@gmail.com",
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            "Let's build something amazing together",
-            style: GoogleFonts.inter(
-              fontSize: 18,
-              color: textColor?.withOpacity(0.7),
-            ),
-          ),
-          const SizedBox(height: 50),
-          Wrap(
-            spacing: 20,
-            runSpacing: 20,
-            alignment: WrapAlignment.center,
-            children: const [
-              _SocialButton(
-                icon: FontAwesomeIcons.github,
-                url: "https://github.com/aswinsubhash",
-                label: "GitHub",
-              ),
-              _SocialButton(
-                icon: FontAwesomeIcons.linkedin,
-                url: "https://www.linkedin.com/in/aswinsubhash",
-                label: "LinkedIn",
-              ),
-              _SocialButton(
-                icon: FontAwesomeIcons.envelope,
-                url: "mailto:aswinofficial3@gmail.com",
-                label: "Email",
-              ),
-            ],
-          ),
-          const SizedBox(height: 80),
-          Text(
-            "© 2026 Aswin Subhash. All rights reserved.",
-            style: GoogleFonts.inter(
-              fontSize: 14,
-              color: textColor?.withOpacity(0.3),
-            ),
-          ),
-          const SizedBox(height: 20),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                "Made with ",
-                style: GoogleFonts.inter(
-                  fontSize: 12,
-                  color: textColor?.withOpacity(0.3),
-                ),
-              ),
-              const Icon(Icons.favorite, size: 12, color: Colors.redAccent),
-              Text(
-                " in Flutter",
-                style: GoogleFonts.inter(
-                  fontSize: 12,
-                  color: textColor?.withOpacity(0.3),
-                ),
-              ),
-              const SizedBox(width: 5),
-              const Icon(Icons.flutter_dash, size: 14, color: Colors.blue),
-            ],
-          ),
-        ],
+          );
+        },
       ),
     );
   }
 }
 
-class _SocialButton extends StatefulWidget {
-  final IconData icon;
-  final String url;
+class _ContactTextField extends StatelessWidget {
   final String label;
+  final String hint;
+  final int maxLines;
 
-  const _SocialButton({
-    required this.icon,
-    required this.url,
+  const _ContactTextField({
     required this.label,
+    required this.hint,
+    this.maxLines = 1,
   });
 
   @override
-  State<_SocialButton> createState() => _SocialButtonState();
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          label,
+          style: GoogleFonts.inter(fontWeight: FontWeight.w600, fontSize: 14),
+        ),
+        const SizedBox(height: 8),
+        TextField(
+          maxLines: maxLines,
+          decoration: InputDecoration(
+            hintText: hint,
+            hintStyle: GoogleFonts.inter(color: Colors.grey),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: Colors.grey.withOpacity(0.3)),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: Colors.grey.withOpacity(0.3)),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: const BorderSide(color: Colors.blueAccent),
+            ),
+            filled: true,
+            fillColor: Theme.of(context).cardColor,
+            contentPadding: const EdgeInsets.all(16),
+          ),
+        ),
+      ],
+    );
+  }
 }
 
-class _SocialButtonState extends State<_SocialButton> {
-  bool _isHovered = false;
+class _SocialIconButton extends StatelessWidget {
+  final IconData icon;
+  final String url;
+
+  const _SocialIconButton({required this.icon, required this.url});
 
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    final textColor = Theme.of(context).textTheme.bodyLarge?.color;
-    final borderColor = isDark ? Colors.white : Colors.black;
-
-    // Default: border color (white/black). Hover: inverted (black/white or white/black)
-    // Actually, usually hover means "fill".
-    // If dark mode: default is transparent with white border. Hover usually fills white with black text.
-    // If light mode: default is transparent with black border. Hover fills black with white text.
-
-    final fillOnHover = isDark ? Colors.white : Colors.black;
-    final textOnHover = isDark ? Colors.black : Colors.white;
-
-    return MouseRegion(
-      onEnter: (_) => setState(() => _isHovered = true),
-      onExit: (_) => setState(() => _isHovered = false),
-      child: GestureDetector(
-        onTap: () async {
-          final uri = Uri.parse(widget.url);
-          if (await canLaunchUrl(uri)) {
-            await launchUrl(uri);
-          }
-        },
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 200),
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-          decoration: BoxDecoration(
-            color: _isHovered ? fillOnHover : Colors.transparent,
-            borderRadius: BorderRadius.circular(30),
-            border: Border.all(color: borderColor),
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                widget.icon,
-                size: 20,
-                color: _isHovered ? textOnHover : textColor,
-              ),
-              const SizedBox(width: 10),
-              Text(
-                widget.label,
-                style: GoogleFonts.inter(
-                  color: _isHovered ? textOnHover : textColor,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ],
-          ),
-        ),
+    return IconButton(
+      onPressed: () async {
+        final uri = Uri.parse(url);
+        if (await canLaunchUrl(uri)) {
+          await launchUrl(uri);
+        }
+      },
+      icon: FaIcon(icon, size: 24),
+      style: IconButton.styleFrom(
+        backgroundColor: isDark ? Colors.grey[800] : Colors.grey[200],
+        foregroundColor: isDark ? Colors.white : Colors.black,
+        padding: const EdgeInsets.all(12),
       ),
     );
   }
