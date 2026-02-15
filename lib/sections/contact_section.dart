@@ -19,6 +19,12 @@ class _ContactSectionState extends State<ContactSection> {
   final _subjectController = TextEditingController();
   final _messageController = TextEditingController();
 
+  // Error states for custom validation
+  String? _nameError;
+  String? _emailError;
+  String? _subjectError;
+  String? _messageError;
+
   @override
   void dispose() {
     _nameController.dispose();
@@ -28,7 +34,61 @@ class _ContactSectionState extends State<ContactSection> {
     super.dispose();
   }
 
+  String? _validateName(String value) {
+    if (value.trim().isEmpty) {
+      return 'Please enter your name';
+    }
+    return null;
+  }
+
+  String? _validateEmail(String value) {
+    if (value.trim().isEmpty) {
+      return 'Please enter your email';
+    }
+    final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+    if (!emailRegex.hasMatch(value)) {
+      return 'Please enter a valid email';
+    }
+    return null;
+  }
+
+  String? _validateSubject(String value) {
+    if (value.trim().isEmpty) {
+      return 'Please enter a subject';
+    }
+    return null;
+  }
+
+  String? _validateMessage(String value) {
+    if (value.trim().isEmpty) {
+      return 'Please enter a message';
+    }
+    if (value.trim().length < 10) {
+      return 'Message must be at least 10 characters';
+    }
+    return null;
+  }
+
+  bool _validateForm() {
+    setState(() {
+      _nameError = _validateName(_nameController.text);
+      _emailError = _validateEmail(_emailController.text);
+      _subjectError = _validateSubject(_subjectController.text);
+      _messageError = _validateMessage(_messageController.text);
+    });
+
+    return _nameError == null &&
+        _emailError == null &&
+        _subjectError == null &&
+        _messageError == null;
+  }
+
   Future<void> _launchEmail() async {
+    // Validate form before sending
+    if (!_validateForm()) {
+      return;
+    }
+
     final String name = _nameController.text;
     final String email = _emailController.text;
     final String subject = _subjectController.text;
@@ -67,21 +127,8 @@ class _ContactSectionState extends State<ContactSection> {
           const Positioned.fill(
             child: RandomMovingLine(color: Colors.blueAccent, speed: 3.0),
           ),
-          Positioned(
-            bottom: 20,
-            left: 0,
-            right: 0,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text('Made with ', style: TextStyle(color: Colors.grey)),
-                const Icon(Icons.favorite, color: Colors.blue, size: 16),
-                const Text(' in Flutter', style: TextStyle(color: Colors.grey)),
-              ],
-            ),
-          ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 80, horizontal: 20),
+            padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
             child: LayoutBuilder(
               builder: (context, constraints) {
                 bool isDesktop = constraints.maxWidth > 800;
@@ -173,18 +220,45 @@ class _ContactSectionState extends State<ContactSection> {
                                   label: AppStrings.nameLabel,
                                   hint: AppStrings.nameHint,
                                   controller: _nameController,
+                                  error: _nameError,
+                                  onChanged: (value) {
+                                    if (_nameError != null) {
+                                      setState(
+                                        () => _nameError = _validateName(value),
+                                      );
+                                    }
+                                  },
                                 ),
                                 const SizedBox(height: 20),
                                 _ContactTextField(
                                   label: AppStrings.emailLabel,
                                   hint: AppStrings.emailHint,
                                   controller: _emailController,
+                                  error: _emailError,
+                                  onChanged: (value) {
+                                    if (_emailError != null) {
+                                      setState(
+                                        () =>
+                                            _emailError = _validateEmail(value),
+                                      );
+                                    }
+                                  },
                                 ),
                                 const SizedBox(height: 20),
                                 _ContactTextField(
                                   label: AppStrings.subjectLabel,
                                   hint: AppStrings.subjectHint,
                                   controller: _subjectController,
+                                  error: _subjectError,
+                                  onChanged: (value) {
+                                    if (_subjectError != null) {
+                                      setState(
+                                        () => _subjectError = _validateSubject(
+                                          value,
+                                        ),
+                                      );
+                                    }
+                                  },
                                 ),
                                 const SizedBox(height: 20),
                                 _ContactTextField(
@@ -192,6 +266,16 @@ class _ContactSectionState extends State<ContactSection> {
                                   hint: AppStrings.messageHint,
                                   maxLines: 4,
                                   controller: _messageController,
+                                  error: _messageError,
+                                  onChanged: (value) {
+                                    if (_messageError != null) {
+                                      setState(
+                                        () => _messageError = _validateMessage(
+                                          value,
+                                        ),
+                                      );
+                                    }
+                                  },
                                 ),
                                 const SizedBox(height: 30),
                                 SizedBox(
@@ -247,6 +331,21 @@ class _ContactSectionState extends State<ContactSection> {
               },
             ),
           ),
+          // Copyright Footer
+          Positioned(
+            bottom: 10,
+            left: 0,
+            right: 0,
+            child: Center(
+              child: Text(
+                '© 2026 Aswin Subhash. All rights reserved.',
+                style: TextStyle(
+                  color: Colors.grey.withOpacity(0.6),
+                  fontSize: 11,
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -258,58 +357,81 @@ class _ContactTextField extends StatelessWidget {
   final String hint;
   final int maxLines;
   final TextEditingController? controller;
+  final String? error;
+  final Function(String)? onChanged;
 
   const _ContactTextField({
     required this.label,
     required this.hint,
     this.maxLines = 1,
     this.controller,
+    this.error,
+    this.onChanged,
   });
 
   @override
   Widget build(BuildContext context) {
     final textColor = Theme.of(context).textTheme.bodyLarge?.color;
+    final hasError = error != null;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          label,
-          style: TextStyle(
-            fontFamily: 'Inter',
-            fontWeight: FontWeight.w600,
-            fontSize: 14,
-            color: textColor,
+        AnimatedContainer(
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(
+              color: hasError ? Colors.redAccent : Colors.grey.withOpacity(0.3),
+              width: hasError ? 2 : 1,
+            ),
+          ),
+          child: TextField(
+            controller: controller,
+            onChanged: onChanged,
+            style: TextStyle(fontFamily: 'Inter', color: textColor),
+            maxLines: maxLines,
+            decoration: InputDecoration(
+              hintText: hint,
+              hintStyle: TextStyle(fontFamily: 'Inter', color: Colors.grey),
+              border: InputBorder.none,
+              enabledBorder: InputBorder.none,
+              focusedBorder: InputBorder.none,
+              filled: true,
+              fillColor: Theme.of(context).cardColor,
+              contentPadding: const EdgeInsets.all(16),
+            ),
           ),
         ),
-        const SizedBox(height: 8),
-        TextField(
-          controller: controller,
-          style: TextStyle(fontFamily: 'Inter', color: textColor),
-          maxLines: maxLines,
-          decoration: InputDecoration(
-            labelText: label,
-            labelStyle: TextStyle(
-              fontFamily: 'Inter',
-              color: textColor?.withOpacity(0.7),
-            ),
-            hintText: hint,
-            hintStyle: TextStyle(fontFamily: 'Inter', color: Colors.grey),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(color: Colors.grey.withOpacity(0.3)),
-            ),
-            enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: BorderSide(color: Colors.grey.withOpacity(0.3)),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
-              borderSide: const BorderSide(color: Colors.blueAccent),
-            ),
-            filled: true,
-            fillColor: Theme.of(context).cardColor,
-            contentPadding: const EdgeInsets.all(16),
-          ),
+        AnimatedSize(
+          duration: const Duration(milliseconds: 250),
+          curve: Curves.easeInOut,
+          child: hasError
+              ? Padding(
+                  padding: const EdgeInsets.only(top: 8, left: 4),
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.error_outline,
+                        color: Colors.redAccent,
+                        size: 16,
+                      ),
+                      const SizedBox(width: 6),
+                      Expanded(
+                        child: Text(
+                          error!,
+                          style: const TextStyle(
+                            color: Colors.redAccent,
+                            fontSize: 12,
+                            fontFamily: 'Inter',
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              : const SizedBox.shrink(),
         ),
       ],
     );

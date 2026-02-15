@@ -6,7 +6,16 @@ import '../constants.dart';
 import '../widgets/scattered_background.dart';
 
 class HomeSection extends StatefulWidget {
-  const HomeSection({super.key});
+  final ScrollController? scrollController;
+  final GlobalKey? projectsKey;
+  final GlobalKey? contactKey;
+
+  const HomeSection({
+    super.key,
+    this.scrollController,
+    this.projectsKey,
+    this.contactKey,
+  });
 
   @override
   State<HomeSection> createState() => _HomeSectionState();
@@ -41,6 +50,42 @@ class _HomeSectionState extends State<HomeSection> {
           const SnackBar(content: Text('Could not launch resume download')),
         );
       }
+    }
+  }
+
+  void _scrollToProjects() {
+    if (widget.scrollController != null &&
+        widget.projectsKey?.currentContext != null) {
+      final RenderBox renderBox =
+          widget.projectsKey!.currentContext!.findRenderObject() as RenderBox;
+      final position = renderBox.localToGlobal(Offset.zero).dy;
+      final currentScrollOffset = widget.scrollController!.offset;
+
+      widget.scrollController!.animateTo(
+        currentScrollOffset +
+            position -
+            80, // 80px offset for better visual alignment
+        duration: const Duration(milliseconds: 800),
+        curve: Curves.easeInOut,
+      );
+    }
+  }
+
+  void _scrollToContact() {
+    if (widget.scrollController != null &&
+        widget.contactKey?.currentContext != null) {
+      final RenderBox renderBox =
+          widget.contactKey!.currentContext!.findRenderObject() as RenderBox;
+      final position = renderBox.localToGlobal(Offset.zero).dy;
+      final currentScrollOffset = widget.scrollController!.offset;
+
+      widget.scrollController!.animateTo(
+        currentScrollOffset +
+            position -
+            80, // 80px offset for better visual alignment
+        duration: const Duration(milliseconds: 800),
+        curve: Curves.easeInOut,
+      );
     }
   }
 
@@ -192,29 +237,95 @@ class _HomeSectionState extends State<HomeSection> {
 
                               const SizedBox(height: 30),
 
-                              // Resume Button
-                              OutlinedButton.icon(
-                                onPressed: _downloadResume,
-                                icon: const Icon(Icons.download_rounded),
-                                label: Text(
-                                  'Download Resume',
-                                  style: TextStyle(
-                                    fontFamily: 'Inter',
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
+                              // Action Buttons Row
+                              Wrap(
+                                spacing: 16,
+                                runSpacing: 16,
+                                alignment: isDesktop
+                                    ? WrapAlignment.start
+                                    : WrapAlignment.center,
+                                children: [
+                                  // View Projects Button
+                                  OutlinedButton.icon(
+                                    onPressed: _scrollToProjects,
+                                    icon: const Icon(Icons.view_module_rounded),
+                                    label: const Text(
+                                      'View Projects',
+                                      style: TextStyle(
+                                        fontFamily: 'Inter',
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    style: OutlinedButton.styleFrom(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 24,
+                                        vertical: 16,
+                                      ),
+                                      side: BorderSide(
+                                        color: Theme.of(context).primaryColor,
+                                        width: 2,
+                                      ),
+                                      shape: const StadiumBorder(),
+                                    ),
                                   ),
-                                ),
-                                style: OutlinedButton.styleFrom(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 24,
-                                    vertical: 16,
+
+                                  // Download Resume Button
+                                  OutlinedButton.icon(
+                                    onPressed: _downloadResume,
+                                    icon: const Icon(Icons.download_rounded),
+                                    label: const Text(
+                                      'Download Resume',
+                                      style: TextStyle(
+                                        fontFamily: 'Inter',
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    style: OutlinedButton.styleFrom(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 24,
+                                        vertical: 16,
+                                      ),
+                                      side: BorderSide(
+                                        color: Theme.of(context).primaryColor,
+                                        width: 2,
+                                      ),
+                                      shape: const StadiumBorder(),
+                                      backgroundColor: Theme.of(
+                                        context,
+                                      ).primaryColor,
+                                      foregroundColor: Colors.white,
+                                    ),
                                   ),
-                                  side: BorderSide(
-                                    color: Theme.of(context).primaryColor,
-                                    width: 2,
+
+                                  // Contact Button
+                                  OutlinedButton.icon(
+                                    onPressed: _scrollToContact,
+                                    icon: const Icon(
+                                      Icons.mail_outline_rounded,
+                                    ),
+                                    label: const Text(
+                                      'Contact',
+                                      style: TextStyle(
+                                        fontFamily: 'Inter',
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    style: OutlinedButton.styleFrom(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 24,
+                                        vertical: 16,
+                                      ),
+                                      side: BorderSide(
+                                        color: Theme.of(context).primaryColor,
+                                        width: 2,
+                                      ),
+                                      shape: const StadiumBorder(),
+                                    ),
                                   ),
-                                  shape: const StadiumBorder(),
-                                ),
+                                ],
                               ),
                             ],
                           ),

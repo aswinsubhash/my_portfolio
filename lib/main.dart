@@ -80,6 +80,8 @@ class PortfolioHomePage extends StatefulWidget {
 class _PortfolioHomePageState extends State<PortfolioHomePage> {
   final ValueNotifier<double> _scrollNotifier = ValueNotifier(0.0);
   final ScrollController _scrollController = ScrollController();
+  final GlobalKey _projectsKey = GlobalKey();
+  final GlobalKey _contactKey = GlobalKey();
 
   @override
   void initState() {
@@ -107,26 +109,48 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
             controller: _scrollController,
             child: Column(
               children: [
-                const HomeSection(),
+                HomeSection(
+                  scrollController: _scrollController,
+                  projectsKey: _projectsKey,
+                  contactKey: _contactKey,
+                ),
                 const AboutSection(),
                 ExperienceSection(scroll: _scrollNotifier),
-                const ProjectsSection(),
-                const ContactSection(),
+                ProjectsSection(key: _projectsKey),
+                ContactSection(key: _contactKey),
               ],
             ),
           ),
           Positioned(
             top: 20,
             right: 20,
-            child: FloatingActionButton(
-              onPressed: widget.onThemeToggle,
-              backgroundColor: widget.isDarkMode ? Colors.black : Colors.white,
-              elevation: 4,
-              shape: const CircleBorder(), // ensure it's round
-              child: Icon(
-                widget.isDarkMode ? Icons.light_mode : Icons.dark_mode,
-                color: widget.isDarkMode ? Colors.white : Colors.black,
-              ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Text(
+                  'Made with ',
+                  style: TextStyle(color: Colors.grey, fontSize: 12),
+                ),
+                const Icon(Icons.favorite, color: Colors.blue, size: 12),
+                const Text(
+                  ' in Flutter',
+                  style: TextStyle(color: Colors.grey, fontSize: 12),
+                ),
+                const SizedBox(width: 16),
+                FloatingActionButton(
+                  mini: true,
+                  onPressed: widget.onThemeToggle,
+                  backgroundColor: widget.isDarkMode
+                      ? Colors.black
+                      : Colors.white,
+                  elevation: 4,
+                  child: Icon(
+                    widget.isDarkMode ? Icons.light_mode : Icons.dark_mode,
+                    color: widget.isDarkMode ? Colors.white : Colors.black,
+                    size: 20,
+                  ),
+                ),
+              ],
             ),
           ),
         ],
