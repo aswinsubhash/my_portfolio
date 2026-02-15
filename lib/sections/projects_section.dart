@@ -1,34 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
+import '../constants.dart';
 
 class ProjectsSection extends StatelessWidget {
   const ProjectsSection({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final projects = [
-      _Project(
-        title: "Portfolio Website",
-        description: "A responsive portfolio website built with Flutter Web.",
-        imageColor: Colors.blue.shade900, // Darker for dark theme
-      ),
-      _Project(
-        title: "E-Commerce App",
-        description:
-            "A full-featured mobile shopping app with payment integration.",
-        imageColor: Colors.green.shade900,
-      ),
-      _Project(
-        title: "Task Manager",
-        description: "Productivity tool to organize and track daily tasks.",
-        imageColor: Colors.orange.shade900,
-      ),
-      _Project(
-        title: "Social Media Dashboard",
-        description: "Analytics dashboard for social media management.",
-        imageColor: Colors.purple.shade900,
-      ),
-    ];
+    // Projects data moved to AppStrings.projects
 
     final textColor = Theme.of(context).textTheme.bodyLarge?.color;
 
@@ -38,7 +17,7 @@ class ProjectsSection extends StatelessWidget {
       child: Stack(
         children: [
           // Background
-          // Background removed as requested
+          // Background
 
           // Content
           Padding(
@@ -46,8 +25,9 @@ class ProjectsSection extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  "My Projects",
-                  style: GoogleFonts.outfit(
+                  AppStrings.projectsTitle,
+                  style: TextStyle(
+                    fontFamily: 'Inter',
                     fontSize: 40,
                     fontWeight: FontWeight.bold,
                     color: textColor, // Theme text
@@ -55,10 +35,11 @@ class ProjectsSection extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  "Here are some of my recent works",
-                  style: GoogleFonts.inter(
+                  AppStrings.projectsSubtitle,
+                  style: TextStyle(
+                    fontFamily: 'Inter',
                     fontSize: 18,
-                    color: textColor?.withValues(alpha: 0.7),
+                    color: textColor?.withValues(alpha: 0.6),
                   ), // Light text
                 ),
                 const SizedBox(height: 50),
@@ -68,7 +49,7 @@ class ProjectsSection extends StatelessWidget {
                       spacing: 40,
                       runSpacing: 40,
                       alignment: WrapAlignment.center,
-                      children: projects.map((project) {
+                      children: AppStrings.projects.map((project) {
                         return _ProjectCard(project: project);
                       }).toList(),
                     );
@@ -83,20 +64,10 @@ class ProjectsSection extends StatelessWidget {
   }
 }
 
-class _Project {
-  final String title;
-  final String description;
-  final Color imageColor;
-
-  _Project({
-    required this.title,
-    required this.description,
-    required this.imageColor,
-  });
-}
+// _Project class removed, using ProjectData from constants.dart
 
 class _ProjectCard extends StatefulWidget {
-  final _Project project;
+  final ProjectData project;
 
   const _ProjectCard({required this.project});
 
@@ -145,9 +116,7 @@ class _ProjectCardState extends State<_ProjectCard> {
             Container(
               height: 180,
               decoration: BoxDecoration(
-                color: widget.project.imageColor.withValues(
-                  alpha: isDark ? 1 : 0.8,
-                ),
+                color: widget.project.color.withValues(alpha: isDark ? 1 : 0.8),
                 borderRadius: const BorderRadius.vertical(
                   top: Radius.circular(20),
                 ),
@@ -163,7 +132,8 @@ class _ProjectCardState extends State<_ProjectCard> {
                 children: [
                   Text(
                     widget.project.title,
-                    style: GoogleFonts.outfit(
+                    style: TextStyle(
+                      fontFamily: 'Inter',
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
                       color: textColor, // Theme text
@@ -172,8 +142,10 @@ class _ProjectCardState extends State<_ProjectCard> {
                   const SizedBox(height: 10),
                   Text(
                     widget.project.description,
-                    style: GoogleFonts.inter(
+                    style: TextStyle(
+                      fontFamily: 'Inter',
                       fontSize: 14,
+                      height: 1.5,
                       color: textColor?.withValues(alpha: 0.7), // Light text
                     ),
                   ),

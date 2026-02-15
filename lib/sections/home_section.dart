@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
+import 'package:url_launcher/url_launcher.dart';
+
+import '../constants.dart';
 import '../widgets/scattered_background.dart';
 
 class HomeSection extends StatefulWidget {
@@ -27,6 +29,19 @@ class _HomeSectionState extends State<HomeSection> {
     final x = (event.position.dx / size.width) * 2 - 1;
     final y = (event.position.dy / size.height) * 2 - 1;
     _mouseAlignment.value = Alignment(x, y);
+  }
+
+  Future<void> _downloadResume() async {
+    final Uri url = Uri.parse(
+      'assets/Aswin_Subhash_Mobile_Application_Developer_CV.pdf',
+    );
+    if (!await launchUrl(url)) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Could not launch resume download')),
+        );
+      }
+    }
   }
 
   @override
@@ -111,35 +126,94 @@ class _HomeSectionState extends State<HomeSection> {
                                 ? CrossAxisAlignment.start
                                 : CrossAxisAlignment.center,
                             children: [
+                              // Location
+                              Text(
+                                AppStrings.homeLocation.toUpperCase(),
+                                style: TextStyle(
+                                  fontFamily: 'Inter',
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                  letterSpacing: 2,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .bodyMedium
+                                      ?.color
+                                      ?.withValues(alpha: 0.6),
+                                ),
+                              ),
+
+                              const SizedBox(height: 10),
+
+                              // Name
                               _GradientText(
-                                text: "Hi, I'm Aswin Subhash",
-                                style: GoogleFonts.outfit(
+                                text: AppStrings.greeting,
+                                style: TextStyle(
+                                  fontFamily: 'Inter',
                                   fontSize: isDesktop ? 80 : 50,
                                   fontWeight: FontWeight.bold,
-                                  height: 1.2,
+                                  height: 1.1,
+                                ),
+                              ),
+
+                              const SizedBox(height: 10),
+
+                              // Title
+                              Text(
+                                AppStrings.homeTitle,
+                                style: TextStyle(
+                                  fontFamily: 'Inter',
+                                  fontSize: isDesktop ? 20 : 16,
+                                  fontWeight: FontWeight.w600,
+                                  color: Theme.of(
+                                    context,
+                                  ).textTheme.bodyLarge?.color,
                                 ),
                               ),
 
                               const SizedBox(height: 20),
 
+                              // Bio Description
                               SizedBox(
-                                height: 40,
-                                child: _TypewriterText(
-                                  texts: const [
-                                    "Flutter Developer",
-                                    "Cross-Platform Expert",
-                                  ],
-                                  style: GoogleFonts.inter(
-                                    fontSize: 24,
-                                    color:
-                                        Theme.of(context)
-                                            .textTheme
-                                            .bodyLarge
-                                            ?.color
-                                            ?.withValues(alpha: 0.8) ??
-                                        Colors.white70,
-                                    letterSpacing: 1.2,
+                                width: 600, // Limit width for readability
+                                child: Text(
+                                  AppStrings.homeDescription,
+                                  style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontSize: 16,
+                                    height: 1.6,
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium
+                                        ?.color
+                                        ?.withValues(alpha: 0.8),
                                   ),
+                                ),
+                              ),
+
+                              const SizedBox(height: 30),
+
+                              // Resume Button
+                              OutlinedButton.icon(
+                                onPressed: _downloadResume,
+                                icon: const Icon(Icons.download_rounded),
+                                label: Text(
+                                  'Download Resume',
+                                  style: TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                style: OutlinedButton.styleFrom(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 24,
+                                    vertical: 16,
+                                  ),
+                                  side: BorderSide(
+                                    color: Theme.of(context).primaryColor,
+                                    width: 2,
+                                  ),
+                                  shape: const StadiumBorder(),
                                 ),
                               ),
                             ],
@@ -213,130 +287,6 @@ class _GradientTextState extends State<_GradientText>
           ),
         );
       },
-    );
-  }
-}
-
-class _TypewriterText extends StatefulWidget {
-  final List<String> texts;
-  final TextStyle style;
-
-  const _TypewriterText({required this.texts, required this.style});
-
-  @override
-  State<_TypewriterText> createState() => _TypewriterTextState();
-}
-
-class _TypewriterTextState extends State<_TypewriterText>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<int> _characterCount;
-  int _currentIndex = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration:
-          const Duration(milliseconds: 100) *
-          widget.texts[_currentIndex].length,
-    );
-
-    _setupAnimation();
-
-    _controller.addStatusListener((status) {
-      if (status == AnimationStatus.completed) {
-        Future.delayed(const Duration(milliseconds: 1000), () {
-          if (mounted) _controller.reverse();
-        });
-      } else if (status == AnimationStatus.dismissed) {
-        Future.delayed(const Duration(milliseconds: 500), () {
-          if (mounted) {
-            setState(() {
-              _currentIndex = (_currentIndex + 1) % widget.texts.length;
-              _controller.duration =
-                  const Duration(milliseconds: 100) *
-                  widget.texts[_currentIndex].length;
-              _setupAnimation();
-            });
-            _controller.forward();
-          }
-        });
-      }
-    });
-
-    _controller.forward();
-  }
-
-  void _setupAnimation() {
-    _characterCount = StepTween(
-      begin: 0,
-      end: widget.texts[_currentIndex].length,
-    ).animate(CurvedAnimation(parent: _controller, curve: Curves.linear));
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: _characterCount,
-      builder: (context, child) {
-        int count = _characterCount.value;
-        String currentString = widget.texts[_currentIndex];
-        // Ensure count doesn't exceed string length - StepTween might sometimes be quirky
-        if (count > currentString.length) count = currentString.length;
-
-        String currentText = currentString.substring(0, count);
-        return Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(currentText, style: widget.style),
-            _BlinkingCursor(style: widget.style),
-          ],
-        );
-      },
-    );
-  }
-}
-
-class _BlinkingCursor extends StatefulWidget {
-  final TextStyle style;
-  const _BlinkingCursor({required this.style});
-
-  @override
-  State<_BlinkingCursor> createState() => _BlinkingCursorState();
-}
-
-class _BlinkingCursorState extends State<_BlinkingCursor>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 500),
-    )..repeat(reverse: true);
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return FadeTransition(
-      opacity: _controller,
-      child: Text("|", style: widget.style), // Keeping the cursor simpler
     );
   }
 }

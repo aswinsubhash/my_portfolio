@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'sections/home_section.dart';
 import 'sections/about_section.dart';
+import 'sections/experience_section.dart';
 import 'sections/projects_section.dart';
 import 'sections/contact_section.dart';
 
@@ -35,7 +36,7 @@ class _PortfolioAppState extends State<PortfolioApp> {
               seedColor: Colors.blueAccent,
               brightness: Brightness.light,
             ),
-            textTheme: GoogleFonts.interTextTheme(ThemeData.light().textTheme),
+            fontFamily: 'Inter',
           ),
           darkTheme: ThemeData(
             useMaterial3: true,
@@ -45,7 +46,7 @@ class _PortfolioAppState extends State<PortfolioApp> {
               seedColor: Colors.blueAccent,
               brightness: Brightness.dark,
             ),
-            textTheme: GoogleFonts.interTextTheme(ThemeData.dark().textTheme),
+            fontFamily: 'Inter',
           ),
           themeMode: currentMode,
           home: PortfolioHomePage(
@@ -62,7 +63,7 @@ class _PortfolioAppState extends State<PortfolioApp> {
   }
 }
 
-class PortfolioHomePage extends StatelessWidget {
+class PortfolioHomePage extends StatefulWidget {
   final VoidCallback onThemeToggle;
   final bool isDarkMode;
 
@@ -73,17 +74,44 @@ class PortfolioHomePage extends StatelessWidget {
   });
 
   @override
+  State<PortfolioHomePage> createState() => _PortfolioHomePageState();
+}
+
+class _PortfolioHomePageState extends State<PortfolioHomePage> {
+  final ValueNotifier<double> _scrollNotifier = ValueNotifier(0.0);
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController.addListener(() {
+      if (mounted) {
+        _scrollNotifier.value = _scrollController.offset;
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    _scrollNotifier.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
           SingleChildScrollView(
+            controller: _scrollController,
             child: Column(
-              children: const [
-                HomeSection(),
-                AboutSection(),
-                ProjectsSection(),
-                ContactSection(),
+              children: [
+                const HomeSection(),
+                const AboutSection(),
+                ExperienceSection(scroll: _scrollNotifier),
+                const ProjectsSection(),
+                const ContactSection(),
               ],
             ),
           ),
@@ -91,13 +119,13 @@ class PortfolioHomePage extends StatelessWidget {
             top: 20,
             right: 20,
             child: FloatingActionButton(
-              onPressed: onThemeToggle,
-              backgroundColor: isDarkMode ? Colors.black : Colors.white,
+              onPressed: widget.onThemeToggle,
+              backgroundColor: widget.isDarkMode ? Colors.black : Colors.white,
               elevation: 4,
               shape: const CircleBorder(), // ensure it's round
               child: Icon(
-                isDarkMode ? Icons.light_mode : Icons.dark_mode,
-                color: isDarkMode ? Colors.white : Colors.black,
+                widget.isDarkMode ? Icons.light_mode : Icons.dark_mode,
+                color: widget.isDarkMode ? Colors.white : Colors.black,
               ),
             ),
           ),

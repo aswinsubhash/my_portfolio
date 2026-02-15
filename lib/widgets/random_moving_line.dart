@@ -129,27 +129,7 @@ class _SnakePainter extends CustomPainter {
       canvas.drawCircle(points[i], radius, paint);
     }
 
-    // Draw Eyes
-    if (points.length > 2) {
-      Offset head = points.last;
-      Offset neck = points[points.length - 3];
-      Offset direction = head - neck;
-      double angle = atan2(direction.dy, direction.dx);
-
-      canvas.save();
-      canvas.translate(head.dx, head.dy);
-      canvas.rotate(angle);
-
-      final eyePaint = Paint()..color = Colors.white;
-      canvas.drawCircle(const Offset(2, -3), 2, eyePaint);
-      canvas.drawCircle(const Offset(2, 3), 2, eyePaint);
-
-      final pupilPaint = Paint()..color = Colors.black;
-      canvas.drawCircle(const Offset(2.5, -3), 1, pupilPaint);
-      canvas.drawCircle(const Offset(2.5, 3), 1, pupilPaint);
-
-      canvas.restore();
-    }
+    // Draw Eyes removed as requested
   }
 
   @override
