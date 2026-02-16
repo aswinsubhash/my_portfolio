@@ -94,6 +94,13 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // Precache contact image to prevent flash when scrolling
+    precacheImage(const AssetImage('assets/images/contact.png'), context);
+  }
+
+  @override
   void dispose() {
     _scrollController.dispose();
     _scrollNotifier.dispose();
@@ -105,21 +112,23 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
     return Scaffold(
       body: Stack(
         children: [
-          SingleChildScrollView(
+          CustomScrollView(
             controller: _scrollController,
-            child: Column(
-              children: [
-                HomeSection(
+            slivers: [
+              SliverToBoxAdapter(
+                child: HomeSection(
                   scrollController: _scrollController,
                   projectsKey: _projectsKey,
                   contactKey: _contactKey,
                 ),
-                const AboutSection(),
-                ExperienceSection(scroll: _scrollNotifier),
-                ProjectsSection(key: _projectsKey),
-                ContactSection(key: _contactKey),
-              ],
-            ),
+              ),
+              const SliverToBoxAdapter(child: AboutSection()),
+              SliverToBoxAdapter(
+                child: ExperienceSection(scroll: _scrollNotifier),
+              ),
+              SliverToBoxAdapter(child: ProjectsSection(key: _projectsKey)),
+              SliverToBoxAdapter(child: ContactSection(key: _contactKey)),
+            ],
           ),
           Positioned(
             top: 20,
@@ -127,16 +136,6 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Text(
-                  'Made with ',
-                  style: TextStyle(color: Colors.grey, fontSize: 12),
-                ),
-                const Icon(Icons.favorite, color: Colors.blue, size: 12),
-                const Text(
-                  ' in Flutter',
-                  style: TextStyle(color: Colors.grey, fontSize: 12),
-                ),
-                const SizedBox(width: 16),
                 FloatingActionButton(
                   mini: true,
                   onPressed: widget.onThemeToggle,

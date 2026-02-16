@@ -20,42 +20,48 @@ class ProjectsSection extends StatelessWidget {
           // Background
 
           // Content
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 80, horizontal: 20),
-            child: Column(
-              children: [
-                Text(
-                  AppStrings.projectsTitle,
-                  style: TextStyle(
-                    fontFamily: 'Inter',
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold,
-                    color: textColor, // Theme text
-                  ),
+          Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 1200),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  children: [
+                    Text(
+                      AppStrings.projectsTitle,
+                      style: TextStyle(
+                        fontFamily: 'Inter',
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: textColor, // Theme text
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      AppStrings.projectsSubtitle,
+                      style: TextStyle(
+                        fontFamily: 'Inter',
+                        fontSize: 18,
+                        color: textColor?.withValues(alpha: 0.6),
+                      ), // Light text
+                    ),
+                    const SizedBox(height: 50),
+                    LayoutBuilder(
+                      builder: (context, constraints) {
+                        return Wrap(
+                          spacing: 40,
+                          runSpacing: 40,
+                          alignment: WrapAlignment.center,
+                          children: AppStrings.projects.map((project) {
+                            return _ProjectCard(project: project);
+                          }).toList(),
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 40),
+                  ],
                 ),
-                const SizedBox(height: 10),
-                Text(
-                  AppStrings.projectsSubtitle,
-                  style: TextStyle(
-                    fontFamily: 'Inter',
-                    fontSize: 18,
-                    color: textColor?.withValues(alpha: 0.6),
-                  ), // Light text
-                ),
-                const SizedBox(height: 50),
-                LayoutBuilder(
-                  builder: (context, constraints) {
-                    return Wrap(
-                      spacing: 40,
-                      runSpacing: 40,
-                      alignment: WrapAlignment.center,
-                      children: AppStrings.projects.map((project) {
-                        return _ProjectCard(project: project);
-                      }).toList(),
-                    );
-                  },
-                ),
-              ],
+              ),
             ),
           ),
         ],

@@ -97,7 +97,7 @@ class AppStrings {
   ];
 
   // Contact Section
-  static const String contactTitle = "Get In Touch";
+  static const String contactTitle = "Contact";
   static const String contactSubtitle =
       "Reach out to discuss my work or just to connect.";
   static const String nameLabel = "Name";

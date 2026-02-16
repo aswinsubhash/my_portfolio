@@ -53,34 +53,40 @@ class ExperienceSection extends StatelessWidget {
             ),
           ),
           // Main Content
-          Padding(
-            padding: const EdgeInsets.all(50),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  AppStrings.experienceTitle,
-                  style: TextStyle(
-                    fontFamily: 'Inter',
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold,
-                    color: textColor,
-                  ),
+          Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 1200),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      AppStrings.experienceTitle,
+                      style: TextStyle(
+                        fontFamily: 'Inter',
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: textColor,
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                    ListView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: AppStrings.experience.length,
+                      itemBuilder: (context, index) {
+                        return _ExperienceItem(
+                          key: ValueKey(index),
+                          experience: AppStrings.experience[index],
+                          isLast: index == AppStrings.experience.length - 1,
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 100),
+                  ],
                 ),
-                const SizedBox(height: 30),
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: AppStrings.experience.length,
-                  itemBuilder: (context, index) {
-                    return _ExperienceItem(
-                      key: ValueKey(index),
-                      experience: AppStrings.experience[index],
-                      isLast: index == AppStrings.experience.length - 1,
-                    );
-                  },
-                ),
-              ],
+              ),
             ),
           ),
         ],

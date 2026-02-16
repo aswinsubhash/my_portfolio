@@ -92,12 +92,13 @@ class _HomeSectionState extends State<HomeSection> {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isMobile = MediaQuery.of(context).size.width < 800;
     return MouseRegion(
       onHover: _onHover,
       child: Container(
-        height: MediaQuery.of(context).size.height,
-        width: double.infinity,
-        clipBehavior: Clip.hardEdge,
+        constraints: BoxConstraints(
+          minHeight: MediaQuery.of(context).size.height,
+        ),
         decoration: BoxDecoration(
           color: Theme.of(context).scaffoldBackgroundColor,
         ),
@@ -116,223 +117,234 @@ class _HomeSectionState extends State<HomeSection> {
 
             // Main Content
             Center(
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: LayoutBuilder(
-                    builder: (context, constraints) {
-                      bool isDesktop = constraints.maxWidth > 800;
-                      return Flex(
-                        direction: isDesktop ? Axis.horizontal : Axis.vertical,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          // Image Section
-                          Container(
-                            width: 300,
-                            height: 300,
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
+              child: Padding(
+                padding: EdgeInsets.only(
+                  left: 20,
+                  right: 20,
+                  top: isMobile ? 80 : 0,
+                ),
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    bool isDesktop = constraints.maxWidth > 800;
+                    return Flex(
+                      direction: isDesktop ? Axis.horizontal : Axis.vertical,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        // Image Section
+                        Container(
+                          width: 300,
+                          height: 300,
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                          ),
+                          child: ClipOval(
+                            child: Image.asset(
+                              'assets/images/profile.png',
+                              fit: BoxFit.cover,
+                              frameBuilder:
+                                  (
+                                    context,
+                                    child,
+                                    frame,
+                                    wasSynchronouslyLoaded,
+                                  ) {
+                                    if (wasSynchronouslyLoaded) return child;
+                                    return AnimatedOpacity(
+                                      opacity: frame == null ? 0 : 1,
+                                      duration: const Duration(
+                                        milliseconds: 800,
+                                      ),
+                                      curve: Curves.easeOut,
+                                      child: child,
+                                    );
+                                  },
                             ),
-                            child: ClipOval(
-                              child: Image.asset(
-                                'assets/images/profile.png',
-                                fit: BoxFit.cover,
-                                frameBuilder:
-                                    (
-                                      context,
-                                      child,
-                                      frame,
-                                      wasSynchronouslyLoaded,
-                                    ) {
-                                      if (wasSynchronouslyLoaded) return child;
-                                      return AnimatedOpacity(
-                                        opacity: frame == null ? 0 : 1,
-                                        duration: const Duration(
-                                          milliseconds: 800,
-                                        ),
-                                        curve: Curves.easeOut,
-                                        child: child,
-                                      );
-                                    },
+                          ),
+                        ),
+
+                        SizedBox(
+                          width: isDesktop ? 60 : 0,
+                          height: isDesktop ? 0 : 40,
+                        ),
+
+                        // Text Section
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: isDesktop
+                              ? CrossAxisAlignment.start
+                              : CrossAxisAlignment.center,
+                          children: [
+                            // Location
+                            Text(
+                              AppStrings.homeLocation.toUpperCase(),
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                                letterSpacing: 2,
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.color
+                                    ?.withValues(alpha: 0.6),
                               ),
                             ),
-                          ),
 
-                          SizedBox(
-                            width: isDesktop ? 60 : 0,
-                            height: isDesktop ? 0 : 40,
-                          ),
+                            const SizedBox(height: 10),
 
-                          // Text Section
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: isDesktop
-                                ? CrossAxisAlignment.start
-                                : CrossAxisAlignment.center,
-                            children: [
-                              // Location
-                              Text(
-                                AppStrings.homeLocation.toUpperCase(),
+                            // Name
+                            _GradientText(
+                              text: AppStrings.greeting,
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontSize: isDesktop ? 80 : 50,
+                                fontWeight: FontWeight.bold,
+                                height: 1.1,
+                              ),
+                            ),
+
+                            const SizedBox(height: 10),
+
+                            // Title
+                            Text(
+                              AppStrings.homeTitle,
+                              textAlign: isDesktop
+                                  ? TextAlign.start
+                                  : TextAlign.center,
+                              softWrap: true,
+                              maxLines: 3,
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontSize: isDesktop ? 20 : 16,
+                                fontWeight: FontWeight.w600,
+                                color: Theme.of(
+                                  context,
+                                ).textTheme.bodyLarge?.color,
+                              ),
+                            ),
+
+                            const SizedBox(height: 20),
+
+                            // Bio Description
+                            ConstrainedBox(
+                              constraints: BoxConstraints(
+                                maxWidth: isDesktop
+                                    ? (constraints.maxWidth > 960
+                                          ? 600
+                                          : constraints.maxWidth - 360)
+                                    : constraints.maxWidth,
+                              ),
+                              child: Text(
+                                AppStrings.homeDescription,
                                 style: TextStyle(
                                   fontFamily: 'Inter',
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  letterSpacing: 2,
+                                  fontSize: 16,
+                                  height: 1.6,
                                   color: Theme.of(context)
                                       .textTheme
                                       .bodyMedium
                                       ?.color
-                                      ?.withValues(alpha: 0.6),
+                                      ?.withValues(alpha: 0.8),
                                 ),
                               ),
+                            ),
 
-                              const SizedBox(height: 10),
+                            const SizedBox(height: 30),
 
-                              // Name
-                              _GradientText(
-                                text: AppStrings.greeting,
-                                style: TextStyle(
-                                  fontFamily: 'Inter',
-                                  fontSize: isDesktop ? 80 : 50,
-                                  fontWeight: FontWeight.bold,
-                                  height: 1.1,
-                                ),
-                              ),
-
-                              const SizedBox(height: 10),
-
-                              // Title
-                              Text(
-                                AppStrings.homeTitle,
-                                style: TextStyle(
-                                  fontFamily: 'Inter',
-                                  fontSize: isDesktop ? 20 : 16,
-                                  fontWeight: FontWeight.w600,
-                                  color: Theme.of(
-                                    context,
-                                  ).textTheme.bodyLarge?.color,
-                                ),
-                              ),
-
-                              const SizedBox(height: 20),
-
-                              // Bio Description
-                              SizedBox(
-                                width: 600, // Limit width for readability
-                                child: Text(
-                                  AppStrings.homeDescription,
-                                  style: TextStyle(
-                                    fontFamily: 'Inter',
-                                    fontSize: 16,
-                                    height: 1.6,
-                                    color: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium
-                                        ?.color
-                                        ?.withValues(alpha: 0.8),
+                            // Action Buttons Row
+                            Wrap(
+                              spacing: 16,
+                              runSpacing: 16,
+                              alignment: isDesktop
+                                  ? WrapAlignment.start
+                                  : WrapAlignment.center,
+                              children: [
+                                // View Projects Button
+                                OutlinedButton.icon(
+                                  onPressed: _scrollToProjects,
+                                  icon: const Icon(Icons.view_module_rounded),
+                                  label: const Text(
+                                    'View Projects',
+                                    style: TextStyle(
+                                      fontFamily: 'Inter',
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                  style: OutlinedButton.styleFrom(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 24,
+                                      vertical: 16,
+                                    ),
+                                    side: BorderSide(
+                                      color: Theme.of(context).primaryColor,
+                                      width: 2,
+                                    ),
+                                    shape: const StadiumBorder(),
                                   ),
                                 ),
-                              ),
 
-                              const SizedBox(height: 30),
-
-                              // Action Buttons Row
-                              Wrap(
-                                spacing: 16,
-                                runSpacing: 16,
-                                alignment: isDesktop
-                                    ? WrapAlignment.start
-                                    : WrapAlignment.center,
-                                children: [
-                                  // View Projects Button
-                                  OutlinedButton.icon(
-                                    onPressed: _scrollToProjects,
-                                    icon: const Icon(Icons.view_module_rounded),
-                                    label: const Text(
-                                      'View Projects',
-                                      style: TextStyle(
-                                        fontFamily: 'Inter',
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                    style: OutlinedButton.styleFrom(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 24,
-                                        vertical: 16,
-                                      ),
-                                      side: BorderSide(
-                                        color: Theme.of(context).primaryColor,
-                                        width: 2,
-                                      ),
-                                      shape: const StadiumBorder(),
+                                // Download Resume Button
+                                OutlinedButton.icon(
+                                  onPressed: _downloadResume,
+                                  icon: const Icon(Icons.download_rounded),
+                                  label: const Text(
+                                    'Download Resume',
+                                    style: TextStyle(
+                                      fontFamily: 'Inter',
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
                                     ),
                                   ),
-
-                                  // Download Resume Button
-                                  OutlinedButton.icon(
-                                    onPressed: _downloadResume,
-                                    icon: const Icon(Icons.download_rounded),
-                                    label: const Text(
-                                      'Download Resume',
-                                      style: TextStyle(
-                                        fontFamily: 'Inter',
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600,
-                                      ),
+                                  style: OutlinedButton.styleFrom(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 24,
+                                      vertical: 16,
                                     ),
-                                    style: OutlinedButton.styleFrom(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 24,
-                                        vertical: 16,
-                                      ),
-                                      side: BorderSide(
-                                        color: Theme.of(context).primaryColor,
-                                        width: 2,
-                                      ),
-                                      shape: const StadiumBorder(),
-                                      backgroundColor: Theme.of(
-                                        context,
-                                      ).primaryColor,
-                                      foregroundColor: Colors.white,
+                                    side: BorderSide(
+                                      color: Theme.of(context).primaryColor,
+                                      width: 2,
+                                    ),
+                                    shape: const StadiumBorder(),
+                                    backgroundColor: Theme.of(
+                                      context,
+                                    ).primaryColor,
+                                    foregroundColor: Colors.white,
+                                  ),
+                                ),
+
+                                // Contact Button
+                                OutlinedButton.icon(
+                                  onPressed: _scrollToContact,
+                                  icon: const Icon(Icons.mail_outline_rounded),
+                                  label: const Text(
+                                    'Contact',
+                                    style: TextStyle(
+                                      fontFamily: 'Inter',
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
                                     ),
                                   ),
-
-                                  // Contact Button
-                                  OutlinedButton.icon(
-                                    onPressed: _scrollToContact,
-                                    icon: const Icon(
-                                      Icons.mail_outline_rounded,
+                                  style: OutlinedButton.styleFrom(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 24,
+                                      vertical: 16,
                                     ),
-                                    label: const Text(
-                                      'Contact',
-                                      style: TextStyle(
-                                        fontFamily: 'Inter',
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600,
-                                      ),
+                                    side: BorderSide(
+                                      color: Theme.of(context).primaryColor,
+                                      width: 2,
                                     ),
-                                    style: OutlinedButton.styleFrom(
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 24,
-                                        vertical: 16,
-                                      ),
-                                      side: BorderSide(
-                                        color: Theme.of(context).primaryColor,
-                                        width: 2,
-                                      ),
-                                      shape: const StadiumBorder(),
-                                    ),
+                                    shape: const StadiumBorder(),
                                   ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
-                      );
-                    },
-                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    );
+                  },
                 ),
               ),
             ),
