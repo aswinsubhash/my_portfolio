@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:url_launcher/url_launcher.dart';
-
 import '../constants.dart';
 import '../widgets/scattered_background.dart';
+import '../utils/download_helper.dart';
 
 class HomeSection extends StatefulWidget {
   final ScrollController? scrollController;
@@ -42,14 +41,11 @@ class _HomeSectionState extends State<HomeSection> {
 
   Future<void> _downloadResume() async {
     // For Flutter Web, placing the file in the web folder makes it accessible at the root path
-    final Uri url = Uri.parse('Aswin_Subhash_Resume.pdf');
-    if (!await launchUrl(url)) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Could not launch resume download')),
-        );
-      }
-    }
+    // We use DownloadHelper to force a direct download using the HTML 'download' attribute
+    DownloadHelper.download(
+      'Aswin_Subhash_Resume.pdf',
+      'Aswin_Subhash_Resume.pdf',
+    );
   }
 
   void _scrollToProjects() {
