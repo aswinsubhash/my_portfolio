@@ -94,11 +94,13 @@ class _RandomMovingLineState extends State<RandomMovingLine>
             _velocity = Offset(cos(angle), sin(angle)) * widget.speed;
           }
         }
-        return CustomPaint(
-          size: Size.infinite,
-          painter: _SnakePainter(
-            points: List.from(_points),
-            color: widget.color,
+        return RepaintBoundary(
+          child: CustomPaint(
+            size: Size.infinite,
+            painter: _SnakePainter(
+              points: List.from(_points),
+              color: widget.color,
+            ),
           ),
         );
       },

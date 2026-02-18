@@ -82,39 +82,46 @@ class _SolarSystemBackgroundState extends State<SolarSystemBackground>
               ),
             // Center Sun (Flutter)
             Center(
-              child: Image.asset(
-                'assets/images/flutter.png',
-                width: scaledSunSize,
-                height: scaledSunSize,
-                fit: BoxFit.contain,
-                errorBuilder: (context, error, stackTrace) =>
-                    Icon(Icons.sunny, size: scaledSunSize, color: Colors.amber),
+              child: RepaintBoundary(
+                child: Image.asset(
+                  'assets/images/flutter.png',
+                  width: scaledSunSize,
+                  height: scaledSunSize,
+                  fit: BoxFit.contain,
+                  errorBuilder: (context, error, stackTrace) => Icon(
+                    Icons.sunny,
+                    size: scaledSunSize,
+                    color: Colors.amber,
+                  ),
+                ),
               ),
             ),
 
             // Planet 1 (Android)
             Center(
-              child: AnimatedBuilder(
-                animation: _controller1,
-                builder: (context, child) {
-                  final angle = _controller1.value * 2 * math.pi;
-                  return Transform.translate(
-                    offset: Offset(
-                      math.cos(angle) * scaledOrbitRadius1,
-                      math.sin(angle) * scaledOrbitRadius1,
+              child: RepaintBoundary(
+                child: AnimatedBuilder(
+                  animation: _controller1,
+                  builder: (context, child) {
+                    final angle = _controller1.value * 2 * math.pi;
+                    return Transform.translate(
+                      offset: Offset(
+                        math.cos(angle) * scaledOrbitRadius1,
+                        math.sin(angle) * scaledOrbitRadius1,
+                      ),
+                      child: child,
+                    );
+                  },
+                  child: Image.asset(
+                    'assets/images/android.png',
+                    width: scaledPlanetSize,
+                    height: scaledPlanetSize,
+                    fit: BoxFit.contain,
+                    errorBuilder: (context, error, stackTrace) => Icon(
+                      Icons.android,
+                      size: scaledPlanetSize,
+                      color: Colors.green,
                     ),
-                    child: child,
-                  );
-                },
-                child: Image.asset(
-                  'assets/images/android.png',
-                  width: scaledPlanetSize,
-                  height: scaledPlanetSize,
-                  fit: BoxFit.contain,
-                  errorBuilder: (context, error, stackTrace) => Icon(
-                    Icons.android,
-                    size: scaledPlanetSize,
-                    color: Colors.green,
                   ),
                 ),
               ),
@@ -122,33 +129,35 @@ class _SolarSystemBackgroundState extends State<SolarSystemBackground>
 
             // Planet 2 (Apple)
             Center(
-              child: AnimatedBuilder(
-                animation: _controller2,
-                builder: (context, child) {
-                  final angle = _controller2.value * 2 * math.pi;
-                  // Add phase shift to start at different position
-                  final phase = math.pi;
-                  final currentAngle = angle + phase;
-                  return Transform.translate(
-                    offset: Offset(
-                      math.cos(currentAngle) * scaledOrbitRadius2,
-                      math.sin(currentAngle) * scaledOrbitRadius2,
+              child: RepaintBoundary(
+                child: AnimatedBuilder(
+                  animation: _controller2,
+                  builder: (context, child) {
+                    final angle = _controller2.value * 2 * math.pi;
+                    // Add phase shift to start at different position
+                    final phase = math.pi;
+                    final currentAngle = angle + phase;
+                    return Transform.translate(
+                      offset: Offset(
+                        math.cos(currentAngle) * scaledOrbitRadius2,
+                        math.sin(currentAngle) * scaledOrbitRadius2,
+                      ),
+                      child: child,
+                    );
+                  },
+                  child: Image.asset(
+                    'assets/images/apple.png',
+                    width: scaledAppleSize,
+                    height: scaledAppleSize,
+                    fit: BoxFit.contain,
+                    color: isDark
+                        ? Colors.white
+                        : null, // Tint white in dark mode
+                    errorBuilder: (context, error, stackTrace) => Icon(
+                      Icons.apple,
+                      size: scaledAppleSize,
+                      color: Colors.grey,
                     ),
-                    child: child,
-                  );
-                },
-                child: Image.asset(
-                  'assets/images/apple.png',
-                  width: scaledAppleSize,
-                  height: scaledAppleSize,
-                  fit: BoxFit.contain,
-                  color: isDark
-                      ? Colors.white
-                      : null, // Tint white in dark mode
-                  errorBuilder: (context, error, stackTrace) => Icon(
-                    Icons.apple,
-                    size: scaledAppleSize,
-                    color: Colors.grey,
                   ),
                 ),
               ),
@@ -156,31 +165,35 @@ class _SolarSystemBackgroundState extends State<SolarSystemBackground>
 
             // Optional: Draw orbit rings (subtle)
             Center(
-              child: Container(
-                width: scaledOrbitRadius1 * 2,
-                height: scaledOrbitRadius1 * 2,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: isDark
-                        ? Colors.white.withValues(alpha: 0.3)
-                        : Colors.black.withValues(alpha: 0.3),
-                    width: 1,
+              child: RepaintBoundary(
+                child: Container(
+                  width: scaledOrbitRadius1 * 2,
+                  height: scaledOrbitRadius1 * 2,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: isDark
+                          ? Colors.white.withValues(alpha: 0.3)
+                          : Colors.black.withValues(alpha: 0.3),
+                      width: 1,
+                    ),
                   ),
                 ),
               ),
             ),
             Center(
-              child: Container(
-                width: scaledOrbitRadius2 * 2,
-                height: scaledOrbitRadius2 * 2,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: isDark
-                        ? Colors.white.withValues(alpha: 0.3)
-                        : Colors.black.withValues(alpha: 0.1),
-                    width: 1,
+              child: RepaintBoundary(
+                child: Container(
+                  width: scaledOrbitRadius2 * 2,
+                  height: scaledOrbitRadius2 * 2,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: isDark
+                          ? Colors.white.withValues(alpha: 0.3)
+                          : Colors.black.withValues(alpha: 0.1),
+                      width: 1,
+                    ),
                   ),
                 ),
               ),

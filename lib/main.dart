@@ -129,9 +129,10 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                 // yOffset starts higher up (screenHeight * 0.2 shift)
                 final yOffset = (scrollValue * 0.1) - (screenHeight * 0.2);
 
+                if (scrollValue < 50) return const SizedBox.shrink();
+
                 return Opacity(
-                  // Smooth fade in as soon as user starts scrolling past Home
-                  opacity: (scrollValue < 50) ? 0.0 : 0.6,
+                  opacity: 0.6,
                   child: Transform.translate(
                     offset: Offset(0, yOffset),
                     child: const SolarSystemBackground(
