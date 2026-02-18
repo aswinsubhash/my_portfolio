@@ -7,6 +7,7 @@ import 'sections/projects_section.dart';
 import 'sections/education_section.dart';
 import 'sections/contact_section.dart';
 import 'widgets/solar_system_background.dart';
+import 'widgets/global_background.dart';
 
 void main() {
   runApp(const PortfolioApp());
@@ -114,40 +115,54 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
     return Scaffold(
       body: Stack(
         children: [
-          // Global Background (Solar System)
-          Positioned.fill(
-            child: ValueListenableBuilder<double>(
-              valueListenable: _scrollNotifier,
-              builder: (context, scrollValue, child) {
-                final isDark = Theme.of(context).brightness == Brightness.dark;
-                if (!isDark) return const SizedBox.shrink();
+          // Global Background (Solar System & Snakes)
+          ValueListenableBuilder<double>(
+            valueListenable: _scrollNotifier,
+            child: const GlobalBackground(),
+            builder: (context, scrollValue, backgroundChild) {
+              final isDark = Theme.of(context).brightness == Brightness.dark;
+              final showBackground = scrollValue >= 50;
 
-                final screenHeight = MediaQuery.of(context).size.height;
+              return Visibility(
+                visible: showBackground,
+                child: Stack(
+                  children: [
+                    // Solar System (Dark Mode only)
+                    if (isDark)
+                      Positioned.fill(
+                        child: Builder(
+                          builder: (context) {
+                            final screenHeight = MediaQuery.of(
+                              context,
+                            ).size.height;
+                            final yOffset =
+                                (scrollValue * 0.1) - (screenHeight * 0.2);
 
-                // Parallax effect
-                // Calibrated to be centered behind About, Experience, Projects, Education
-                // yOffset starts higher up (screenHeight * 0.2 shift)
-                final yOffset = (scrollValue * 0.1) - (screenHeight * 0.2);
+                            return Opacity(
+                              opacity: 0.6,
+                              child: Transform.translate(
+                                offset: Offset(0, yOffset),
+                                child: const SolarSystemBackground(
+                                  sunSize: 100,
+                                  planetSize: 40,
+                                  appleSize: 65,
+                                  orbitRadius1: 140,
+                                  orbitRadius2: 240,
+                                  orbitDuration1: Duration(seconds: 45),
+                                  orbitDuration2: Duration(seconds: 70),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
 
-                if (scrollValue < 50) return const SizedBox.shrink();
-
-                return Opacity(
-                  opacity: 0.6,
-                  child: Transform.translate(
-                    offset: Offset(0, yOffset),
-                    child: const SolarSystemBackground(
-                      sunSize: 100,
-                      planetSize: 40,
-                      appleSize: 65,
-                      orbitRadius1: 140,
-                      orbitRadius2: 240,
-                      orbitDuration1: Duration(seconds: 45),
-                      orbitDuration2: Duration(seconds: 70),
-                    ),
-                  ),
-                );
-              },
-            ),
+                    // Global Snakes & Stars (Persistent child)
+                    Positioned.fill(child: backgroundChild!),
+                  ],
+                ),
+              );
+            },
           ),
 
           CustomScrollView(

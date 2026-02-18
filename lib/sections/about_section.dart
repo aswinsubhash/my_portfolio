@@ -111,13 +111,10 @@ class _SkillChipState extends State<_SkillChip> {
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         curve: Curves.easeOut,
-        // Removed scale transform as requested
         decoration: BoxDecoration(
           color: isDark
               ? (_isHovered
-                    ? primaryColor.withValues(
-                        alpha: 0.2,
-                      ) // Increased opacity slightly
+                    ? primaryColor.withValues(alpha: 0.2)
                     : Colors.white.withValues(alpha: 0.05))
               : Colors.white,
           borderRadius: BorderRadius.circular(20),
@@ -125,7 +122,7 @@ class _SkillChipState extends State<_SkillChip> {
             color: _isHovered
                 ? (isDark ? Colors.white : primaryColor)
                 : (isDark ? Colors.white24 : Colors.black12),
-            width: 1, // Constant width prevents jitter/zoom
+            width: 1,
           ),
           boxShadow: _isHovered
               ? [
@@ -146,7 +143,7 @@ class _SkillChipState extends State<_SkillChip> {
                 : (isDark
                       ? Colors.white.withValues(alpha: 0.9)
                       : Theme.of(context).textTheme.bodyMedium?.color),
-            fontWeight: FontWeight.normal, // Constant weight prevents jitter
+            fontWeight: FontWeight.normal,
           ),
         ),
       ),
