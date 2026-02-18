@@ -8,8 +8,7 @@ import '../widgets/random_moving_line.dart';
 import '../widgets/star_field_background.dart';
 
 class ContactSection extends StatefulWidget {
-  final GlobalKey? key;
-  const ContactSection({this.key}) : super(key: key);
+  const ContactSection({super.key});
 
   @override
   State<ContactSection> createState() => _ContactSectionState();
@@ -547,14 +546,18 @@ class _ContactSectionState extends State<ContactSection>
             onChanged: (value) {
               if (error != null) {
                 setState(() {
-                  if (controller == _nameController)
+                  if (controller == _nameController) {
                     _nameError = _validateName(value);
-                  if (controller == _emailController)
+                  }
+                  if (controller == _emailController) {
                     _emailError = _validateEmail(value);
-                  if (controller == _subjectController)
+                  }
+                  if (controller == _subjectController) {
                     _subjectError = _validateSubject(value);
-                  if (controller == _messageController)
+                  }
+                  if (controller == _messageController) {
                     _messageError = _validateMessage(value);
+                  }
                 });
               }
             },
