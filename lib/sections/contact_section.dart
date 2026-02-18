@@ -5,6 +5,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../constants.dart';
 import '../widgets/random_moving_line.dart';
+import '../widgets/star_field_background.dart';
 
 class ContactSection extends StatefulWidget {
   const ContactSection({super.key});
@@ -143,6 +144,7 @@ class _ContactSectionState extends State<ContactSection>
                       speed: 3.0,
                     ),
                   ),
+                  Positioned.fill(child: StarFieldBackground(starCount: 80)),
                 ],
               ),
             ),
@@ -258,14 +260,17 @@ class _ContactSectionState extends State<ContactSection>
                                         _SocialIconButton(
                                           icon: FontAwesomeIcons.github,
                                           url: AppStrings.githubUrl,
+                                          isMobile: true,
                                         ),
                                         _SocialIconButton(
                                           icon: FontAwesomeIcons.linkedin,
                                           url: AppStrings.linkedinUrl,
+                                          isMobile: true,
                                         ),
                                         _SocialIconButton(
                                           icon: FontAwesomeIcons.envelope,
                                           url: AppStrings.emailUrl,
+                                          isMobile: true,
                                         ),
                                       ],
                                     ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
+import '../widgets/star_field_background.dart';
 
 class AboutSection extends StatelessWidget {
   const AboutSection({super.key});
@@ -15,8 +16,7 @@ class AboutSection extends StatelessWidget {
       color: Theme.of(context).scaffoldBackgroundColor, // Base background color
       child: Stack(
         children: [
-          // Background
-          // Background removed as requested
+          const Positioned.fill(child: StarFieldBackground(starCount: 80)),
           Center(
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 1200),

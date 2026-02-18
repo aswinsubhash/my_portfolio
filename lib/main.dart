@@ -4,6 +4,7 @@ import 'sections/home_section.dart';
 import 'sections/about_section.dart';
 import 'sections/experience_section.dart';
 import 'sections/projects_section.dart';
+import 'sections/education_section.dart';
 import 'sections/contact_section.dart';
 
 void main() {
@@ -127,6 +128,7 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
                 child: ExperienceSection(scroll: _scrollNotifier),
               ),
               SliverToBoxAdapter(child: ProjectsSection(key: _projectsKey)),
+              const SliverToBoxAdapter(child: EducationSection()),
               SliverToBoxAdapter(child: ContactSection(key: _contactKey)),
             ],
           ),

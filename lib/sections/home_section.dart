@@ -261,7 +261,7 @@ class _HomeSectionState extends State<HomeSection> {
                                   : WrapAlignment.center,
                               children: [
                                 // View Projects Button
-                                OutlinedButton.icon(
+                                TextButton.icon(
                                   onPressed: _scrollToProjects,
                                   icon: const Icon(Icons.view_module_rounded),
                                   label: const Text(
@@ -272,21 +272,20 @@ class _HomeSectionState extends State<HomeSection> {
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
-                                  style: OutlinedButton.styleFrom(
+                                  style: TextButton.styleFrom(
                                     padding: const EdgeInsets.symmetric(
                                       horizontal: 24,
                                       vertical: 16,
                                     ),
-                                    side: BorderSide(
-                                      color: Theme.of(context).primaryColor,
-                                      width: 2,
-                                    ),
+                                    foregroundColor: isDark
+                                        ? Colors.white
+                                        : Theme.of(context).primaryColor,
                                     shape: const StadiumBorder(),
                                   ),
                                 ),
 
                                 // Download Resume Button
-                                OutlinedButton.icon(
+                                TextButton.icon(
                                   onPressed: _downloadResume,
                                   icon: const Icon(Icons.download_rounded),
                                   label: const Text(
@@ -297,25 +296,20 @@ class _HomeSectionState extends State<HomeSection> {
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
-                                  style: OutlinedButton.styleFrom(
+                                  style: TextButton.styleFrom(
                                     padding: const EdgeInsets.symmetric(
                                       horizontal: 24,
                                       vertical: 16,
                                     ),
-                                    side: BorderSide(
-                                      color: Theme.of(context).primaryColor,
-                                      width: 2,
-                                    ),
+                                    foregroundColor: isDark
+                                        ? Colors.white
+                                        : Theme.of(context).primaryColor,
                                     shape: const StadiumBorder(),
-                                    backgroundColor: Theme.of(
-                                      context,
-                                    ).primaryColor,
-                                    foregroundColor: Colors.white,
                                   ),
                                 ),
 
                                 // Contact Button
-                                OutlinedButton.icon(
+                                TextButton.icon(
                                   onPressed: _scrollToContact,
                                   icon: const Icon(Icons.mail_outline_rounded),
                                   label: const Text(
@@ -326,15 +320,14 @@ class _HomeSectionState extends State<HomeSection> {
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
-                                  style: OutlinedButton.styleFrom(
+                                  style: TextButton.styleFrom(
                                     padding: const EdgeInsets.symmetric(
                                       horizontal: 24,
                                       vertical: 16,
                                     ),
-                                    side: BorderSide(
-                                      color: Theme.of(context).primaryColor,
-                                      width: 2,
-                                    ),
+                                    foregroundColor: isDark
+                                        ? Colors.white
+                                        : Theme.of(context).primaryColor,
                                     shape: const StadiumBorder(),
                                   ),
                                 ),

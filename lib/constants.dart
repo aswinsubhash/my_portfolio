@@ -67,32 +67,57 @@ class AppStrings {
     "Android Studio",
     "VS Code",
     "Xcode",
+    "Antigravity",
+    "Codex",
   ];
 
   // Projects Section
-  static const String projectsTitle = "My Projects";
-  static const String projectsSubtitle = "Here are some of my recent works";
+  static const String projectsTitle = "Projects";
+  static const String projectsSubtitle = "";
   static const List<ProjectData> projects = [
     ProjectData(
-      title: "Portfolio Website",
-      description: "A responsive portfolio website built with Flutter Web.",
-      color: Colors.blue,
+      title: "Okinawa Navi - Regional Info & Utility App",
+      description: [
+        "Developed a regional information app for Okinawa in Japan featuring live news, weather alerts, event updates, and gourmet recommendations.",
+        "Implemented in-app WebView to load external articles, videos, and local content smoothly within the app.",
+        "Integrated an interactive rain map to help users track live precipitation and weather patterns.",
+        "Published on Playstore and App Store, collectively achieving strong user adoption with 10,000+ downloads on Android.",
+      ],
+      color: Colors.teal,
     ),
+
     ProjectData(
-      title: "E-Commerce App",
-      description:
-          "A full-featured mobile shopping app with payment integration.",
+      title: "Look Meal - Nutrition & Food Search App",
+      description: [
+        "Created a nutrition search cross platform app that lets users look up calories and nutrient details for dishes, ingredients, and packaged products, with advanced sorting and filtering tools.",
+        "Implemented features such as stamp-collection rewards, in-app social sharing, and personalized food collections.",
+        "Published on both Playstore and App Store, gaining steady user adoption in Japan.",
+      ],
       color: Colors.green,
     ),
     ProjectData(
-      title: "Task Manager",
-      description: "Productivity tool to organize and track daily tasks.",
-      color: Colors.orange,
+      title: "Tabeh GPS - Smart & Secure Real-Time Vehicle Tracking App",
+      description: [
+        "Engineered a real-time vehicle tracking application using Flutter, enabling precise live GPS updates, trip history playback, fuel alerts, and geofence monitoring.",
+        "Implemented route history and trip playback features to help users review past trips with detailed insights.",
+        "Added fuel monitoring with automated alerts for sudden fuel drops and unusual consumption patterns.",
+        "Built instant notifications for ignition status, speeding, and geofence breaches.",
+        "Integrated geofencing and safety zones, allowing users to set virtual boundaries and receive automatic alerts.",
+        "Added advanced analytics for driver behavior, vehicle performance, and trip efficiency.",
+        "Published on Playstore and App Store, with growing adoption among fleet managers in Saudi Arabia.",
+      ],
+      color: Colors.redAccent,
     ),
     ProjectData(
-      title: "Social Media Dashboard",
-      description: "Analytics dashboard for social media management.",
-      color: Colors.purple,
+      title: "Rental Anshin Kun - 360° Damage Reporting System",
+      description: [
+        "Built an interconnected Resident and Inspector app system for centralized property damage reporting in Japan.",
+        "Implemented 360° panoramic room views allowing users to pin exact damage locations.",
+        "Built QR-embedded image uploads to ensure transparent and trackable evidence.",
+        "Enabled inspectors to verify resident-reported damages or add new findings within the same system.",
+        "Streamlined communication and improved reporting accuracy across multiple property management teams.",
+      ],
+      color: Colors.indigo,
     ),
   ];
 
@@ -162,6 +187,28 @@ class AppStrings {
       ],
     ),
   ];
+
+  // Education Section
+  static const String educationTitle = "Education";
+  static const String educationSubtitle = "";
+  static const List<EducationData> education = [
+    EducationData(
+      degree: "Bachelor of Engineering in Computer Science",
+      institution:
+          "Rohini College of Engineering & Technology, Kanyakumari (Anna University)",
+      duration: "2017 – 2021",
+    ),
+    EducationData(
+      degree: "Higher Secondary School in Science",
+      institution: "S.N English Medium School",
+      duration: "2015 - 2017",
+    ),
+    EducationData(
+      degree: "Secondary School Leaving Certificate ( S.S.L.C)",
+      institution: "Boys Higher Secondary School",
+      duration: "2015",
+    ),
+  ];
 }
 
 class ExperienceData {
@@ -182,12 +229,24 @@ class ExperienceData {
 
 class ProjectData {
   final String title;
-  final String description;
-  final MaterialColor color;
+  final List<String> description;
+  final Color color;
 
   const ProjectData({
     required this.title,
     required this.description,
     required this.color,
+  });
+}
+
+class EducationData {
+  final String degree;
+  final String institution;
+  final String duration;
+
+  const EducationData({
+    required this.degree,
+    required this.institution,
+    required this.duration,
   });
 }
