@@ -104,9 +104,9 @@ class _ContactSectionState extends State<ContactSection>
     // To find Entry IDs:
     // 1. Right-click your Google Form and "Inspect".
     // 2. Search for "entry." in the code.
-    // Clean URL (remove /u/0/ which is user-specific)
+    // Clean URL (using the new Form ID provided)
     const String formUrl =
-        'https://docs.google.com/forms/d/e/1FAIpQLSfYp7Zo9dsxTqfp-xi3xaHRYqu4tq7QrIsHz8iWOcW2EVcqUA/formResponse';
+        'https://docs.google.com/forms/d/1DBlSf-ggjPkzbLsRR0rZlwyIwxcbXsfgJh6NognhMHg/formResponse';
     const String nameEntryId = 'entry.1105429070';
     const String emailEntryId = 'entry.1045630864';
     const String subjectEntryId = 'entry.846492184';
