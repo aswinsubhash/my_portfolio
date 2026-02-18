@@ -41,9 +41,8 @@ class _HomeSectionState extends State<HomeSection> {
   }
 
   Future<void> _downloadResume() async {
-    final Uri url = Uri.parse(
-      'assets/Aswin_Subhash_Mobile_Application_Developer_CV.pdf',
-    );
+    // For Flutter Web, placing the file in the web folder makes it accessible at the root path
+    final Uri url = Uri.parse('Aswin_Subhash_Resume.pdf');
     if (!await launchUrl(url)) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
