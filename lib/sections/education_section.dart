@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../widgets/section_background.dart';
 import '../constants.dart';
 
 class EducationSection extends StatelessWidget {
@@ -12,60 +11,58 @@ class EducationSection extends StatelessWidget {
     final textColor = Theme.of(context).textTheme.bodyLarge?.color;
     final isDesktop = MediaQuery.of(context).size.width > 800;
 
-    return SectionBackground(
-      child: Container(
-        width: double.infinity,
-        color: Colors.transparent,
-        child: Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 1200),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: SizedBox(
-                width: double.infinity,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      AppStrings.educationTitle,
-                      style: TextStyle(
-                        fontFamily: 'Inter',
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: textColor,
-                      ),
+    return Container(
+      width: double.infinity,
+      color: Colors.transparent,
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 1200),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: SizedBox(
+              width: double.infinity,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    AppStrings.educationTitle,
+                    style: TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: textColor,
                     ),
-                    const SizedBox(height: 40),
-                    if (isDesktop)
-                      IntrinsicHeight(
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: AppStrings.education.map((edu) {
-                            return Expanded(
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                  right: edu == AppStrings.education.last
-                                      ? 0
-                                      : 20,
-                                ),
-                                child: _EducationCard(education: edu),
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                      )
-                    else
-                      Column(
+                  ),
+                  const SizedBox(height: 40),
+                  if (isDesktop)
+                    IntrinsicHeight(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: AppStrings.education.map((edu) {
-                          return Padding(
-                            padding: const EdgeInsets.only(bottom: 20),
-                            child: _EducationCard(education: edu),
+                          return Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                right: edu == AppStrings.education.last
+                                    ? 0
+                                    : 20,
+                              ),
+                              child: _EducationCard(education: edu),
+                            ),
                           );
                         }).toList(),
                       ),
-                    const SizedBox(height: 40),
-                  ],
-                ),
+                    )
+                  else
+                    Column(
+                      children: AppStrings.education.map((edu) {
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 20),
+                          child: _EducationCard(education: edu),
+                        );
+                      }).toList(),
+                    ),
+                  const SizedBox(height: 40),
+                ],
               ),
             ),
           ),
