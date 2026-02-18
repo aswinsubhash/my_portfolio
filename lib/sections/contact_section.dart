@@ -104,11 +104,11 @@ class _ContactSectionState extends State<ContactSection>
     // 1. Right-click your Google Form and "Inspect".
     // 2. Search for "entry." in the code.
     const String formUrl =
-        'YOUR_GOOGLE_FORM_RESPONSE_URL_HERE'; // Ends with /formResponse
-    const String nameEntryId = 'entry.1111111';
-    const String emailEntryId = 'entry.2222222';
-    const String subjectEntryId = 'entry.3333333';
-    const String messageEntryId = 'entry.4444444';
+        'https://docs.google.com/forms/u/0/d/e/1FAIpQLSfYp7Zo9dsxTqfp-xi3xaHRYqu4tq7QrIsHz8iWOcW2EVcqUA/formResponse';
+    const String nameEntryId = 'entry.1105429070';
+    const String emailEntryId = 'entry.1045630864';
+    const String subjectEntryId = 'entry.846492184';
+    const String messageEntryId = 'entry.591229160';
 
     try {
       final response = await http.post(
