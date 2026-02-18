@@ -6,6 +6,7 @@ import 'sections/experience_section.dart';
 import 'sections/projects_section.dart';
 import 'sections/education_section.dart';
 import 'sections/contact_section.dart';
+import 'widgets/solar_system_background.dart';
 
 void main() {
   runApp(const PortfolioApp());
@@ -113,6 +114,41 @@ class _PortfolioHomePageState extends State<PortfolioHomePage> {
     return Scaffold(
       body: Stack(
         children: [
+          // Global Background (Solar System)
+          Positioned.fill(
+            child: ValueListenableBuilder<double>(
+              valueListenable: _scrollNotifier,
+              builder: (context, scrollValue, child) {
+                final isDark = Theme.of(context).brightness == Brightness.dark;
+                if (!isDark) return const SizedBox.shrink();
+
+                final screenHeight = MediaQuery.of(context).size.height;
+
+                // Parallax effect
+                // Calibrated to be centered behind About, Experience, Projects, Education
+                // yOffset starts higher up (screenHeight * 0.2 shift)
+                final yOffset = (scrollValue * 0.1) - (screenHeight * 0.2);
+
+                return Opacity(
+                  // Smooth fade in as soon as user starts scrolling past Home
+                  opacity: (scrollValue < 50) ? 0.0 : 0.6,
+                  child: Transform.translate(
+                    offset: Offset(0, yOffset),
+                    child: const SolarSystemBackground(
+                      sunSize: 100,
+                      planetSize: 40,
+                      appleSize: 65,
+                      orbitRadius1: 140,
+                      orbitRadius2: 240,
+                      orbitDuration1: Duration(seconds: 45),
+                      orbitDuration2: Duration(seconds: 70),
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+
           CustomScrollView(
             controller: _scrollController,
             slivers: [

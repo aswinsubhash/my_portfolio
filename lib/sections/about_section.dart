@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
-import '../widgets/star_field_background.dart';
 
 class AboutSection extends StatelessWidget {
   const AboutSection({super.key});
@@ -11,87 +10,77 @@ class AboutSection extends StatelessWidget {
     final textColor = Theme.of(context).textTheme.bodyLarge?.color;
 
     return Container(
-      // Remove padding from container to let stack fill width, apply padding inside
       width: double.infinity,
-      color: Theme.of(context).scaffoldBackgroundColor, // Base background color
-      child: Stack(
-        children: [
-          const Positioned.fill(child: StarFieldBackground(starCount: 80)),
-          Center(
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 1200),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      AppStrings.aboutMeTitle,
-                      style: TextStyle(
-                        fontFamily: 'Inter',
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: textColor,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    LayoutBuilder(
-                      builder: (context, constraints) {
-                        bool isDesktop = constraints.maxWidth > 800;
-                        return Flex(
-                          direction: isDesktop
-                              ? Axis.horizontal
-                              : Axis.vertical,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Expanded(
-                              flex: isDesktop ? 1 : 0,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    AppStrings.aboutMeDescription,
-                                    style: TextStyle(
-                                      fontFamily: 'Inter',
-                                      fontSize: 18,
-                                      height: 1.5,
-                                      color: textColor?.withValues(alpha: 0.8),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 30),
-                                  Text(
-                                    AppStrings.skillsTitle,
-                                    style: TextStyle(
-                                      fontFamily: 'Inter',
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.bold,
-                                      color: textColor,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 15),
-                                  Wrap(
-                                    spacing: 10,
-                                    runSpacing: 10,
-                                    children: AppStrings.skills
-                                        .map(
-                                          (skill) => _SkillChip(label: skill),
-                                        )
-                                        .toList(),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 40),
-                  ],
+      color: Colors.transparent,
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 1200),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  AppStrings.aboutMeTitle,
+                  style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: textColor,
+                  ),
                 ),
-              ),
+                const SizedBox(height: 20),
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    bool isDesktop = constraints.maxWidth > 800;
+                    return Flex(
+                      direction: isDesktop ? Axis.horizontal : Axis.vertical,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          flex: isDesktop ? 1 : 0,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                AppStrings.aboutMeDescription,
+                                style: TextStyle(
+                                  fontFamily: 'Inter',
+                                  fontSize: 18,
+                                  height: 1.5,
+                                  color: textColor?.withValues(alpha: 0.8),
+                                ),
+                              ),
+                              const SizedBox(height: 30),
+                              Text(
+                                AppStrings.skillsTitle,
+                                style: TextStyle(
+                                  fontFamily: 'Inter',
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                  color: textColor,
+                                ),
+                              ),
+                              const SizedBox(height: 15),
+                              Wrap(
+                                spacing: 10,
+                                runSpacing: 10,
+                                children: AppStrings.skills
+                                    .map((skill) => _SkillChip(label: skill))
+                                    .toList(),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                ),
+                const SizedBox(height: 40),
+              ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }

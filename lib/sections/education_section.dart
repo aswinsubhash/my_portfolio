@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../constants.dart';
-import '../widgets/star_field_background.dart';
 
 class EducationSection extends StatelessWidget {
   const EducationSection({super.key});
@@ -14,65 +13,60 @@ class EducationSection extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      color: Theme.of(context).scaffoldBackgroundColor,
-      child: Stack(
-        children: [
-          const Positioned.fill(child: StarFieldBackground(starCount: 100)),
-          Center(
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 1200),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: SizedBox(
-                  width: double.infinity,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        AppStrings.educationTitle,
-                        style: TextStyle(
-                          fontFamily: 'Inter',
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: textColor,
-                        ),
-                      ),
-                      const SizedBox(height: 40),
-                      if (isDesktop)
-                        IntrinsicHeight(
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: AppStrings.education.map((edu) {
-                              return Expanded(
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                    right: edu == AppStrings.education.last
-                                        ? 0
-                                        : 20,
-                                  ),
-                                  child: _EducationCard(education: edu),
-                                ),
-                              );
-                            }).toList(),
-                          ),
-                        )
-                      else
-                        Column(
-                          children: AppStrings.education.map((edu) {
-                            return Padding(
-                              padding: const EdgeInsets.only(bottom: 20),
-                              child: _EducationCard(education: edu),
-                            );
-                          }).toList(),
-                        ),
-                      const SizedBox(height: 40),
-                    ],
+      color: Colors.transparent,
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 1200),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: SizedBox(
+              width: double.infinity,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    AppStrings.educationTitle,
+                    style: TextStyle(
+                      fontFamily: 'Inter',
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: textColor,
+                    ),
                   ),
-                ),
+                  const SizedBox(height: 40),
+                  if (isDesktop)
+                    IntrinsicHeight(
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: AppStrings.education.map((edu) {
+                          return Expanded(
+                            child: Padding(
+                              padding: EdgeInsets.only(
+                                right: edu == AppStrings.education.last
+                                    ? 0
+                                    : 20,
+                              ),
+                              child: _EducationCard(education: edu),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    )
+                  else
+                    Column(
+                      children: AppStrings.education.map((edu) {
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 20),
+                          child: _EducationCard(education: edu),
+                        );
+                      }).toList(),
+                    ),
+                  const SizedBox(height: 40),
+                ],
               ),
             ),
           ),
-        ],
+        ),
       ),
     );
   }

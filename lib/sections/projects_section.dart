@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
-import '../widgets/star_field_background.dart';
 
 class ProjectsSection extends StatelessWidget {
   const ProjectsSection({super.key});
@@ -12,46 +11,41 @@ class ProjectsSection extends StatelessWidget {
 
     return Container(
       width: double.infinity,
-      color: Theme.of(context).scaffoldBackgroundColor,
-      child: Stack(
-        children: [
-          const Positioned.fill(child: StarFieldBackground(starCount: 120)),
-          Center(
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 1200),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      AppStrings.projectsTitle,
-                      style: TextStyle(
-                        fontFamily: 'Inter',
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: textColor,
-                      ),
-                    ),
-                    const SizedBox(height: 40),
-                    ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: AppStrings.projects.length,
-                      itemBuilder: (context, index) {
-                        return _ProjectListItem(
-                          project: AppStrings.projects[index],
-                          isLast: index == AppStrings.projects.length - 1,
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 40),
-                  ],
+      color: Colors.transparent,
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 1200),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  AppStrings.projectsTitle,
+                  style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: textColor,
+                  ),
                 ),
-              ),
+                const SizedBox(height: 40),
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: AppStrings.projects.length,
+                  itemBuilder: (context, index) {
+                    return _ProjectListItem(
+                      project: AppStrings.projects[index],
+                      isLast: index == AppStrings.projects.length - 1,
+                    );
+                  },
+                ),
+                const SizedBox(height: 40),
+              ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }
@@ -122,7 +116,8 @@ class _ProjectListItemState extends State<_ProjectListItem>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Header (Clickable)
-              InkWell(
+              GestureDetector(
+                behavior: HitTestBehavior.opaque,
                 onTap: () {
                   if (_controller.isDismissed) {
                     _controller.forward();
@@ -130,7 +125,6 @@ class _ProjectListItemState extends State<_ProjectListItem>
                     _controller.reverse();
                   }
                 },
-                borderRadius: BorderRadius.circular(15),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(

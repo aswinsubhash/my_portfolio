@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
-import '../widgets/solar_system_background.dart';
 
 class ExperienceSection extends StatelessWidget {
   final ValueNotifier<double>? scroll;
@@ -11,85 +10,46 @@ class ExperienceSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
-    // Explicitly set text color based on brightness to ensure contrast
     final textColor = isDark ? Colors.white : Colors.black;
 
     return Container(
       width: double.infinity,
-      decoration: BoxDecoration(
-        color: Theme.of(context).scaffoldBackgroundColor,
-      ),
-      clipBehavior: Clip.hardEdge, // Prevent overflow
-      // Removed padding here to let Stack fill, applying padding to content instead if needed
-      // Actually, keeping vertical padding on Container is fine if Stack matches it?
-      // No, Stack should probably go inside.
-      child: Stack(
-        children: [
-          // Solar System Background with Parallax
-          Positioned.fill(
-            child: ListenableBuilder(
-              listenable: scroll ?? ValueNotifier(0.0),
-              child: Opacity(
-                opacity: 0.5, // Increased visibility
-                child: const SolarSystemBackground(
-                  sunSize: 100,
-                  planetSize: 40,
-                  appleSize: 65, // Increased apple size
-                  orbitRadius1: 140,
-                  orbitRadius2: 240, // Increased orbit radius
-                  orbitDuration1: Duration(seconds: 45),
-                  orbitDuration2: Duration(seconds: 70),
+      color: Colors.transparent,
+      child: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 1200),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  AppStrings.experienceTitle,
+                  style: TextStyle(
+                    fontFamily: 'Inter',
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: textColor,
+                  ),
                 ),
-              ),
-              builder: (context, child) {
-                final scrollOffset = scroll?.value ?? 0.0;
-                // Parallax effect: moves slower than content
-                return Transform.translate(
-                  // Adjust 0.15 to control parallax intensity
-                  offset: Offset(0, (scrollOffset * 0.15) - 100),
-                  child: child,
-                );
-              },
+                const SizedBox(height: 30),
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: AppStrings.experience.length,
+                  itemBuilder: (context, index) {
+                    return _ExperienceItem(
+                      key: ValueKey(index),
+                      experience: AppStrings.experience[index],
+                      isLast: index == AppStrings.experience.length - 1,
+                    );
+                  },
+                ),
+                const SizedBox(height: 100),
+              ],
             ),
           ),
-          // Main Content
-          Center(
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 1200),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      AppStrings.experienceTitle,
-                      style: TextStyle(
-                        fontFamily: 'Inter',
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: textColor,
-                      ),
-                    ),
-                    const SizedBox(height: 30),
-                    ListView.builder(
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: AppStrings.experience.length,
-                      itemBuilder: (context, index) {
-                        return _ExperienceItem(
-                          key: ValueKey(index),
-                          experience: AppStrings.experience[index],
-                          isLast: index == AppStrings.experience.length - 1,
-                        );
-                      },
-                    ),
-                    const SizedBox(height: 100),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
@@ -164,7 +124,8 @@ class _ExperienceItemState extends State<_ExperienceItem>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Header (Clickable)
-              InkWell(
+              GestureDetector(
+                behavior: HitTestBehavior.opaque,
                 onTap: () {
                   if (_controller.isDismissed) {
                     _controller.forward();
@@ -172,7 +133,6 @@ class _ExperienceItemState extends State<_ExperienceItem>
                     _controller.reverse();
                   }
                 },
-                borderRadius: BorderRadius.circular(15),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
