@@ -30,6 +30,7 @@ class _ContactSectionState extends State<ContactSection>
   String? _messageError;
 
   bool _isSending = false;
+  bool _showSuccess = false;
 
   @override
   bool get wantKeepAlive => true;
@@ -123,17 +124,22 @@ class _ContactSectionState extends State<ContactSection>
 
       if (mounted) {
         if (response.statusCode == 200 || response.statusCode == 302) {
-          // Note: Google Forms returns 302 or sometimes 200 on success
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Message sent successfully! ✨'),
-              backgroundColor: Colors.green,
-            ),
-          );
+          setState(() {
+            _showSuccess = true;
+          });
           _nameController.clear();
           _emailController.clear();
           _subjectController.clear();
           _messageController.clear();
+
+          // Reset success message after 5 seconds
+          Future.delayed(const Duration(seconds: 5), () {
+            if (mounted) {
+              setState(() {
+                _showSuccess = false;
+              });
+            }
+          });
         } else {
           throw Exception('Failed to send message');
         }
@@ -448,80 +454,88 @@ class _ContactSectionState extends State<ContactSection>
                   ),
                 ],
               ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _buildTextField(
-                    label: AppStrings.nameLabel,
-                    hint: AppStrings.nameHint,
-                    controller: _nameController,
-                    error: _nameError,
-                    validator: _validateName,
-                    height: 48,
-                  ),
-                  const SizedBox(height: 16),
-                  _buildTextField(
-                    label: AppStrings.emailLabel,
-                    hint: AppStrings.emailHint,
-                    controller: _emailController,
-                    error: _emailError,
-                    validator: _validateEmail,
-                    height: 48,
-                  ),
-                  const SizedBox(height: 16),
-                  _buildTextField(
-                    label: AppStrings.subjectLabel,
-                    hint: AppStrings.subjectHint,
-                    controller: _subjectController,
-                    error: _subjectError,
-                    validator: _validateSubject,
-                    height: 48,
-                  ),
-                  const SizedBox(height: 16),
-                  _buildTextField(
-                    label: AppStrings.messageLabel,
-                    hint: AppStrings.messageHint,
-                    controller: _messageController,
-                    error: _messageError,
-                    validator: _validateMessage,
-                    maxLines: 4,
-                    height: 68,
-                  ),
-                  const SizedBox(height: 24),
-                  SizedBox(
-                    width: double.infinity,
-                    height: 56,
-                    child: ElevatedButton(
-                      onPressed: _isSending ? null : _submitToGoogleForm,
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blueAccent,
-                        foregroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        elevation: 5,
-                      ),
-                      child: _isSending
-                          ? const SizedBox(
-                              width: 24,
-                              height: 24,
-                              child: CircularProgressIndicator(
-                                color: Colors.white,
-                                strokeWidth: 2,
+              child: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 500),
+                child: _showSuccess
+                    ? _buildSuccessView(context)
+                    : Column(
+                        key: const ValueKey('form_fields'),
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _buildTextField(
+                            label: AppStrings.nameLabel,
+                            hint: AppStrings.nameHint,
+                            controller: _nameController,
+                            error: _nameError,
+                            validator: _validateName,
+                            height: 48,
+                          ),
+                          const SizedBox(height: 16),
+                          _buildTextField(
+                            label: AppStrings.emailLabel,
+                            hint: AppStrings.emailHint,
+                            controller: _emailController,
+                            error: _emailError,
+                            validator: _validateEmail,
+                            height: 48,
+                          ),
+                          const SizedBox(height: 16),
+                          _buildTextField(
+                            label: AppStrings.subjectLabel,
+                            hint: AppStrings.subjectHint,
+                            controller: _subjectController,
+                            error: _subjectError,
+                            validator: _validateSubject,
+                            height: 48,
+                          ),
+                          const SizedBox(height: 16),
+                          _buildTextField(
+                            label: AppStrings.messageLabel,
+                            hint: AppStrings.messageHint,
+                            controller: _messageController,
+                            error: _messageError,
+                            validator: _validateMessage,
+                            maxLines: 4,
+                            height: 68,
+                          ),
+                          const SizedBox(height: 24),
+                          SizedBox(
+                            width: double.infinity,
+                            height: 56,
+                            child: ElevatedButton(
+                              onPressed: _isSending
+                                  ? null
+                                  : _submitToGoogleForm,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.blueAccent,
+                                foregroundColor: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                elevation: 5,
                               ),
-                            )
-                          : Text(
-                              AppStrings.sendMessage,
-                              style: const TextStyle(
-                                fontFamily: 'Inter',
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              child: _isSending
+                                  ? const SizedBox(
+                                      width: 24,
+                                      height: 24,
+                                      child: CircularProgressIndicator(
+                                        color: Colors.white,
+                                        strokeWidth: 2,
+                                      ),
+                                    )
+                                  : Text(
+                                      AppStrings.sendMessage,
+                                      style: const TextStyle(
+                                        fontFamily: 'Inter',
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                             ),
-                    ),
-                  ),
-                ],
+                          ),
+                        ],
+                      ),
               ),
             ),
           ),
@@ -547,80 +561,118 @@ class _ContactSectionState extends State<ContactSection>
               ),
             ],
           ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildTextField(
-                label: AppStrings.nameLabel,
-                hint: AppStrings.nameHint,
-                controller: _nameController,
-                error: _nameError,
-                validator: _validateName,
-                height: 48,
-              ),
-              const SizedBox(height: 16),
-              _buildTextField(
-                label: AppStrings.emailLabel,
-                hint: AppStrings.emailHint,
-                controller: _emailController,
-                error: _emailError,
-                validator: _validateEmail,
-                height: 48,
-              ),
-              const SizedBox(height: 16),
-              _buildTextField(
-                label: AppStrings.subjectLabel,
-                hint: AppStrings.subjectHint,
-                controller: _subjectController,
-                error: _subjectError,
-                validator: _validateSubject,
-                height: 48,
-              ),
-              const SizedBox(height: 16),
-              _buildTextField(
-                label: AppStrings.messageLabel,
-                hint: AppStrings.messageHint,
-                controller: _messageController,
-                error: _messageError,
-                validator: _validateMessage,
-                maxLines: 4,
-                height: 68,
-              ),
-              const SizedBox(height: 24),
-              SizedBox(
-                width: double.infinity,
-                height: 56,
-                child: ElevatedButton(
-                  onPressed: _isSending ? null : _submitToGoogleForm,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blueAccent,
-                    foregroundColor: Colors.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    elevation: 5,
-                  ),
-                  child: _isSending
-                      ? const SizedBox(
-                          width: 24,
-                          height: 24,
-                          child: CircularProgressIndicator(
-                            color: Colors.white,
-                            strokeWidth: 2,
+          child: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 500),
+            child: _showSuccess
+                ? _buildSuccessView(context)
+                : Column(
+                    key: const ValueKey('mobile_form_fields'),
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildTextField(
+                        label: AppStrings.nameLabel,
+                        hint: AppStrings.nameHint,
+                        controller: _nameController,
+                        error: _nameError,
+                        validator: _validateName,
+                        height: 48,
+                      ),
+                      const SizedBox(height: 16),
+                      _buildTextField(
+                        label: AppStrings.emailLabel,
+                        hint: AppStrings.emailHint,
+                        controller: _emailController,
+                        error: _emailError,
+                        validator: _validateEmail,
+                        height: 48,
+                      ),
+                      const SizedBox(height: 16),
+                      _buildTextField(
+                        label: AppStrings.subjectLabel,
+                        hint: AppStrings.subjectHint,
+                        controller: _subjectController,
+                        error: _subjectError,
+                        validator: _validateSubject,
+                        height: 48,
+                      ),
+                      const SizedBox(height: 16),
+                      _buildTextField(
+                        label: AppStrings.messageLabel,
+                        hint: AppStrings.messageHint,
+                        controller: _messageController,
+                        error: _messageError,
+                        validator: _validateMessage,
+                        maxLines: 4,
+                        height: 68,
+                      ),
+                      const SizedBox(height: 24),
+                      SizedBox(
+                        width: double.infinity,
+                        height: 56,
+                        child: ElevatedButton(
+                          onPressed: _isSending ? null : _submitToGoogleForm,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blueAccent,
+                            foregroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            elevation: 5,
                           ),
-                        )
-                      : Text(
-                          AppStrings.sendMessage,
-                          style: const TextStyle(
-                            fontFamily: 'Inter',
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          child: _isSending
+                              ? const SizedBox(
+                                  width: 24,
+                                  height: 24,
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                    strokeWidth: 2,
+                                  ),
+                                )
+                              : Text(
+                                  AppStrings.sendMessage,
+                                  style: const TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
                         ),
-                ),
-              ),
-            ],
+                      ),
+                    ],
+                  ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSuccessView(BuildContext context) {
+    return Column(
+      key: const ValueKey('success_message'),
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Icon(Icons.check_circle_outline, color: Colors.green, size: 80),
+        const SizedBox(height: 20),
+        Text(
+          'Message Sent!',
+          style: TextStyle(
+            fontFamily: 'Inter',
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+            color: Theme.of(context).textTheme.bodyLarge?.color,
+          ),
+        ),
+        const SizedBox(height: 10),
+        Text(
+          'Thank you for reaching out. I\'ll get back to you as soon as possible.',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontFamily: 'Inter',
+            fontSize: 16,
+            color: Theme.of(
+              context,
+            ).textTheme.bodyMedium?.color?.withOpacity(0.7),
           ),
         ),
       ],
