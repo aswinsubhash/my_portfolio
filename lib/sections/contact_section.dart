@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
+
 import 'package:http/http.dart' as http;
 
-import '../widgets/section_background.dart';
 import '../constants.dart';
+import '../widgets/random_moving_line.dart';
+import '../widgets/star_field_background.dart';
 
 class ContactSection extends StatefulWidget {
   const ContactSection({super.key});
@@ -97,6 +100,10 @@ class _ContactSectionState extends State<ContactSection>
       _isSending = true;
     });
 
+    // Replace these placeholders with your actual Google Form details
+    // To find Entry IDs:
+    // 1. Right-click your Google Form and "Inspect".
+    // 2. Search for "entry." in the code.
     // Clean URL (using the new Form ID provided)
     const String formUrl =
         'https://docs.google.com/forms/d/1DBlSf-ggjPkzbLsRR0rZlwyIwxcbXsfgJh6NognhMHg/formResponse';
@@ -117,6 +124,8 @@ class _ContactSectionState extends State<ContactSection>
       );
 
       if (mounted) {
+        // Google Forms often returns 302 (redirect) or 200.
+        // On Web, CORS might block the response even if the data was sent.
         if (response.statusCode == 200 ||
             response.statusCode == 302 ||
             response.statusCode == 0) {
@@ -127,6 +136,8 @@ class _ContactSectionState extends State<ContactSection>
       }
     } catch (e) {
       debugPrint('Google Form Error: $e');
+      // On Web, a CORS error often means the request WAS sent but the response was blocked.
+      // We'll treat it as success to provide a better UX, as most submissions go through.
       if (mounted) {
         _handleSuccess();
       }
@@ -148,6 +159,7 @@ class _ContactSectionState extends State<ContactSection>
     _subjectController.clear();
     _messageController.clear();
 
+    // Reset success message after 5 seconds
     Future.delayed(const Duration(seconds: 5), () {
       if (mounted) {
         setState(() {
@@ -163,153 +175,234 @@ class _ContactSectionState extends State<ContactSection>
     final textColor = Theme.of(context).textTheme.bodyLarge?.color;
     final backgroundColor = Theme.of(context).scaffoldBackgroundColor;
 
-    return SectionBackground(
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          bool isDesktop = constraints.maxWidth > 800;
+    return Container(
+      width: double.infinity,
+      color: backgroundColor,
+      child: Stack(
+        children: [
+          // Background Animations - Isolated in RepaintBoundary
+          const Positioned.fill(
+            child: RepaintBoundary(
+              child: Stack(
+                children: [
+                  Positioned.fill(
+                    child: RandomMovingLine(
+                      color: Colors.purpleAccent,
+                      speed: 4.0,
+                    ),
+                  ),
+                  Positioned.fill(
+                    child: RandomMovingLine(
+                      color: Colors.blueAccent,
+                      speed: 3.0,
+                    ),
+                  ),
+                  Positioned.fill(child: StarFieldBackground(starCount: 80)),
+                ],
+              ),
+            ),
+          ),
 
-          return Container(
-            width: double.infinity,
-            color: backgroundColor.withOpacity(0.5), // Subtle overlay if needed
-            child: Column(
-              children: [
-                Center(
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 1200),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            AppStrings.contactTitle,
-                            style: TextStyle(
-                              fontFamily: 'Inter',
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
-                              color: textColor,
-                            ),
+          // Main Content
+          LayoutBuilder(
+            builder: (context, constraints) {
+              bool isDesktop = constraints.maxWidth > 800;
+
+              return SizedBox(
+                width: double.infinity,
+                child: Column(
+                  children: [
+                    Center(
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 1200),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // Section Title
+                              Text(
+                                AppStrings.contactTitle,
+                                style: TextStyle(
+                                  fontFamily: 'Inter',
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                  color: textColor,
+                                ),
+                              ),
+                              const SizedBox(height: 40),
+
+                              // Content Body
+                              if (isDesktop)
+                                _buildDesktopLayout(context)
+                              else
+                                _buildMobileLayout(context),
+
+                              const SizedBox(height: 40),
+                            ],
                           ),
-                          const SizedBox(height: 40),
-                          AnimatedSwitcher(
-                            duration: const Duration(milliseconds: 500),
-                            child: _showSuccess
-                                ? _buildSuccessView(context)
-                                : (isDesktop
-                                      ? _buildDesktopLayout(context)
-                                      : _buildMobileLayout(context)),
-                          ),
-                          const SizedBox(height: 40),
-                        ],
+                        ),
                       ),
                     ),
-                  ),
-                ),
-                Divider(
-                  color: Colors.grey.withOpacity(0.3),
-                  thickness: 1,
-                  height: 1,
-                ),
-                const SizedBox(height: 20),
-                Center(
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 1200),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: _buildFooter(context),
+                    // Footer Divider - Full Width
+                    Divider(
+                      color: Colors.grey.withOpacity(0.3),
+                      thickness: 1,
+                      height: 1,
                     ),
-                  ),
+                    const SizedBox(height: 20),
+                    // Footer Content - Constrained
+                    Center(
+                      child: ConstrainedBox(
+                        constraints: const BoxConstraints(maxWidth: 1200),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: LayoutBuilder(
+                            builder: (context, constraints) {
+                              bool isMobile = constraints.maxWidth < 600;
+
+                              if (isMobile) {
+                                // Mobile: Stack vertically
+                                return Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    // Copyright
+                                    Text(
+                                      '© 2026 Aswin Subhash. All rights reserved.',
+                                      style: TextStyle(
+                                        color: Colors.grey.withOpacity(0.6),
+                                        fontSize: 11,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    const SizedBox(height: 10),
+                                    // Made with Flutter
+                                    Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          'Made with ',
+                                          style: TextStyle(
+                                            color: Colors.grey.withOpacity(0.6),
+                                            fontSize: 11,
+                                          ),
+                                        ),
+                                        const Icon(
+                                          Icons.favorite,
+                                          color: Colors.blue,
+                                          size: 11,
+                                        ),
+                                        Text(
+                                          ' in Flutter',
+                                          style: TextStyle(
+                                            color: Colors.grey.withOpacity(0.6),
+                                            fontSize: 11,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 10),
+                                    // Social Media Icons
+                                    Wrap(
+                                      spacing: 15,
+                                      runSpacing: 15,
+                                      alignment: WrapAlignment.center,
+                                      children: const [
+                                        _SocialIconButton(
+                                          icon: FontAwesomeIcons.github,
+                                          url: AppStrings.githubUrl,
+                                          isMobile: true,
+                                        ),
+                                        _SocialIconButton(
+                                          icon: FontAwesomeIcons.linkedin,
+                                          url: AppStrings.linkedinUrl,
+                                          isMobile: true,
+                                        ),
+                                        _SocialIconButton(
+                                          icon: FontAwesomeIcons.envelope,
+                                          url: AppStrings.emailUrl,
+                                          isMobile: true,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                );
+                              }
+
+                              // Desktop: Horizontal layout
+                              return Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  // Copyright - Left
+                                  Text(
+                                    '© 2026 Aswin Subhash. All rights reserved.',
+                                    style: TextStyle(
+                                      color: Colors.grey.withOpacity(0.6),
+                                      fontSize: 11,
+                                    ),
+                                  ),
+                                  // Made with Flutter - Center
+                                  Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Text(
+                                        'Made with ',
+                                        style: TextStyle(
+                                          color: Colors.grey.withOpacity(0.6),
+                                          fontSize: 11,
+                                        ),
+                                      ),
+                                      const Icon(
+                                        Icons.favorite,
+                                        color: Colors.blue,
+                                        size: 11,
+                                      ),
+                                      Text(
+                                        ' in Flutter',
+                                        style: TextStyle(
+                                          color: Colors.grey.withOpacity(0.6),
+                                          fontSize: 11,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  // Social Media Icons - Right
+                                  Wrap(
+                                    spacing: 15,
+                                    runSpacing: 15,
+                                    children: const [
+                                      _SocialIconButton(
+                                        icon: FontAwesomeIcons.github,
+                                        url: AppStrings.githubUrl,
+                                      ),
+                                      _SocialIconButton(
+                                        icon: FontAwesomeIcons.linkedin,
+                                        url: AppStrings.linkedinUrl,
+                                      ),
+                                      _SocialIconButton(
+                                        icon: FontAwesomeIcons.envelope,
+                                        url: AppStrings.emailUrl,
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                  ],
                 ),
-                const SizedBox(height: 20),
-              ],
-            ),
-          );
-        },
+              );
+            },
+          ),
+        ],
       ),
-    );
-  }
-
-  Widget _buildFooter(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        bool isMobile = constraints.maxWidth < 600;
-        if (isMobile) {
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                '© 2026 Aswin Subhash. All rights reserved.',
-                style: TextStyle(
-                  color: Colors.grey.withOpacity(0.6),
-                  fontSize: 11,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 10),
-              _buildMadeWithFlutter(),
-              const SizedBox(height: 10),
-              _buildSocialIcons(true),
-            ],
-          );
-        }
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              '© 2026 Aswin Subhash. All rights reserved.',
-              style: TextStyle(
-                color: Colors.grey.withOpacity(0.6),
-                fontSize: 11,
-              ),
-            ),
-            _buildMadeWithFlutter(),
-            _buildSocialIcons(false),
-          ],
-        );
-      },
-    );
-  }
-
-  Widget _buildMadeWithFlutter() {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text(
-          'Made with ',
-          style: TextStyle(color: Colors.grey.withOpacity(0.6), fontSize: 11),
-        ),
-        const Icon(Icons.favorite, color: Colors.blue, size: 11),
-        Text(
-          ' in Flutter',
-          style: TextStyle(color: Colors.grey.withOpacity(0.6), fontSize: 11),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildSocialIcons(bool isMobile) {
-    return Wrap(
-      spacing: 15,
-      runSpacing: 15,
-      alignment: WrapAlignment.center,
-      children: [
-        _SocialIconButton(
-          icon: FontAwesomeIcons.github,
-          url: AppStrings.githubUrl,
-          isMobile: isMobile,
-        ),
-        _SocialIconButton(
-          icon: FontAwesomeIcons.linkedin,
-          url: AppStrings.linkedinUrl,
-          isMobile: isMobile,
-        ),
-        _SocialIconButton(
-          icon: FontAwesomeIcons.envelope,
-          url: AppStrings.emailUrl,
-          isMobile: isMobile,
-        ),
-      ],
     );
   }
 
@@ -318,135 +411,246 @@ class _ContactSectionState extends State<ContactSection>
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Expanded(flex: 1, child: _buildContactImage(context)),
+          // Image Side
+          Expanded(
+            flex: 1,
+            child: Container(
+              constraints: const BoxConstraints(minHeight: 400),
+              alignment: Alignment.topCenter,
+              child: Container(
+                width: 400,
+                height: 400,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).cardColor,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.blueAccent.withOpacity(0.3),
+                      blurRadius: 60,
+                      spreadRadius: 20,
+                    ),
+                  ],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Image.asset(
+                    'assets/images/contact.png',
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ),
+          ),
+
           const SizedBox(width: 60),
-          Expanded(flex: 1, child: _buildContactForm(context)),
+
+          // Form Side
+          Expanded(
+            flex: 1,
+            child: Container(
+              constraints: const BoxConstraints(minHeight: 400),
+              padding: const EdgeInsets.all(30),
+              decoration: BoxDecoration(
+                color: Theme.of(context).cardColor,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 20,
+                    offset: const Offset(0, 10),
+                  ),
+                ],
+              ),
+              child: AnimatedSwitcher(
+                duration: const Duration(milliseconds: 500),
+                child: _showSuccess
+                    ? _buildSuccessView(context)
+                    : Column(
+                        key: const ValueKey('form_fields'),
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _buildTextField(
+                            label: AppStrings.nameLabel,
+                            hint: AppStrings.nameHint,
+                            controller: _nameController,
+                            error: _nameError,
+                            validator: _validateName,
+                            height: 48,
+                          ),
+                          const SizedBox(height: 16),
+                          _buildTextField(
+                            label: AppStrings.emailLabel,
+                            hint: AppStrings.emailHint,
+                            controller: _emailController,
+                            error: _emailError,
+                            validator: _validateEmail,
+                            height: 48,
+                          ),
+                          const SizedBox(height: 16),
+                          _buildTextField(
+                            label: AppStrings.subjectLabel,
+                            hint: AppStrings.subjectHint,
+                            controller: _subjectController,
+                            error: _subjectError,
+                            validator: _validateSubject,
+                            height: 48,
+                          ),
+                          const SizedBox(height: 16),
+                          _buildTextField(
+                            label: AppStrings.messageLabel,
+                            hint: AppStrings.messageHint,
+                            controller: _messageController,
+                            error: _messageError,
+                            validator: _validateMessage,
+                            maxLines: 4,
+                            height: 68,
+                          ),
+                          const SizedBox(height: 24),
+                          SizedBox(
+                            width: double.infinity,
+                            height: 56,
+                            child: ElevatedButton(
+                              onPressed: _isSending
+                                  ? null
+                                  : _submitToGoogleForm,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.blueAccent,
+                                foregroundColor: Colors.white,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                elevation: 5,
+                              ),
+                              child: _isSending
+                                  ? const SizedBox(
+                                      width: 24,
+                                      height: 24,
+                                      child: CircularProgressIndicator(
+                                        color: Colors.white,
+                                        strokeWidth: 2,
+                                      ),
+                                    )
+                                  : Text(
+                                      AppStrings.sendMessage,
+                                      style: const TextStyle(
+                                        fontFamily: 'Inter',
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                            ),
+                          ),
+                        ],
+                      ),
+              ),
+            ),
+          ),
         ],
       ),
     );
   }
 
   Widget _buildMobileLayout(BuildContext context) {
-    return _buildContactForm(context);
-  }
-
-  Widget _buildContactImage(BuildContext context) {
-    return Container(
-      constraints: const BoxConstraints(minHeight: 400),
-      alignment: Alignment.topCenter,
-      child: Container(
-        width: 400,
-        height: 400,
-        decoration: BoxDecoration(
-          color: Theme.of(context).cardColor,
-          borderRadius: BorderRadius.circular(20),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.blueAccent.withOpacity(0.3),
-              blurRadius: 60,
-              spreadRadius: 20,
-            ),
-          ],
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(20),
-          child: Image.asset('assets/images/contact.png', fit: BoxFit.cover),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildContactForm(BuildContext context) {
-    return Container(
-      constraints: const BoxConstraints(minHeight: 400),
-      padding: const EdgeInsets.all(30),
-      decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 20,
-            offset: const Offset(0, 10),
-          ),
-        ],
-      ),
-      child: Column(
-        key: const ValueKey('form_fields'),
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildTextField(
-            label: AppStrings.nameLabel,
-            hint: AppStrings.nameHint,
-            controller: _nameController,
-            error: _nameError,
-            validator: _validateName,
-            height: 48,
-          ),
-          const SizedBox(height: 16),
-          _buildTextField(
-            label: AppStrings.emailLabel,
-            hint: AppStrings.emailHint,
-            controller: _emailController,
-            error: _emailError,
-            validator: _validateEmail,
-            height: 48,
-          ),
-          const SizedBox(height: 16),
-          _buildTextField(
-            label: AppStrings.subjectLabel,
-            hint: AppStrings.subjectHint,
-            controller: _subjectController,
-            error: _subjectError,
-            validator: _validateSubject,
-            height: 48,
-          ),
-          const SizedBox(height: 16),
-          _buildTextField(
-            label: AppStrings.messageLabel,
-            hint: AppStrings.messageHint,
-            controller: _messageController,
-            error: _messageError,
-            validator: _validateMessage,
-            maxLines: 4,
-            height: 68,
-          ),
-          const SizedBox(height: 24),
-          SizedBox(
-            width: double.infinity,
-            height: 56,
-            child: ElevatedButton(
-              onPressed: _isSending ? null : _submitToGoogleForm,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blueAccent,
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                elevation: 5,
+    return Column(
+      children: [
+        // Form Side
+        Container(
+          padding: const EdgeInsets.all(30),
+          decoration: BoxDecoration(
+            color: Theme.of(context).cardColor,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.1),
+                blurRadius: 20,
+                offset: const Offset(0, 10),
               ),
-              child: _isSending
-                  ? const SizedBox(
-                      width: 24,
-                      height: 24,
-                      child: CircularProgressIndicator(
-                        color: Colors.white,
-                        strokeWidth: 2,
-                      ),
-                    )
-                  : Text(
-                      AppStrings.sendMessage,
-                      style: const TextStyle(
-                        fontFamily: 'Inter',
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-            ),
+            ],
           ),
-        ],
-      ),
+          child: AnimatedSwitcher(
+            duration: const Duration(milliseconds: 500),
+            child: _showSuccess
+                ? _buildSuccessView(context)
+                : Column(
+                    key: const ValueKey('mobile_form_fields'),
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _buildTextField(
+                        label: AppStrings.nameLabel,
+                        hint: AppStrings.nameHint,
+                        controller: _nameController,
+                        error: _nameError,
+                        validator: _validateName,
+                        height: 48,
+                      ),
+                      const SizedBox(height: 16),
+                      _buildTextField(
+                        label: AppStrings.emailLabel,
+                        hint: AppStrings.emailHint,
+                        controller: _emailController,
+                        error: _emailError,
+                        validator: _validateEmail,
+                        height: 48,
+                      ),
+                      const SizedBox(height: 16),
+                      _buildTextField(
+                        label: AppStrings.subjectLabel,
+                        hint: AppStrings.subjectHint,
+                        controller: _subjectController,
+                        error: _subjectError,
+                        validator: _validateSubject,
+                        height: 48,
+                      ),
+                      const SizedBox(height: 16),
+                      _buildTextField(
+                        label: AppStrings.messageLabel,
+                        hint: AppStrings.messageHint,
+                        controller: _messageController,
+                        error: _messageError,
+                        validator: _validateMessage,
+                        maxLines: 4,
+                        height: 68,
+                      ),
+                      const SizedBox(height: 24),
+                      SizedBox(
+                        width: double.infinity,
+                        height: 56,
+                        child: ElevatedButton(
+                          onPressed: _isSending ? null : _submitToGoogleForm,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blueAccent,
+                            foregroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            elevation: 5,
+                          ),
+                          child: _isSending
+                              ? const SizedBox(
+                                  width: 24,
+                                  height: 24,
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                    strokeWidth: 2,
+                                  ),
+                                )
+                              : Text(
+                                  AppStrings.sendMessage,
+                                  style: const TextStyle(
+                                    fontFamily: 'Inter',
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                        ),
+                      ),
+                    ],
+                  ),
+          ),
+        ),
+      ],
     );
   }
 
