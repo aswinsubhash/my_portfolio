@@ -4,6 +4,8 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
 
 import '../constants.dart';
+import '../widgets/random_moving_line.dart';
+import '../widgets/star_field_background.dart';
 
 class ContactSection extends StatefulWidget {
   final GlobalKey? key;
@@ -162,67 +164,94 @@ class _ContactSectionState extends State<ContactSection>
     final textColor = Theme.of(context).textTheme.bodyLarge?.color;
     final backgroundColor = Theme.of(context).scaffoldBackgroundColor;
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        bool isDesktop = constraints.maxWidth > 800;
-
-        return Container(
-          width: double.infinity,
-          color: backgroundColor.withOpacity(0.5),
-          child: Column(
-            children: [
-              Center(
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 1200),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          AppStrings.contactTitle,
-                          style: TextStyle(
-                            fontFamily: 'Inter',
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: textColor,
-                          ),
-                        ),
-                        const SizedBox(height: 40),
-                        AnimatedSwitcher(
-                          duration: const Duration(milliseconds: 500),
-                          child: _showSuccess
-                              ? _buildSuccessView(context)
-                              : (isDesktop
-                                    ? _buildDesktopLayout(context)
-                                    : _buildMobileLayout(context)),
-                        ),
-                        const SizedBox(height: 40),
-                      ],
+    return Container(
+      width: double.infinity,
+      color: backgroundColor,
+      child: Stack(
+        children: [
+          // Background Animations - Isolated in RepaintBoundary
+          const Positioned.fill(
+            child: RepaintBoundary(
+              child: Stack(
+                children: [
+                  Positioned.fill(
+                    child: RandomMovingLine(
+                      color: Colors.purpleAccent,
+                      speed: 4.0,
                     ),
                   ),
-                ),
-              ),
-              Divider(
-                color: Colors.grey.withOpacity(0.3),
-                thickness: 1,
-                height: 1,
-              ),
-              const SizedBox(height: 20),
-              Center(
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 1200),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: _buildFooter(context),
+                  Positioned.fill(
+                    child: RandomMovingLine(
+                      color: Colors.blueAccent,
+                      speed: 3.0,
+                    ),
                   ),
-                ),
+                  Positioned.fill(child: StarFieldBackground(starCount: 80)),
+                ],
               ),
-              const SizedBox(height: 20),
-            ],
+            ),
           ),
-        );
-      },
+          // Main Content
+          LayoutBuilder(
+            builder: (context, constraints) {
+              bool isDesktop = constraints.maxWidth > 800;
+
+              return Column(
+                children: [
+                  Center(
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 1200),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              AppStrings.contactTitle,
+                              style: TextStyle(
+                                fontFamily: 'Inter',
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                                color: textColor,
+                              ),
+                            ),
+                            const SizedBox(height: 40),
+                            AnimatedSwitcher(
+                              duration: const Duration(milliseconds: 500),
+                              child: _showSuccess
+                                  ? _buildSuccessView(context)
+                                  : (isDesktop
+                                        ? _buildDesktopLayout(context)
+                                        : _buildMobileLayout(context)),
+                            ),
+                            const SizedBox(height: 40),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Divider(
+                    color: Colors.grey.withOpacity(0.3),
+                    thickness: 1,
+                    height: 1,
+                  ),
+                  const SizedBox(height: 20),
+                  Center(
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 1200),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: _buildFooter(context),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                ],
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 
