@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import 'package:http/http.dart' as http;
+
 import '../constants.dart';
 import '../widgets/random_moving_line.dart';
 import '../widgets/star_field_background.dart';
@@ -26,6 +28,8 @@ class _ContactSectionState extends State<ContactSection>
   String? _emailError;
   String? _subjectError;
   String? _messageError;
+
+  bool _isSending = false;
 
   @override
   bool get wantKeepAlive => true;
@@ -88,31 +92,67 @@ class _ContactSectionState extends State<ContactSection>
         _messageError == null;
   }
 
-  Future<void> _launchEmail() async {
-    // Validate form before sending
-    if (!_validateForm()) {
-      return;
-    }
+  Future<void> _submitToGoogleForm() async {
+    if (!_validateForm()) return;
 
-    final String name = _nameController.text;
-    final String email = _emailController.text;
-    final String subject = _subjectController.text;
-    final String message = _messageController.text;
+    setState(() {
+      _isSending = true;
+    });
 
-    final Uri emailLaunchUri = Uri(
-      scheme: 'mailto',
-      path: AppStrings.emailAddress,
-      queryParameters: {
-        'subject': subject,
-        'body': 'Name: $name\nEmail: $email\n\n$message',
-      },
-    );
+    // Replace these placeholders with your actual Google Form details
+    // To find Entry IDs:
+    // 1. Right-click your Google Form and "Inspect".
+    // 2. Search for "entry." in the code.
+    const String formUrl =
+        'YOUR_GOOGLE_FORM_RESPONSE_URL_HERE'; // Ends with /formResponse
+    const String nameEntryId = 'entry.1111111';
+    const String emailEntryId = 'entry.2222222';
+    const String subjectEntryId = 'entry.3333333';
+    const String messageEntryId = 'entry.4444444';
 
-    if (await canLaunchUrl(emailLaunchUri)) {
-      await launchUrl(emailLaunchUri);
-    } else {
-      // Fallback: try to launch anyway, as canLaunchUrl sometimes returns false for mailto on certain platforms
-      await launchUrl(emailLaunchUri);
+    try {
+      final response = await http.post(
+        Uri.parse(formUrl),
+        body: {
+          nameEntryId: _nameController.text,
+          emailEntryId: _emailController.text,
+          subjectEntryId: _subjectController.text,
+          messageEntryId: _messageController.text,
+        },
+      );
+
+      if (mounted) {
+        if (response.statusCode == 200 || response.statusCode == 302) {
+          // Note: Google Forms returns 302 or sometimes 200 on success
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Message sent successfully! ✨'),
+              backgroundColor: Colors.green,
+            ),
+          );
+          _nameController.clear();
+          _emailController.clear();
+          _subjectController.clear();
+          _messageController.clear();
+        } else {
+          throw Exception('Failed to send message');
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Something went wrong. Please try again later.'),
+            backgroundColor: Colors.redAccent,
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isSending = false;
+        });
+      }
     }
   }
 
@@ -453,7 +493,7 @@ class _ContactSectionState extends State<ContactSection>
                     width: double.infinity,
                     height: 56,
                     child: ElevatedButton(
-                      onPressed: _launchEmail,
+                      onPressed: _isSending ? null : _submitToGoogleForm,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.blueAccent,
                         foregroundColor: Colors.white,
@@ -462,14 +502,23 @@ class _ContactSectionState extends State<ContactSection>
                         ),
                         elevation: 5,
                       ),
-                      child: Text(
-                        AppStrings.sendMessage,
-                        style: const TextStyle(
-                          fontFamily: 'Inter',
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                      child: _isSending
+                          ? const SizedBox(
+                              width: 24,
+                              height: 24,
+                              child: CircularProgressIndicator(
+                                color: Colors.white,
+                                strokeWidth: 2,
+                              ),
+                            )
+                          : Text(
+                              AppStrings.sendMessage,
+                              style: const TextStyle(
+                                fontFamily: 'Inter',
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                     ),
                   ),
                 ],
@@ -543,7 +592,7 @@ class _ContactSectionState extends State<ContactSection>
                 width: double.infinity,
                 height: 56,
                 child: ElevatedButton(
-                  onPressed: _launchEmail,
+                  onPressed: _isSending ? null : _submitToGoogleForm,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.blueAccent,
                     foregroundColor: Colors.white,
@@ -552,14 +601,23 @@ class _ContactSectionState extends State<ContactSection>
                     ),
                     elevation: 5,
                   ),
-                  child: Text(
-                    AppStrings.sendMessage,
-                    style: const TextStyle(
-                      fontFamily: 'Inter',
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  child: _isSending
+                      ? const SizedBox(
+                          width: 24,
+                          height: 24,
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                            strokeWidth: 2,
+                          ),
+                        )
+                      : Text(
+                          AppStrings.sendMessage,
+                          style: const TextStyle(
+                            fontFamily: 'Inter',
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                 ),
               ),
             ],
