@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import '../constants.dart';
 
 class ProjectsSection extends StatelessWidget {
-  const ProjectsSection({super.key});
+  final GlobalKey? key;
+  const ProjectsSection({this.key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

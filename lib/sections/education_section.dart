@@ -88,14 +88,13 @@ class _EducationCardState extends State<_EducationCard> {
   Widget build(BuildContext context) {
     final isDark = Theme.of(context).brightness == Brightness.dark;
 
-    // Custom colors to match reference
     final cardBg = isDark
         ? (_isHovering
               ? Colors.white.withValues(alpha: 0.05)
               : Colors.transparent)
         : Colors.white;
     final borderColor = isDark ? Colors.white12 : Colors.black12;
-    final iconColor = Colors.amber; // Yellow tassel/cap
+    final iconColor = Colors.amber;
     final institutionColor = isDark ? Colors.white : Colors.black87;
     final degreeColor = Colors.blueAccent;
     final durationColor = isDark ? Colors.grey : Colors.black54;
@@ -117,7 +116,6 @@ class _EducationCardState extends State<_EducationCard> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Icon
             Container(
               padding: const EdgeInsets.only(top: 2),
               child: FaIcon(
@@ -127,7 +125,6 @@ class _EducationCardState extends State<_EducationCard> {
               ),
             ),
             const SizedBox(width: 20),
-            // Content
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
