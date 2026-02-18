@@ -231,7 +231,7 @@ class _ContactSectionState extends State<ContactSection>
                     ),
                   ),
                   Divider(
-                    color: Colors.grey.withOpacity(0.3),
+                    color: Colors.grey.withValues(alpha: 0.3),
                     thickness: 1,
                     height: 1,
                   ),
@@ -266,7 +266,7 @@ class _ContactSectionState extends State<ContactSection>
               Text(
                 '© 2026 Aswin Subhash. All rights reserved.',
                 style: TextStyle(
-                  color: Colors.grey.withOpacity(0.6),
+                  color: Colors.grey.withValues(alpha: 0.6),
                   fontSize: 11,
                 ),
                 textAlign: TextAlign.center,
@@ -284,7 +284,7 @@ class _ContactSectionState extends State<ContactSection>
             Text(
               '© 2026 Aswin Subhash. All rights reserved.',
               style: TextStyle(
-                color: Colors.grey.withOpacity(0.6),
+                color: Colors.grey.withValues(alpha: 0.6),
                 fontSize: 11,
               ),
             ),
@@ -303,12 +303,18 @@ class _ContactSectionState extends State<ContactSection>
       children: [
         Text(
           'Made with ',
-          style: TextStyle(color: Colors.grey.withOpacity(0.6), fontSize: 11),
+          style: TextStyle(
+            color: Colors.grey.withValues(alpha: 0.6),
+            fontSize: 11,
+          ),
         ),
         const Icon(Icons.favorite, color: Colors.blue, size: 11),
         Text(
           ' in Flutter',
-          style: TextStyle(color: Colors.grey.withOpacity(0.6), fontSize: 11),
+          style: TextStyle(
+            color: Colors.grey.withValues(alpha: 0.6),
+            fontSize: 11,
+          ),
         ),
       ],
     );
@@ -368,7 +374,7 @@ class _ContactSectionState extends State<ContactSection>
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: Colors.blueAccent.withOpacity(0.3),
+              color: Colors.blueAccent.withValues(alpha: 0.3),
               blurRadius: 60,
               spreadRadius: 20,
             ),
@@ -391,7 +397,7 @@ class _ContactSectionState extends State<ContactSection>
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(alpha: 0.1),
             blurRadius: 20,
             offset: const Offset(0, 10),
           ),
@@ -501,7 +507,7 @@ class _ContactSectionState extends State<ContactSection>
             fontSize: 16,
             color: Theme.of(
               context,
-            ).textTheme.bodyMedium?.color?.withOpacity(0.7),
+            ).textTheme.bodyMedium?.color?.withValues(alpha: 0.7),
           ),
         ),
       ],
@@ -530,7 +536,9 @@ class _ContactSectionState extends State<ContactSection>
             color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(10),
             border: Border.all(
-              color: hasError ? Colors.redAccent : Colors.grey.withOpacity(0.3),
+              color: hasError
+                  ? Colors.redAccent
+                  : Colors.grey.withValues(alpha: 0.3),
               width: hasError ? 2 : 1,
             ),
           ),

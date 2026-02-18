@@ -109,7 +109,9 @@ class _EducationCardState extends State<_EducationCard> {
           color: cardBg,
           borderRadius: BorderRadius.circular(15),
           border: Border.all(
-            color: _isHovering ? degreeColor.withOpacity(0.5) : borderColor,
+            color: _isHovering
+                ? degreeColor.withValues(alpha: 0.5)
+                : borderColor,
             width: 1,
           ),
         ),

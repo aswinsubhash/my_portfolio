@@ -111,8 +111,8 @@ class _ExperienceItemState extends State<_ExperienceItem>
           decoration: BoxDecoration(
             color: _isHovering
                 ? (isDark
-                      ? Colors.white.withOpacity(0.05)
-                      : Colors.black.withOpacity(0.03))
+                      ? Colors.white.withValues(alpha: 0.05)
+                      : Colors.black.withValues(alpha: 0.03))
                 : Colors.transparent,
             borderRadius: BorderRadius.circular(20),
             border: Border.all(
@@ -165,7 +165,7 @@ class _ExperienceItemState extends State<_ExperienceItem>
                             style: TextStyle(
                               fontFamily: 'Inter',
                               fontSize: 14,
-                              color: textColor.withOpacity(0.6),
+                              color: textColor.withValues(alpha: 0.6),
                               fontStyle: FontStyle.italic,
                             ),
                           ),
@@ -182,7 +182,7 @@ class _ExperienceItemState extends State<_ExperienceItem>
                         ).animate(_expandAnimation),
                         child: Icon(
                           Icons.keyboard_arrow_down,
-                          color: textColor.withOpacity(0.5),
+                          color: textColor.withValues(alpha: 0.5),
                         ),
                       ),
                     ),
@@ -220,7 +220,7 @@ class _ExperienceItemState extends State<_ExperienceItem>
                                       fontFamily: 'Inter',
                                       fontSize: 16,
                                       height: 1.6,
-                                      color: textColor.withOpacity(0.8),
+                                      color: textColor.withValues(alpha: 0.8),
                                     ),
                                   ),
                                 ),
