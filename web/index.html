@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <!--
     If you are serving your web app in a path other than the root, change the
@@ -27,12 +28,86 @@
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
+  <link rel="icon" type="image/png" href="favicon.png" />
 
-  <title>portfolio_web</title>
+  <title>Aswin Subhash Portfolio</title>
   <link rel="manifest" href="manifest.json">
+
+  <style>
+    body {
+      background-color: #000000;
+      /* Match dark theme */
+      margin: 0;
+      padding: 0;
+    }
+
+    /* System theme awareness for the initial loading screen */
+    @media (prefers-color-scheme: light) {
+      body {
+        background-color: #f9fafb;
+        /* Match light theme shade50 */
+      }
+
+      .loading-spinner {
+        border: 4px solid rgba(0, 0, 0, 0.1);
+        border-top: 4px solid #3b82f6;
+        /* Blue Accent */
+      }
+    }
+
+    .loading-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      width: 100vw;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 9999;
+    }
+
+    .loading-spinner {
+      width: 50px;
+      height: 50px;
+      border: 4px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      border-top: 4px solid #3b82f6;
+      /* Blue Accent */
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
 </head>
-<body>
+
+<body style="background-color: #000000;">
+  <div class="loading-container" id="loading-indicator">
+    <div class="loading-spinner"></div>
+  </div>
+  <script>
+    window.addEventListener('load', function (ev) {
+      // Give Flutter a moment to initialize before removing the overlay
+      setTimeout(function () {
+        var loadingIndicator = document.getElementById('loading-indicator');
+        if (loadingIndicator) {
+          loadingIndicator.style.transition = 'opacity 0.5s ease';
+          loadingIndicator.style.opacity = '0';
+          setTimeout(function () {
+            loadingIndicator.remove();
+          }, 500);
+        }
+      }, 2000); // Increased to 2 seconds to ensure Flutter engine is ready
+    });
+  </script>
   <!--
     You can customize the "flutter_bootstrap.js" script.
     This is useful to provide a custom configuration to the Flutter loader
@@ -43,4 +118,5 @@
   -->
   <script src="flutter_bootstrap.js" async></script>
 </body>
+
 </html>
