@@ -354,129 +354,130 @@ class _ContactSectionState extends State<ContactSection>
   }
 
   Widget _buildDesktopLayout(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Image Side
-        Expanded(
-          flex: 1,
-          child: Container(
-            height: 400, // Fixed height for stability
-            alignment: Alignment.topCenter,
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // Image Side
+          Expanded(
+            flex: 1,
             child: Container(
-              width: 400,
-              height: 400,
+              constraints: const BoxConstraints(minHeight: 400),
+              alignment: Alignment.topCenter,
+              child: Container(
+                width: 400,
+                height: 400,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).cardColor,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.blueAccent.withOpacity(0.3),
+                      blurRadius: 60,
+                      spreadRadius: 20,
+                    ),
+                  ],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(20),
+                  child: Image.asset(
+                    'assets/images/contact.png',
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ),
+          ),
+
+          const SizedBox(width: 60),
+
+          // Form Side
+          Expanded(
+            flex: 1,
+            child: Container(
+              constraints: const BoxConstraints(minHeight: 400),
+              padding: const EdgeInsets.all(30),
               decoration: BoxDecoration(
                 color: Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.blueAccent.withOpacity(0.3),
-                    blurRadius: 60, // Reduced from 100 for performance
-                    spreadRadius: 20,
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 20,
+                    offset: const Offset(0, 10),
                   ),
                 ],
               ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Image.asset(
-                  'assets/images/contact.png',
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-          ),
-        ),
-
-        const SizedBox(width: 60),
-
-        // Form Side
-        Expanded(
-          flex: 1,
-          child: Container(
-            height: 400, // Fixed height matching image
-            padding: const EdgeInsets.all(30),
-            decoration: BoxDecoration(
-              color: Theme.of(context).cardColor,
-              borderRadius: BorderRadius.circular(20),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
-                  blurRadius: 20,
-                  offset: const Offset(0, 10),
-                ),
-              ],
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize
-                  .min, // Although height is fixed, this keeps content top-aligned
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildTextField(
-                  label: AppStrings.nameLabel,
-                  hint: AppStrings.nameHint,
-                  controller: _nameController,
-                  error: _nameError,
-                  validator: _validateName,
-                  height: 48,
-                ),
-                const SizedBox(height: 16),
-                _buildTextField(
-                  label: AppStrings.emailLabel,
-                  hint: AppStrings.emailHint,
-                  controller: _emailController,
-                  error: _emailError,
-                  validator: _validateEmail,
-                  height: 48,
-                ),
-                const SizedBox(height: 16),
-                _buildTextField(
-                  label: AppStrings.subjectLabel,
-                  hint: AppStrings.subjectHint,
-                  controller: _subjectController,
-                  error: _subjectError,
-                  validator: _validateSubject,
-                  height: 48,
-                ),
-                const SizedBox(height: 16),
-                _buildTextField(
-                  label: AppStrings.messageLabel,
-                  hint: AppStrings.messageHint,
-                  controller: _messageController,
-                  error: _messageError,
-                  validator: _validateMessage,
-                  maxLines: 4,
-                  height: 68,
-                ),
-                const Spacer(), // Pushes button to bottom
-                SizedBox(
-                  width: double.infinity,
-                  height: 56,
-                  child: ElevatedButton(
-                    onPressed: _launchEmail,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blueAccent,
-                      foregroundColor: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildTextField(
+                    label: AppStrings.nameLabel,
+                    hint: AppStrings.nameHint,
+                    controller: _nameController,
+                    error: _nameError,
+                    validator: _validateName,
+                    height: 48,
+                  ),
+                  const SizedBox(height: 16),
+                  _buildTextField(
+                    label: AppStrings.emailLabel,
+                    hint: AppStrings.emailHint,
+                    controller: _emailController,
+                    error: _emailError,
+                    validator: _validateEmail,
+                    height: 48,
+                  ),
+                  const SizedBox(height: 16),
+                  _buildTextField(
+                    label: AppStrings.subjectLabel,
+                    hint: AppStrings.subjectHint,
+                    controller: _subjectController,
+                    error: _subjectError,
+                    validator: _validateSubject,
+                    height: 48,
+                  ),
+                  const SizedBox(height: 16),
+                  _buildTextField(
+                    label: AppStrings.messageLabel,
+                    hint: AppStrings.messageHint,
+                    controller: _messageController,
+                    error: _messageError,
+                    validator: _validateMessage,
+                    maxLines: 4,
+                    height: 68,
+                  ),
+                  const SizedBox(height: 24),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 56,
+                    child: ElevatedButton(
+                      onPressed: _launchEmail,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blueAccent,
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        elevation: 5,
                       ),
-                      elevation: 5,
-                    ),
-                    child: Text(
-                      AppStrings.sendMessage,
-                      style: const TextStyle(
-                        fontFamily: 'Inter',
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                      child: Text(
+                        AppStrings.sendMessage,
+                        style: const TextStyle(
+                          fontFamily: 'Inter',
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
