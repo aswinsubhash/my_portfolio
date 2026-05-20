@@ -27,43 +27,11 @@
   --font-display: var(--font-syne), ui-sans-serif, sans-serif;
   --font-sans: var(--font-dm-sans), ui-sans-serif, sans-serif;
   --font-mono: var(--font-ibm-mono), ui-monospace, "SFMono-Regular", monospace;
-  --font-arabic: var(--font-arabic), ui-sans-serif, sans-serif;
-
   --radius-card: 10px;
 }
 
-/* Japanese overrides */
-:root[lang="ja"] body {
-  font-family: var(--font-japanese), ui-sans-serif, sans-serif;
-}
-
-:root[lang="ja"] h1,
-:root[lang="ja"] h2,
-:root[lang="ja"] h3 {
-  font-family: var(--font-japanese), ui-sans-serif, sans-serif;
-}
-
-:root[lang="ja"] .font-display {
-  font-family: var(--font-japanese), ui-sans-serif, sans-serif;
-}
-
 /* Arabic / RTL overrides */
-:root[dir="rtl"] body {
-  font-family: var(--font-arabic), ui-sans-serif, sans-serif;
-}
-
-:root[dir="rtl"] h1,
-:root[dir="rtl"] h2,
-:root[dir="rtl"] h3 {
-  font-family: var(--font-arabic), ui-sans-serif, sans-serif;
-}
-
-:root[dir="rtl"] .font-display {
-  font-family: var(--font-arabic), ui-sans-serif, sans-serif;
-}
-
 :root[dir="rtl"] .font-mono {
-  font-family: var(--font-ibm-mono), ui-monospace, monospace;
   direction: ltr;
   unicode-bidi: embed;
 }
