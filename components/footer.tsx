@@ -18,9 +18,6 @@ export function Footer() {
             © {year} {personal.name}
           </p>
         </div>
-        <p className="font-mono text-[11px] text-fg-subtle">
-          Built with Next.js · Deployed on Vercel
-        </p>
         <div className="flex items-center gap-2">
           {[
             { href: personal.github, label: "GitHub", icon: <FaGithub size={13} /> },

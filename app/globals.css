@@ -1,26 +1,26 @@
 @import "tailwindcss";
 
 @theme {
-  /* Dark palette — deep space engineering */
-  --color-bg: #060a0f;
-  --color-bg-elev: #0c1219;
-  --color-bg-soft: #111c27;
-  --color-bg-card: #0e1720;
-  --color-fg: #e2e8f0;
-  --color-fg-muted: #8899aa;
-  --color-fg-subtle: #4a5568;
-  --color-border: rgba(99, 160, 220, 0.1);
-  --color-border-strong: rgba(99, 160, 220, 0.18);
+  /* Dark palette — muted graphite console */
+  --color-bg: #080c11;
+  --color-bg-elev: #0d151c;
+  --color-bg-soft: #111d26;
+  --color-bg-card: #0f1921;
+  --color-fg: #dfe8ec;
+  --color-fg-muted: #8fa0aa;
+  --color-fg-subtle: #566775;
+  --color-border: rgba(91, 143, 162, 0.09);
+  --color-border-strong: rgba(42, 157, 143, 0.17);
 
-  /* Emerald accent */
-  --color-accent: #10b981;
-  --color-accent-strong: #059669;
-  --color-accent-dim: rgba(16, 185, 129, 0.12);
-  --color-accent-glow: rgba(16, 185, 129, 0.22);
+  /* Muted teal accent */
+  --color-accent: #2a9d8f;
+  --color-accent-strong: #238579;
+  --color-accent-dim: rgba(42, 157, 143, 0.1);
+  --color-accent-glow: rgba(42, 157, 143, 0.16);
 
   /* Sky secondary */
-  --color-sky: #38bdf8;
-  --color-sky-dim: rgba(56, 189, 248, 0.1);
+  --color-sky: #5b8fa2;
+  --color-sky-dim: rgba(91, 143, 162, 0.1);
 
   --color-success: #34d399;
 
@@ -41,11 +41,11 @@
   --color-fg-muted: #4a5a6a;
   --color-fg-subtle: #8a9aaa;
   --color-border: rgba(15, 25, 35, 0.08);
-  --color-border-strong: rgba(15, 25, 35, 0.15);
-  --color-accent: #059669;
-  --color-accent-strong: #047857;
-  --color-accent-dim: rgba(5, 150, 105, 0.1);
-  --color-accent-glow: rgba(5, 150, 105, 0.15);
+  --color-border-strong: rgba(13, 148, 136, 0.18);
+  --color-accent: #0d9488;
+  --color-accent-strong: #0f766e;
+  --color-accent-dim: rgba(13, 148, 136, 0.1);
+  --color-accent-glow: rgba(13, 148, 136, 0.16);
   --color-sky: #0284c7;
   --color-sky-dim: rgba(2, 132, 199, 0.08);
   --color-success: #059669;

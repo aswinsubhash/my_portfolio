@@ -91,6 +91,21 @@ export const skills: SkillGroup[] = [
 
 export const experience: Experience[] = [
   {
+    company: "Marhaba Group of Companies | Marhaba Auctions",
+    location: "Dubai, UAE · On-site",
+    role: "Flutter Developer | AI Agentic Workflow",
+    duration: "Mar 2026 – Present",
+    description: [
+      "Led the migration of a production Android (Kotlin) and iOS (Swift) application to Flutter for M1 Shipping, a vehicle logistics company operating across the UAE, Oman, and Iraq, delivering the project end-to-end in 30 days.",
+      "Designed and implemented a scalable clean architecture across presentation, domain, and data layers, powering a feature-rich application with dual-flavor UAE and Iraq builds from a single codebase.",
+      "Delivered end-to-end authentication, shipment and vehicle tracking, finance workflows, pricing and terms logic, and a Sell Your Car flow with VIN search and shareable listings.",
+      "Implemented pagination, search, sorting, and filtering across modules, with market-specific app identities, assets, and business logic.",
+      "Established a robust Flutter foundation using BLoC, Dio, GetIt, go_router, structured error handling, token-based authentication, environment switching, and ARB localization for Arabic, Kurdish, Pashto, Farsi, and English with full RTL/LTR support.",
+      "Led an AI-augmented development workflow using Claude Code, multi-agent analysis, Codex generation, Ollama cloud models, automated commit messages, PR descriptions, and pre-commit reviews to accelerate delivery and improve code quality.",
+      "Owned planning, system design, architecture, and implementation to ensure scalability and maintainability across multiple markets.",
+    ],
+  },
+  {
     company: "JIITAK Facilitating Pvt Ltd",
     location: "Kochi, Kerala",
     role: "Flutter Developer",
