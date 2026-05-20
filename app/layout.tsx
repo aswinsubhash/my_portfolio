@@ -61,11 +61,20 @@ export const metadata: Metadata = {
     siteName: personal.name,
     title: `${personal.name} — ${personal.title}`,
     description: personal.tagline,
+    images: [
+      {
+        url: `${siteUrl}/opengraph-image`,
+        width: 1200,
+        height: 630,
+        alt: `${personal.name} — ${personal.title}`,
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: `${personal.name} — ${personal.title}`,
     description: personal.tagline,
+    images: [`${siteUrl}/opengraph-image`],
   },
   robots: { index: true, follow: true },
 };
