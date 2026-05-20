@@ -33,9 +33,7 @@ const ibmMono = IBM_Plex_Mono({
 });
 
 
-const siteUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : "https://aswinsubhash.vercel.app";
+const siteUrl = "https://aswinsubhash.vercel.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
