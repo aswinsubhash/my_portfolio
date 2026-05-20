@@ -367,7 +367,7 @@ const en: Translations = {
   experience: enExperience,
   projects: enProjects,
   education: enEducation,
-  navSections: enNav as NavSection[],
+  navSections: enNav as unknown as NavSection[],
   ui: enUI,
 };
 
