@@ -14,6 +14,11 @@ export type Project = {
   description: string[];
   tags: string[];
   accent: string;
+  highlights?: string[];
+  links?: {
+    playStore?: string;
+    appStore?: string;
+  };
 };
 
 export type Education = {
@@ -85,7 +90,7 @@ export const skills: SkillGroup[] = [
   },
   {
     group: "AI & Agentic",
-    items: ["Claude Code", "OpenAI Codex", "Antigravity", "Ollama"],
+    items: ["Claude Code", "OpenAI Codex", "Open Code", "Antigravity", "Ollama"],
   },
 ];
 
@@ -147,6 +152,25 @@ export const experience: Experience[] = [
 
 export const projects: Project[] = [
   {
+    title: "M1 Shipping",
+    summary:
+      "Vehicle logistics platform for UAE, Oman & Iraq — migrated from native Android/iOS to Flutter in 30 days. Dual-flavor builds, full RTL/LTR, 5-language support.",
+    description: [
+      "Led end-to-end migration of a production Android (Kotlin) and iOS (Swift) app to Flutter in 30 days, delivering a feature-rich vehicle logistics platform across UAE, Oman, and Iraq.",
+      "Architected dual-flavor UAE/Iraq builds from a single codebase using clean architecture across presentation, domain, and data layers.",
+      "Delivered shipment & vehicle tracking, finance workflows, pricing and terms logic, and a Sell Your Car flow with VIN search and shareable listings.",
+      "Built full RTL/LTR localization in Arabic, Kurdish, Pashto, Farsi, and English using ARB files.",
+      "Implemented BLoC, Dio, GetIt, go_router with token-based auth, environment switching, and structured error handling.",
+    ],
+    tags: ["Flutter", "Clean Architecture", "Multi-flavor", "RTL/LTR", "BLoC"],
+    accent: "cyan",
+    highlights: ["30-day delivery", "UAE · Oman · Iraq", "5 languages"],
+    links: {
+      playStore: "https://play.google.com/store/apps/details?id=com.m1shipping.android&hl=en_US",
+      appStore: "https://apps.apple.com/ae/app/m1-shipping/id6505103589",
+    },
+  },
+  {
     title: "Okinawa Navi",
     summary:
       "Regional information app for Okinawa with live news, weather alerts, event updates, and gourmet recommendations. 10,000+ Android downloads.",
@@ -158,6 +182,11 @@ export const projects: Project[] = [
     ],
     tags: ["Flutter", "WebView", "Maps", "Push Notifications"],
     accent: "teal",
+    highlights: ["10,000+ Android downloads"],
+    links: {
+      playStore: "https://play.google.com/store/apps/details?id=com.proalliance.okinavi&hl=en_US",
+      appStore: "https://apps.apple.com/jp/app/%E6%B2%96%E7%B8%84%E3%83%8A%E3%83%93/id1623775334",
+    },
   },
   {
     title: "Look Meal",
@@ -170,6 +199,10 @@ export const projects: Project[] = [
     ],
     tags: ["Flutter", "REST APIs", "Search", "Gamification"],
     accent: "emerald",
+    links: {
+      playStore: "https://play.google.com/store/apps/details?id=com.allright.lookmeal&hl=en_US",
+      appStore: "https://apps.apple.com/jp/app/%E3%83%AB%E3%83%83%E3%82%AF%E3%83%9F%E3%83%BC%E3%83%AB-%E3%82%AB%E3%83%AD%E3%83%AA%E3%83%BC-%E6%A0%84%E9%A4%8A%E7%B4%A0-pfc-%E3%83%80%E3%82%A4%E3%82%A8%E3%83%83%E3%83%88-%E5%A4%96%E9%A3%9F/id6478847606",
+    },
   },
   {
     title: "Tabeh GPS",
@@ -186,6 +219,10 @@ export const projects: Project[] = [
     ],
     tags: ["Flutter", "Socket.io", "Google Maps", "Geofencing", "Analytics"],
     accent: "rose",
+    links: {
+      playStore: "https://play.google.com/store/apps/details?id=com.tabehgps.app&hl=en_US",
+      appStore: "https://apps.apple.com/us/app/tabeh-gps/id6736398833",
+    },
   },
   {
     title: "Rental Anshin Kun",

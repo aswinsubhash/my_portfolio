@@ -3,11 +3,35 @@
 import Image from "next/image";
 import { motion, useReducedMotion } from "motion/react";
 import { ArrowRight, Download, MapPin } from "lucide-react";
-import { personal } from "@/lib/content";
+import { useContent } from "@/lib/useContent";
+
+function Typewriter({ text, className }: { text: string; className?: string }) {
+  const reduce = useReducedMotion();
+  if (reduce) {
+    return <span className={className}>{text}</span>;
+  }
+  return (
+    <span className={className} aria-label={text}>
+      {Array.from(text).map((ch, i) => (
+        <motion.span
+          key={`${ch}-${i}`}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.01, delay: 0.35 + i * 0.045 }}
+          aria-hidden="true"
+        >
+          {ch}
+        </motion.span>
+      ))}
+    </span>
+  );
+}
 
 export function Hero() {
+  const { personal, ui } = useContent();
   const reduce = useReducedMotion();
   const ease = [0.25, 1, 0.5, 1] as const;
+  const [first, last] = personal.name.split(" ");
 
   return (
     <section
@@ -25,21 +49,18 @@ export function Hero() {
         className="hero-signal pointer-events-none bottom-[20%] right-[10%] -z-10 w-72 -rotate-[10deg] [animation-delay:1.6s]"
       />
 
-      {/* Ghosted large name background */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 -z-10 flex items-center justify-center overflow-hidden"
       >
-        <span
-          className="hero-ghost select-none whitespace-nowrap font-display text-[22vw] font-black uppercase leading-none tracking-tighter text-fg/[0.025]"
-        >
+        <span className="hero-ghost select-none whitespace-nowrap font-display text-[22vw] font-black uppercase leading-none tracking-tighter text-fg/[0.025]">
           ASWIN
         </span>
       </div>
 
       <div className="mx-auto grid w-full max-w-6xl items-center gap-10 md:grid-cols-[1fr_1.2fr] md:gap-0">
 
-        {/* Photo — left */}
+        {/* Photo */}
         <motion.div
           initial={{ opacity: 0, x: reduce ? 0 : -24 }}
           animate={{ opacity: 1, x: 0 }}
@@ -61,7 +82,7 @@ export function Hero() {
           </div>
         </motion.div>
 
-        {/* Text — right */}
+        {/* Text */}
         <div className="flex flex-col gap-6">
           <motion.div
             initial={{ opacity: 0, y: reduce ? 0 : 16 }}
@@ -80,7 +101,7 @@ export function Hero() {
             )}
             <span className="inline-flex items-center gap-1.5 font-mono text-[11px] uppercase tracking-[0.18em] text-fg-muted">
               <MapPin size={10} aria-hidden="true" />
-              {personal.location}
+              <span className="kbd">{personal.location}</span>
             </span>
           </motion.div>
 
@@ -90,9 +111,11 @@ export function Hero() {
             transition={{ duration: 0.6, ease, delay: 0.1 }}
           >
             <h1 className="font-display text-5xl font-bold leading-[0.95] tracking-tight text-fg sm:text-6xl lg:text-7xl xl:text-8xl">
-              {personal.name.split(" ")[0]}
+              <Typewriter text={first} />
               <br />
-              <span className="text-fg/40">{personal.name.split(" ")[1]}</span>
+              <span className="text-fg/40">
+                <Typewriter text={last} />
+              </span>
               <span className="text-accent">.</span>
             </h1>
           </motion.div>
@@ -101,13 +124,14 @@ export function Hero() {
             initial={{ opacity: 0, y: reduce ? 0 : 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease, delay: 0.18 }}
-            className="border-l-2 border-accent/40 pl-4"
+            className="border-s-2 border-accent/40 ps-4"
           >
             <p className="font-display text-lg font-semibold tracking-tight text-fg">
               {personal.title}
             </p>
             <p className="mt-1 font-mono text-xs text-sky">
               {personal.subtitle}
+              <span className="cursor-blink ms-1" aria-hidden="true" />
             </p>
           </motion.div>
 
@@ -130,7 +154,7 @@ export function Hero() {
               href="#projects"
               className="group inline-flex h-11 items-center gap-2 rounded-sm bg-accent px-6 font-mono text-xs font-medium uppercase tracking-[0.14em] text-white transition-colors hover:bg-accent-strong"
             >
-              View Projects
+              {ui.hero.viewProjects}
               <ArrowRight size={13} aria-hidden="true" className="transition-transform group-hover:translate-x-0.5" />
             </a>
             <a
@@ -138,13 +162,13 @@ export function Hero() {
               download
               className="inline-flex h-11 items-center gap-2 rounded-sm border border-border-strong bg-bg-elev px-5 font-mono text-xs uppercase tracking-[0.14em] text-fg-muted transition-colors hover:border-accent/40 hover:text-fg"
             >
-              <Download size={13} aria-hidden="true" /> Resume
+              <Download size={13} aria-hidden="true" /> {ui.hero.resume}
             </a>
             <a
               href="#contact"
               className="inline-flex h-11 items-center font-mono text-xs uppercase tracking-[0.14em] text-fg-muted transition-colors hover:text-accent"
             >
-              Say Hello
+              {ui.hero.sayHello}
             </a>
           </motion.div>
         </div>

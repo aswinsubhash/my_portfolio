@@ -4,6 +4,7 @@ import { cn } from "@/lib/cn";
 type SectionProps = React.HTMLAttributes<HTMLElement> & {
   id: string;
   eyebrow?: string;
+  eyebrowSigil?: string;
   title?: React.ReactNode;
   description?: React.ReactNode;
   containerClassName?: string;
@@ -12,6 +13,7 @@ type SectionProps = React.HTMLAttributes<HTMLElement> & {
 export function Section({
   id,
   eyebrow,
+  eyebrowSigil,
   title,
   description,
   className,
@@ -28,7 +30,16 @@ export function Section({
       <div className={cn("mx-auto flex w-full max-w-6xl flex-col gap-12", containerClassName)}>
         {(eyebrow || title || description) && (
           <header className="flex flex-col gap-3">
-            {eyebrow && <span className="eyebrow">{eyebrow}</span>}
+            {eyebrow && (
+              eyebrowSigil ? (
+                <span className="eyebrow eyebrow--prompt">
+                  <span className="eyebrow__sigil">{eyebrowSigil}</span>
+                  {eyebrow}
+                </span>
+              ) : (
+                <span className="eyebrow">{eyebrow}</span>
+              )
+            )}
             {title && (
               <h2 className="font-display text-balance text-4xl font-bold tracking-tight text-fg sm:text-5xl">
                 {title}

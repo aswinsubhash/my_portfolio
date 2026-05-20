@@ -1,107 +1,237 @@
 "use client";
 
 import * as React from "react";
-import { AnimatePresence, motion } from "motion/react";
-import { ChevronDown } from "lucide-react";
+import { motion } from "motion/react";
+import { FaGooglePlay, FaApple } from "react-icons/fa6";
 import { Section } from "@/components/ui/section";
-import { Stagger, itemVariants } from "@/components/ui/reveal";
-import { projects, type Project } from "@/lib/content";
+import { Reveal, Stagger, itemVariants } from "@/components/ui/reveal";
+import { type Project } from "@/lib/content";
+import { useContent } from "@/lib/useContent";
 import { cn } from "@/lib/cn";
 
 export function Projects() {
+  const { projects, ui } = useContent();
+  const [featured, ...rest] = projects;
+
   return (
     <Section
       id="projects"
-      eyebrow="03 · Projects"
-      title="Shipped products."
-      description="Live on Play Store and App Store. Each built end-to-end with Flutter."
+      eyebrow={ui.projects.eyebrow}
+      eyebrowSigil="$"
+      title={ui.projects.title}
+      description={ui.projects.desc}
     >
-      <Stagger className="grid gap-5 md:grid-cols-2">
-          {projects.map((p) => (
+      <div className="flex flex-col gap-5">
+        <Reveal>
+          <FeaturedCard project={featured} featuredLabel={ui.featured} />
+        </Reveal>
+
+        <Stagger className="grid gap-5 md:grid-cols-2 md:items-start">
+          {rest.map((p) => (
             <motion.div key={p.title} variants={itemVariants}>
-              <ProjectCard project={p} />
+              <CompactCard project={p} />
             </motion.div>
           ))}
-      </Stagger>
+        </Stagger>
+      </div>
     </Section>
   );
 }
 
-function ProjectCard({ project }: { project: Project }) {
-  const [open, setOpen] = React.useState(false);
-  const detailsId = React.useId();
+function FeaturedCard({ project, featuredLabel }: { project: Project; featuredLabel: string }) {
+  return (
+    <article
+      className={cn(
+        "card-accent motion-card group relative flex flex-col overflow-hidden rounded-[var(--radius-card)] border bg-bg-card",
+        "border-accent/40 shadow-[0_0_40px_-10px_var(--color-accent-glow)]",
+        "hover:shadow-[0_0_60px_-10px_var(--color-accent-glow)]",
+      )}
+    >
+      <div className="terminal-chrome" aria-hidden="true">
+        <span />
+        <span />
+        <span />
+      </div>
+
+      <div className="flex flex-1 flex-col gap-5 p-8 md:p-10">
+        <div className="flex items-start justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <h3 className="font-display text-2xl md:text-3xl font-bold tracking-tight text-fg leading-snug">
+              {project.title}
+            </h3>
+            <span
+              className={cn(
+                "shrink-0 h-2.5 w-2.5 rounded-full",
+                accentDot[project.accent] ?? "bg-accent",
+              )}
+            />
+          </div>
+          <span className="hidden sm:inline-flex shrink-0 font-mono text-[10px] uppercase tracking-[0.18em] text-accent/70">
+            {featuredLabel}
+          </span>
+        </div>
+
+        {project.highlights && project.highlights.length > 0 && (
+          <div className="flex flex-wrap gap-2">
+            {project.highlights.map((h) => (
+              <span
+                key={h}
+                className="rounded-sm border border-accent/30 bg-accent-dim px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.12em] text-accent"
+              >
+                {h}
+              </span>
+            ))}
+          </div>
+        )}
+
+        <p className="text-[15px] leading-relaxed text-fg-muted max-w-3xl">
+          {project.summary}
+        </p>
+
+        <ul className="flex flex-col gap-2.5 border-t border-border pt-5">
+          {project.description.map((d, i) => (
+            <li
+              key={i}
+              className="flex gap-3 text-[13px] leading-relaxed text-fg-muted"
+            >
+              <span
+                aria-hidden
+                className="mt-[9px] inline-block h-px w-3 shrink-0 bg-accent/50"
+              />
+              <span>{d}</span>
+            </li>
+          ))}
+        </ul>
+
+        <div className="flex flex-wrap gap-1.5">
+          {project.tags.map((t, i) => (
+            <span
+              key={t}
+              className="rounded-sm border border-border bg-bg-elev/80 px-3 py-1 font-mono text-[11px] tracking-[0.04em] text-fg-muted"
+            >
+              {t}
+            </span>
+          ))}
+        </div>
+
+        {project.links && (
+          <div className="mt-auto flex flex-wrap items-center gap-2 pt-1">
+            {project.links.playStore && (
+              <a
+                href={project.links.playStore}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Google Play"
+                className="inline-flex h-9 items-center gap-2 rounded-sm border border-border bg-bg-elev px-3.5 font-mono text-[11px] text-fg-muted transition-colors hover:border-accent/40 hover:text-accent"
+              >
+                <FaGooglePlay size={12} aria-hidden="true" />
+                Play Store
+              </a>
+            )}
+            {project.links.appStore && (
+              <a
+                href={project.links.appStore}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="App Store"
+                className="inline-flex h-9 items-center gap-2 rounded-sm border border-border bg-bg-elev px-3.5 font-mono text-[11px] text-fg-muted transition-colors hover:border-accent/40 hover:text-accent"
+              >
+                <FaApple size={13} aria-hidden="true" />
+                App Store
+              </a>
+            )}
+          </div>
+        )}
+      </div>
+    </article>
+  );
+}
+
+function CompactCard({ project }: { project: Project }) {
+  const visibleTags = project.tags.slice(0, 4);
+  const overflow = project.tags.length - visibleTags.length;
 
   return (
-    <article className={cn(
-      "card-accent motion-card group relative flex h-full flex-col gap-4 rounded-[var(--radius-card)] border border-border bg-bg-card p-6",
-      "hover:border-accent/30 hover:shadow-[0_0_30px_-10px_var(--color-accent-glow)]",
-    )}>
-      {/* Index + title */}
-      <div className="flex items-start justify-between gap-3">
-        <h3 className="font-display text-lg font-bold tracking-tight text-fg leading-snug">
-          {project.title}
-        </h3>
-        <span className={cn(
-          "mt-1 shrink-0 h-2 w-2 rounded-full",
-          accentDot[project.accent] ?? "bg-accent",
-        )} />
+    <article
+      className={cn(
+        "card-accent motion-card group relative flex h-full flex-col overflow-hidden rounded-[var(--radius-card)] border border-border bg-bg-card",
+        "hover:border-accent/30 hover:shadow-[0_0_30px_-10px_var(--color-accent-glow)]",
+      )}
+    >
+      <div className="terminal-chrome" aria-hidden="true">
+        <span />
+        <span />
+        <span />
       </div>
 
-      <p className="text-[14px] leading-relaxed text-fg-muted">{project.summary}</p>
-
-      {/* Tags */}
-      <div className="flex flex-wrap gap-1.5">
-        {project.tags.map((t) => (
+      <div className="flex flex-1 flex-col gap-3.5 p-5">
+        <div className="flex items-start justify-between gap-3">
+          <h3 className="font-display text-base font-bold tracking-tight text-fg leading-snug">
+            {project.title}
+          </h3>
           <span
-            key={t}
-            className="rounded-sm border border-border bg-bg-elev/80 px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-[0.12em] text-fg-subtle"
-          >
-            {t}
-          </span>
-        ))}
-      </div>
+            className={cn(
+              "mt-1 shrink-0 h-2 w-2 rounded-full",
+              accentDot[project.accent] ?? "bg-accent",
+            )}
+          />
+        </div>
 
-      {/* Expand */}
-      <AnimatePresence initial={false}>
-        {open && (
-          <motion.div
-            key="details"
-            id={detailsId}
-            initial={{ opacity: 0, y: -6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
-            transition={{ duration: 0.32, ease: [0.25, 1, 0.5, 1] }}
-            className="border-t border-border pt-4"
-          >
-            <ul className="flex flex-col gap-2">
-              {project.description.map((d, i) => (
-                <li key={i} className="flex gap-3 text-[13px] leading-relaxed text-fg-muted">
-                  <span aria-hidden className="mt-[9px] inline-block h-px w-3 shrink-0 bg-accent/50" />
-                  <span>{d}</span>
-                </li>
-              ))}
-            </ul>
-          </motion.div>
+        <p className="text-[13px] leading-relaxed text-fg-muted line-clamp-3">
+          {project.summary}
+        </p>
+
+        <div className="flex flex-wrap gap-1.5">
+          {visibleTags.map((t, i) => (
+            <span
+              key={t}
+              className="rounded-sm border border-border bg-bg-elev/80 px-2.5 py-0.5 font-mono text-[10px] tracking-[0.04em] text-fg-muted"
+            >
+              {t}
+            </span>
+          ))}
+          {overflow > 0 && (
+            <span className="rounded-sm border border-border bg-bg-elev/80 px-2 py-0.5 font-mono text-[10px] tracking-[0.04em] text-fg-subtle">
+              +{overflow}
+            </span>
+          )}
+        </div>
+
+        {project.links && (
+          <div className="mt-auto flex items-center gap-2 pt-1">
+            {project.links.playStore && (
+              <a
+                href={project.links.playStore}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Google Play"
+                className="inline-flex h-7 items-center gap-1.5 rounded-sm border border-border bg-bg-elev px-2.5 font-mono text-[10px] text-fg-muted transition-colors hover:border-accent/40 hover:text-accent"
+              >
+                <FaGooglePlay size={10} aria-hidden="true" />
+                Play Store
+              </a>
+            )}
+            {project.links.appStore && (
+              <a
+                href={project.links.appStore}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="App Store"
+                className="inline-flex h-7 items-center gap-1.5 rounded-sm border border-border bg-bg-elev px-2.5 font-mono text-[10px] text-fg-muted transition-colors hover:border-accent/40 hover:text-accent"
+              >
+                <FaApple size={11} aria-hidden="true" />
+                App Store
+              </a>
+            )}
+          </div>
         )}
-      </AnimatePresence>
-
-      <button
-        type="button"
-        onClick={() => setOpen((v) => !v)}
-        className="mt-auto inline-flex items-center gap-1.5 self-start font-mono text-[10px] uppercase tracking-[0.16em] text-accent/70 transition-colors hover:text-accent"
-        aria-expanded={open}
-        aria-controls={detailsId}
-      >
-        {open ? "Collapse" : "Details"}
-        <motion.span animate={{ rotate: open ? 180 : 0 }} transition={{ duration: 0.2 }} aria-hidden="true">
-          <ChevronDown size={11} />
-        </motion.span>
-      </button>
+      </div>
     </article>
   );
 }
 
 const accentDot: Record<string, string> = {
+  cyan: "bg-cyan-400",
   teal: "bg-teal-400",
   emerald: "bg-emerald-400",
   rose: "bg-rose-400",

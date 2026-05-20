@@ -10,13 +10,13 @@
   --color-fg-muted: #8fa0aa;
   --color-fg-subtle: #566775;
   --color-border: rgba(91, 143, 162, 0.09);
-  --color-border-strong: rgba(42, 157, 143, 0.17);
+  --color-border-strong: rgba(6, 182, 212, 0.17);
 
-  /* Muted teal accent */
-  --color-accent: #2a9d8f;
-  --color-accent-strong: #238579;
-  --color-accent-dim: rgba(42, 157, 143, 0.1);
-  --color-accent-glow: rgba(42, 157, 143, 0.16);
+  /* Cyan accent */
+  --color-accent: #06b6d4;
+  --color-accent-strong: #0891b2;
+  --color-accent-dim: rgba(6, 182, 212, 0.1);
+  --color-accent-glow: rgba(6, 182, 212, 0.16);
 
   /* Sky secondary */
   --color-sky: #5b8fa2;
@@ -27,8 +27,45 @@
   --font-display: var(--font-syne), ui-sans-serif, sans-serif;
   --font-sans: var(--font-dm-sans), ui-sans-serif, sans-serif;
   --font-mono: var(--font-ibm-mono), ui-monospace, "SFMono-Regular", monospace;
+  --font-arabic: var(--font-arabic), ui-sans-serif, sans-serif;
 
   --radius-card: 10px;
+}
+
+/* Japanese overrides */
+:root[lang="ja"] body {
+  font-family: var(--font-japanese), ui-sans-serif, sans-serif;
+}
+
+:root[lang="ja"] h1,
+:root[lang="ja"] h2,
+:root[lang="ja"] h3 {
+  font-family: var(--font-japanese), ui-sans-serif, sans-serif;
+}
+
+:root[lang="ja"] .font-display {
+  font-family: var(--font-japanese), ui-sans-serif, sans-serif;
+}
+
+/* Arabic / RTL overrides */
+:root[dir="rtl"] body {
+  font-family: var(--font-arabic), ui-sans-serif, sans-serif;
+}
+
+:root[dir="rtl"] h1,
+:root[dir="rtl"] h2,
+:root[dir="rtl"] h3 {
+  font-family: var(--font-arabic), ui-sans-serif, sans-serif;
+}
+
+:root[dir="rtl"] .font-display {
+  font-family: var(--font-arabic), ui-sans-serif, sans-serif;
+}
+
+:root[dir="rtl"] .font-mono {
+  font-family: var(--font-ibm-mono), ui-monospace, monospace;
+  direction: ltr;
+  unicode-bidi: embed;
 }
 
 /* Light theme overrides */
@@ -41,11 +78,11 @@
   --color-fg-muted: #4a5a6a;
   --color-fg-subtle: #8a9aaa;
   --color-border: rgba(15, 25, 35, 0.08);
-  --color-border-strong: rgba(13, 148, 136, 0.18);
-  --color-accent: #0d9488;
-  --color-accent-strong: #0f766e;
-  --color-accent-dim: rgba(13, 148, 136, 0.1);
-  --color-accent-glow: rgba(13, 148, 136, 0.16);
+  --color-border-strong: rgba(8, 145, 178, 0.18);
+  --color-accent: #0891b2;
+  --color-accent-strong: #0e7490;
+  --color-accent-dim: rgba(8, 145, 178, 0.1);
+  --color-accent-glow: rgba(8, 145, 178, 0.16);
   --color-sky: #0284c7;
   --color-sky-dim: rgba(2, 132, 199, 0.08);
   --color-success: #059669;
@@ -114,7 +151,7 @@ textarea {
 /* Atmospheric glow */
 .bg-glow {
   background:
-    radial-gradient(ellipse 70% 50% at 60% 0%, rgba(16, 185, 129, 0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 50% at 60% 0%, rgba(6, 182, 212, 0.07) 0%, transparent 60%),
     radial-gradient(ellipse 50% 40% at 20% 80%, rgba(56, 189, 248, 0.05) 0%, transparent 60%);
 }
 .light .bg-glow {
@@ -167,7 +204,7 @@ textarea {
   left: -12%;
   width: 124%;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.18), transparent);
+  background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.18), transparent);
   opacity: 0.45;
   transform: translate3d(0, 0, 0);
 }
@@ -222,7 +259,7 @@ textarea {
   position: absolute;
   display: block;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.4), transparent);
+  background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.4), transparent);
   opacity: 0.36;
   transform-origin: center;
   animation: signal-pass 8s ease-in-out infinite;
@@ -305,15 +342,97 @@ textarea {
   flex-shrink: 0;
 }
 
+/* Prompt-style eyebrow variant — replaces accent line with $ sigil */
+.eyebrow--prompt::before { display: none; }
+.eyebrow__sigil {
+  color: var(--color-accent);
+  margin-right: 0.4rem;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+/* Blinking caret (cheap, CSS-only) */
+.cursor-blink {
+  display: inline-block;
+  width: 0.55ch;
+  height: 0.95em;
+  margin-left: 0.12em;
+  background: var(--color-accent);
+  vertical-align: -0.08em;
+  animation: caret-blink 1.05s steps(1) infinite;
+}
+@keyframes caret-blink { 50% { opacity: 0; } }
+
+/* Keyboard badge */
+.kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.5rem;
+  padding: 0 0.4rem;
+  height: 1.3rem;
+  border: 1px solid var(--color-border-strong);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  background: var(--color-bg-elev);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--color-fg-muted);
+  letter-spacing: 0.04em;
+}
+
+/* Terminal window chrome (3 dots) — used atop project cards */
+.terminal-chrome {
+  display: flex;
+  gap: 0.35rem;
+  padding: 0.55rem 0.75rem;
+  border-bottom: 1px solid var(--color-border);
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.02), transparent);
+}
+.terminal-chrome > span {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 999px;
+  opacity: 0.55;
+}
+.terminal-chrome > span:nth-child(1) { background: rgba(244, 113, 113, 0.45); }
+.terminal-chrome > span:nth-child(2) { background: rgba(234, 179, 8, 0.45); }
+.terminal-chrome > span:nth-child(3) { background: var(--color-accent); }
+
+/* Git-log commit hash (above experience entries) */
+.commit-hash {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--color-fg-subtle);
+}
+.commit-hash::before {
+  content: "commit ";
+  color: var(--color-accent);
+  opacity: 0.7;
+}
+
+/* Prompt-prefixed form labels (> name) */
+.prompt-label::before {
+  content: "> ";
+  color: var(--color-accent);
+  opacity: 0.85;
+}
+
+/* Hide native cursor when custom cursor active */
+.cursor-none,
+.cursor-none * {
+  cursor: none !important;
+}
+
 /* Scrollbar */
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb {
-  background: rgba(16, 185, 129, 0.15);
+  background: rgba(6, 182, 212, 0.15);
   border-radius: 999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(16, 185, 129, 0.3);
+  background: rgba(6, 182, 212, 0.3);
 }
 
 /* Reduced motion */

@@ -1,11 +1,12 @@
+"use client";
+
 import { FaGithub, FaLinkedinIn } from "react-icons/fa6";
 import { Mail } from "lucide-react";
-import { personal } from "@/lib/content";
+import { useContent } from "@/lib/useContent";
 
 export function Footer() {
-  const year = new Intl.DateTimeFormat("en", { year: "numeric" }).format(
-    new Date(),
-  );
+  const { personal } = useContent();
+  const year = new Intl.DateTimeFormat("en", { year: "numeric" }).format(new Date());
 
   return (
     <footer className="relative border-t border-border bg-bg">
@@ -15,7 +16,8 @@ export function Footer() {
             A
           </span>
           <p className="font-mono text-[11px] text-fg-subtle">
-            © {year} {personal.name}
+            <span className="text-accent">$</span> whoami{" "}
+            <span className="text-fg-muted">— {personal.name}, © {year}</span>
           </p>
         </div>
         <div className="flex items-center gap-2">

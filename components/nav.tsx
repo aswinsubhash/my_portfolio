@@ -2,12 +2,73 @@
 
 import * as React from "react";
 import { motion } from "motion/react";
-import { Menu, X } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
 import { cn } from "@/lib/cn";
-import { navSections, personal } from "@/lib/content";
+import { personal } from "@/lib/content";
+import { useLang, type Lang } from "@/lib/i18n";
+import { useContent } from "@/lib/useContent";
 import { ThemeToggle } from "@/components/theme-toggle";
 
+const LANGS: { code: Lang; label: string; native: string }[] = [
+  { code: "en", label: "EN", native: "English" },
+  { code: "ar", label: "AR", native: "العربية" },
+  { code: "ja", label: "JA", native: "日本語" },
+  { code: "de", label: "DE", native: "Deutsch" },
+];
+
+function LangSwitcher() {
+  const { lang, switchTo } = useLang();
+  const [open, setOpen] = React.useState(false);
+  const current = LANGS.find((l) => l.code === lang)!;
+
+  return (
+    <div
+      className="relative pb-1"
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+    >
+      <button
+        type="button"
+        aria-label="Select language"
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        className="inline-flex h-8 items-center gap-1.5 rounded border border-accent/50 bg-accent/10 px-3 font-mono text-[11px] tracking-wide text-accent transition-colors hover:bg-accent/20"
+      >
+        {current.label}
+        <ChevronDown size={10} aria-hidden="true" />
+      </button>
+
+      {open && (
+        <div className="absolute end-0 top-full z-50 mt-1 min-w-[168px] overflow-hidden rounded border border-border bg-bg-card/95 py-1 shadow-[0_8px_32px_-8px_rgba(0,0,0,0.5)] backdrop-blur-sm">
+          {LANGS.map(({ code, label, native }) => (
+            <button
+              key={code}
+              type="button"
+              role="option"
+              aria-selected={lang === code}
+              onClick={() => { switchTo(code); setOpen(false); }}
+              className={cn(
+                "flex w-full items-center gap-3 px-3 py-2.5 text-left font-mono text-[11px] transition-colors hover:bg-accent-dim",
+                lang === code ? "bg-accent/10 text-accent" : "text-fg-muted",
+              )}
+            >
+              <span className="text-accent/50" aria-hidden="true">•</span>
+              <span className="w-5 uppercase tracking-[0.12em]">{label}</span>
+              <span className={cn("text-[10px]", lang === code ? "text-accent/70" : "text-fg-subtle")}>
+                {native}
+              </span>
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export function Nav() {
+  const { lang, switchTo } = useLang();
+  const { navSections, ui } = useContent();
+
   const [scrolled, setScrolled] = React.useState(false);
   const [open, setOpen] = React.useState(false);
   const [active, setActive] = React.useState<string>("home");
@@ -32,7 +93,7 @@ export function Nav() {
       observers.push(observer);
     });
     return () => observers.forEach((o) => o.disconnect());
-  }, []);
+  }, [navSections]);
 
   return (
     <header className={cn(
@@ -48,7 +109,7 @@ export function Nav() {
             A
           </span>
           <span className="font-display hidden text-sm font-semibold tracking-tight text-fg sm:block">
-            {personal.name.split(" ")[0]}
+            {personal.name}
             <span className="text-accent">.</span>
           </span>
         </a>
@@ -77,15 +138,9 @@ export function Nav() {
         </nav>
 
         {/* Actions */}
-        <div className="hidden items-center gap-3 md:flex">
+        <div className="hidden items-center gap-2 md:flex">
+          <LangSwitcher />
           <ThemeToggle />
-          <a
-            href={personal.resume}
-            download
-            className="inline-flex h-8 items-center gap-1.5 rounded border border-accent/50 bg-accent/10 px-4 font-mono text-[11px] uppercase tracking-[0.14em] text-accent transition-colors hover:bg-accent/20"
-          >
-            Resume
-          </a>
         </div>
 
         {/* Mobile toggle */}
@@ -121,14 +176,21 @@ export function Nav() {
                 {label}
               </a>
             ))}
-            <a
-              href={personal.resume}
-              download
-              onClick={() => setOpen(false)}
-              className="mt-3 py-2 font-mono text-[11px] uppercase tracking-[0.14em] text-accent"
-            >
-              Download Resume
-            </a>
+            <div className="mt-3 flex items-center gap-3">
+              {LANGS.map(({ code, label }) => (
+                <button
+                  key={code}
+                  type="button"
+                  onClick={() => { switchTo(code); setOpen(false); }}
+                  className={cn(
+                    "py-2 font-mono text-[11px] uppercase tracking-[0.14em]",
+                    lang === code ? "text-accent" : "text-fg-muted",
+                  )}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
           </nav>
         </motion.div>
       )}

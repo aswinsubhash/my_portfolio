@@ -4,11 +4,13 @@ import { motion } from "motion/react";
 import { GraduationCap } from "lucide-react";
 import { Section } from "@/components/ui/section";
 import { Stagger, itemVariants } from "@/components/ui/reveal";
-import { education } from "@/lib/content";
+import { useContent } from "@/lib/useContent";
 
 export function Education() {
+  const { education, ui } = useContent();
+
   return (
-    <Section id="education" eyebrow="04 · Education" title="Academic record.">
+    <Section id="education" eyebrow={ui.education.eyebrow} eyebrowSigil="~/" title={ui.education.title}>
       <Stagger className="grid gap-4 md:grid-cols-3">
           {education.map((e) => (
             <motion.article

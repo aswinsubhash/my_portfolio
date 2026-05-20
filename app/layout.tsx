@@ -1,9 +1,13 @@
 import type { Metadata, Viewport } from "next";
-import { Syne, DM_Sans, IBM_Plex_Mono } from "next/font/google";
+import { Syne, DM_Sans, IBM_Plex_Mono, Noto_Sans_Arabic, Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
 import { LenisProvider } from "@/components/lenis-provider";
 import { ThemeProvider } from "@/components/theme-provider";
+import { LangProvider } from "@/lib/i18n";
 import { AmbientMotion } from "@/components/ambient-motion";
+import { Cursor } from "@/components/cursor";
+import { FloatingParticles } from "@/components/floating-particles";
+import { ParticleGrid } from "@/components/particle-grid";
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
 import { personal } from "@/lib/content";
@@ -26,6 +30,20 @@ const ibmMono = IBM_Plex_Mono({
   subsets: ["latin"],
   display: "swap",
   weight: ["400", "500"],
+});
+
+const notoArabic = Noto_Sans_Arabic({
+  variable: "--font-arabic",
+  subsets: ["arabic"],
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
+});
+
+const notoJp = Noto_Sans_JP({
+  variable: "--font-japanese",
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400", "500", "600", "700"],
 });
 
 const siteUrl = "https://aswin.dev";
@@ -92,7 +110,8 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${syne.variable} ${dmSans.variable} ${ibmMono.variable} antialiased`}
+      dir="ltr"
+      className={`${syne.variable} ${dmSans.variable} ${ibmMono.variable} ${notoArabic.variable} ${notoJp.variable} antialiased`}
       suppressHydrationWarning
     >
       <body className="grain relative min-h-screen bg-bg text-fg">
@@ -106,8 +125,12 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
+        <LangProvider>
         <ThemeProvider>
           <LenisProvider>
+            <Cursor />
+            <FloatingParticles />
+            <ParticleGrid />
             <AmbientMotion />
             <Nav />
             <main id="main" className="relative">
@@ -116,6 +139,7 @@ export default function RootLayout({
             <Footer />
           </LenisProvider>
         </ThemeProvider>
+        </LangProvider>
       </body>
     </html>
   );

@@ -3,55 +3,58 @@
 import { motion } from "motion/react";
 import { Section } from "@/components/ui/section";
 import { Stagger, itemVariants } from "@/components/ui/reveal";
-import { personal, skills } from "@/lib/content";
+import { useContent } from "@/lib/useContent";
 
 export function About() {
+  const { personal, skills, ui } = useContent();
+  const spec = ui.about_spec;
+
   return (
     <Section
       id="about"
-      eyebrow="01 · About"
-      title="Engineer who ships."
+      eyebrow={ui.about.eyebrow}
+      eyebrowSigil="$"
+      title={ui.about.title}
     >
       <Stagger className="grid gap-12 md:grid-cols-[1fr_1.6fr] md:gap-20">
-          {/* Left — bio + spec table */}
           <div className="flex flex-col gap-6">
             <p className="text-[15px] leading-relaxed text-fg-muted">
               {personal.bio}
             </p>
             <div className="motion-card mt-2 overflow-hidden rounded-[var(--radius-card)] border border-border">
               {[
-                { k: "Base", v: personal.location },
-                { k: "Focus", v: "Flutter · Dart" },
-                { k: "Experience", v: "2.5+ years" },
-                { k: "Platforms", v: "Android · iOS" },
-                { k: "Status", v: "Available" },
+                { k: spec.base, v: personal.location },
+                { k: spec.focus, v: spec.focusVal },
+                { k: spec.experience, v: spec.expVal },
+                { k: spec.platforms, v: spec.platformsVal },
+                { k: spec.status, v: spec.available },
               ].map(({ k, v }, i) => (
                 <div
                   key={k}
-                  className={`flex items-center justify-between px-4 py-3 text-sm ${i < 4 ? "border-b border-border" : ""}`}
+                  className={`flex items-center justify-between gap-3 px-4 py-3 font-mono text-sm ${i < 4 ? "border-b border-border" : ""}`}
                 >
-                  <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-fg-subtle">
-                    {k}
-                  </span>
-                  <span className={`font-medium ${k === "Status" ? "text-success" : "text-fg"}`}>
-                    {v}
+                  <span className="text-[12px] tracking-tight text-fg-subtle">{k}</span>
+                  <span className="flex items-center gap-2 text-[13px]">
+                    <span className="text-accent" aria-hidden="true">=</span>
+                    <span className={`font-medium ${i === 4 ? "text-success" : "text-fg"}`}>{v}</span>
                   </span>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Right — 2-col spec rows */}
           <div className="flex flex-col divide-y divide-border border-t border-border">
             <Stagger stagger={0.06}>
-              {skills.map((group) => (
+              {skills.map((group, i) => (
                 <motion.div
-                  key={group.group}
+                  key={i}
                   variants={itemVariants}
                   className="grid grid-cols-[100px_1fr] gap-4 py-3 items-start sm:grid-cols-[120px_1fr]"
                 >
                   <span className="pt-0.5 font-mono text-[10px] uppercase tracking-[0.16em] text-fg-subtle">
+                    <span className="text-accent/70" aria-hidden="true">[</span>
                     {group.group}
+                    <span className="text-accent/70" aria-hidden="true">]</span>
                   </span>
                   <div className="flex flex-wrap gap-1.5">
                     {group.items.map((s) => (
