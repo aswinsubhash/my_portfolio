@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Syne, DM_Sans, IBM_Plex_Mono, Noto_Sans_Arabic, Noto_Sans_JP } from "next/font/google";
+import { Syne, DM_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { LenisProvider } from "@/components/lenis-provider";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -32,19 +32,6 @@ const ibmMono = IBM_Plex_Mono({
   weight: ["400", "500"],
 });
 
-const notoArabic = Noto_Sans_Arabic({
-  variable: "--font-arabic",
-  subsets: ["arabic"],
-  display: "swap",
-  weight: ["400", "500", "600", "700"],
-});
-
-const notoJp = Noto_Sans_JP({
-  variable: "--font-japanese",
-  subsets: ["latin"],
-  display: "swap",
-  weight: ["400", "500", "600", "700"],
-});
 
 const siteUrl = "https://aswin.dev";
 
@@ -111,7 +98,7 @@ export default function RootLayout({
     <html
       lang="en"
       dir="ltr"
-      className={`${syne.variable} ${dmSans.variable} ${ibmMono.variable} ${notoArabic.variable} ${notoJp.variable} antialiased`}
+      className={`${syne.variable} ${dmSans.variable} ${ibmMono.variable} antialiased`}
       suppressHydrationWarning
     >
       <body className="grain relative min-h-screen bg-bg text-fg">
