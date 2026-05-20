@@ -1,55 +1,36 @@
-# Aswin's Portfolio
+# Aswin Subhash Portfolio
 
-A modern, responsive personal portfolio website built with Flutter Web. The application features a clean design with smooth animations, interactive elements, and a fully functional contact form.
+Personal portfolio website built with Next.js, React, TypeScript, and Tailwind CSS.
 
-## ✨ Features
+The previous Flutter Web implementation has been retired from this repository.
 
-### 1. **Home Section (Hero)**
-- **Immersive Background**: A continuous, rotating solar system animation with a "snake" effect that guides the user's eye.
-- **Dynamic Text**: Typing effects and gradient shaders for a premium feel.
-- **Responsive Navigation**: Smooth scrolling to all sections.
+## Tech Stack
 
-### 2. **About & Experience**
-- **Timeline View**: An interactive timeline showcasing professional experience with expandable details.
-- **Skill Chips**: A responsive wrap layout displaying technical expertise.
+- Next.js App Router
+- React
+- TypeScript
+- Tailwind CSS
+- Motion
+- Lenis
 
-### 3. **Projects Showcase**
-- **Interactive Cards**: Hover effects that scale and lift project cards.
-- **Detail View**: Expandable cards to read more about each project without leaving the page.
+## Getting Started
 
-### 4. **Contact Section**
-- **Google Forms Integration**: A custom-styled form that submits directly to a Google Sheet.
-- **Section-Specific Animations**: "Snake" animations and a star field background that appear *only* in this section.
-- **Validation**: Real-time form validation and success/error feedback.
+```bash
+npm install
+npm run dev
+```
 
-## 🛠️ Tech Stack
+Open [http://localhost:3000](http://localhost:3000) to view the site.
 
-- **Framework**: Flutter (Web)
-- **Language**: Dart
-- **Key Packages**:
-  - `flutter_animate`: For complex UI animations.
-  - `font_awesome_flutter`: For brand icons.
-  - `url_launcher`: For opening external links.
-  - `http`: For handling form submissions.
-  - `google_fonts`: For typography (Inter).
+## Scripts
 
-## 🚀 Getting Started
+```bash
+npm run dev
+npm run lint
+npm run build
+npm run start
+```
 
-1.  **Clone the repository:**
-    ```bash
-    git clone https://github.com/aswinsubhash/my_portfolio.git
-    ```
+## Deployment
 
-2.  **Install dependencies:**
-    ```bash
-    flutter pub get
-    ```
-
-3.  **Run locally:**
-    ```bash
-    flutter run -d chrome
-    ```
-
-## 📝 License
-
-This project is open source and available under the [MIT License](LICENSE).
+Deploy the repository root as a standard Next.js project. No custom Flutter-style `vercel.json` rewrite is needed.
