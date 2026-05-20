@@ -23,7 +23,7 @@ export const Button = React.forwardRef<
   Props
 >(function Button({ variant = "primary", className, href, ...rest }, ref) {
   const classes = cn(
-    "inline-flex h-11 items-center justify-center gap-2 rounded-full px-5 text-sm font-medium tracking-tight transition-all duration-150 will-change-transform active:scale-[0.98]",
+    "inline-flex h-11 items-center justify-center gap-2 rounded-full px-5 text-sm font-medium tracking-tight transition-[background-color,border-color,color,box-shadow,transform] duration-150 will-change-transform active:scale-[0.98]",
     variants[variant],
     className,
   );

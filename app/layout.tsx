@@ -3,6 +3,7 @@ import { Syne, DM_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { LenisProvider } from "@/components/lenis-provider";
 import { ThemeProvider } from "@/components/theme-provider";
+import { AmbientMotion } from "@/components/ambient-motion";
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
 import { personal } from "@/lib/content";
@@ -95,14 +96,23 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="grain relative min-h-screen bg-bg text-fg">
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-sm focus:bg-accent focus:px-4 focus:py-2 focus:font-mono focus:text-xs focus:uppercase focus:tracking-[0.14em] focus:text-white"
+        >
+          Skip to content
+        </a>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
         <ThemeProvider>
           <LenisProvider>
+            <AmbientMotion />
             <Nav />
-            <main className="relative">{children}</main>
+            <main id="main" className="relative">
+              {children}
+            </main>
             <Footer />
           </LenisProvider>
         </ThemeProvider>

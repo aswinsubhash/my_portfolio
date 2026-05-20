@@ -36,7 +36,7 @@ export function Nav() {
 
   return (
     <header className={cn(
-      "fixed inset-x-0 top-0 z-50 transition-all duration-500",
+      "fixed inset-x-0 top-0 z-50 transition-[background-color,border-color,backdrop-filter] duration-500",
       scrolled
         ? "border-b border-border bg-bg/80 backdrop-blur-xl"
         : "border-b border-transparent bg-transparent",
@@ -82,7 +82,7 @@ export function Nav() {
           <a
             href={personal.resume}
             download
-            className="inline-flex h-8 items-center gap-1.5 rounded border border-accent/50 bg-accent/10 px-4 font-mono text-[11px] uppercase tracking-[0.14em] text-accent transition-all hover:bg-accent/20"
+            className="inline-flex h-8 items-center gap-1.5 rounded border border-accent/50 bg-accent/10 px-4 font-mono text-[11px] uppercase tracking-[0.14em] text-accent transition-colors hover:bg-accent/20"
           >
             Resume
           </a>
@@ -94,9 +94,9 @@ export function Nav() {
           aria-label="Toggle menu"
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
-          className="inline-flex h-9 w-9 items-center justify-center rounded border border-border text-fg-muted md:hidden"
+          className="inline-flex h-9 w-9 items-center justify-center rounded border border-border text-fg-muted transition-colors hover:border-accent/50 hover:text-accent md:hidden"
         >
-          {open ? <X size={16} /> : <Menu size={16} />}
+          {open ? <X size={16} aria-hidden="true" /> : <Menu size={16} aria-hidden="true" />}
         </button>
       </div>
 
@@ -127,7 +127,7 @@ export function Nav() {
               onClick={() => setOpen(false)}
               className="mt-3 py-2 font-mono text-[11px] uppercase tracking-[0.14em] text-accent"
             >
-              Download resume ↓
+              Download Resume
             </a>
           </nav>
         </motion.div>

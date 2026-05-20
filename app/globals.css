@@ -59,16 +59,32 @@ html,
 body {
   background: var(--color-bg);
   color: var(--color-fg);
+  color-scheme: dark;
+  overflow-x: hidden;
+}
+
+html.light,
+.light body {
+  color-scheme: light;
 }
 
 body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
   text-rendering: optimizeLegibility;
 }
 
 h1, h2, h3 {
   font-family: var(--font-display);
+  text-wrap: balance;
+}
+
+a,
+button,
+input,
+textarea {
+  touch-action: manipulation;
 }
 
 ::selection {
@@ -105,6 +121,155 @@ h1, h2, h3 {
   background:
     radial-gradient(ellipse 70% 50% at 60% 0%, rgba(5, 150, 105, 0.05) 0%, transparent 60%),
     radial-gradient(ellipse 50% 40% at 20% 80%, rgba(2, 132, 199, 0.04) 0%, transparent 60%);
+}
+
+/* Refined ambient motion */
+.ambient-motion {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.ambient-motion__glow,
+.ambient-motion__scan,
+.ambient-motion__trace {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+}
+
+.ambient-motion__glow {
+  width: 34rem;
+  height: 34rem;
+  border-radius: 999px;
+  filter: blur(80px);
+  opacity: 0.16;
+  transform: translate3d(0, 0, 0);
+}
+
+.ambient-motion__glow--primary {
+  top: 8%;
+  right: -18rem;
+  background: var(--color-accent-glow);
+  animation: ambient-drift 22s ease-in-out infinite alternate;
+}
+
+.ambient-motion__glow--secondary {
+  left: -20rem;
+  bottom: 6%;
+  background: var(--color-sky-dim);
+  animation: ambient-drift 28s ease-in-out infinite alternate-reverse;
+}
+
+.ambient-motion__scan {
+  left: -12%;
+  width: 124%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.18), transparent);
+  opacity: 0.45;
+  transform: translate3d(0, 0, 0);
+}
+
+.ambient-motion__scan--one {
+  top: 28%;
+  animation: ambient-scan 18s linear infinite;
+}
+
+.ambient-motion__scan--two {
+  top: 72%;
+  animation: ambient-scan 24s linear infinite reverse;
+}
+
+.ambient-motion__trace {
+  width: 16rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.16), transparent);
+  opacity: 0.38;
+  transform-origin: center;
+}
+
+.ambient-motion__trace--one {
+  top: 18%;
+  left: 8%;
+  animation: trace-drift 17s ease-in-out infinite alternate;
+}
+
+.ambient-motion__trace--two {
+  top: 46%;
+  right: 10%;
+  --trace-rotation: 90deg;
+  transform: rotate(90deg);
+  animation: trace-drift 21s ease-in-out infinite alternate-reverse;
+}
+
+.ambient-motion__trace--three {
+  bottom: 18%;
+  left: 30%;
+  animation: trace-drift 26s ease-in-out infinite alternate;
+}
+
+.hero-ghost {
+  animation: ghost-breathe 16s ease-in-out infinite alternate;
+}
+
+.hero-float {
+  animation: hero-float 8s ease-in-out infinite alternate;
+}
+
+.hero-signal {
+  position: absolute;
+  display: block;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.4), transparent);
+  opacity: 0.36;
+  transform-origin: center;
+  animation: signal-pass 8s ease-in-out infinite;
+}
+
+.motion-card {
+  transform: translate3d(0, 0, 0);
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    background-color 180ms ease;
+}
+
+.motion-card:hover,
+.motion-card:focus-within {
+  transform: translate3d(0, -3px, 0);
+}
+
+.motion-card.card-accent::before {
+  transform: scaleX(0.22);
+  transform-origin: left center;
+  transition: transform 260ms ease, opacity 260ms ease;
+}
+
+.motion-card:hover.card-accent::before,
+.motion-card:focus-within.card-accent::before {
+  opacity: 0.9;
+  transform: scaleX(1);
+}
+
+.motion-chip {
+  transform: translate3d(0, 0, 0);
+  transition:
+    transform 160ms ease,
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.motion-chip:hover {
+  transform: translate3d(0, -2px, 0);
+}
+
+.pulse-soft {
+  animation: pulse-soft 3.6s ease-in-out infinite;
 }
 
 /* Grain overlay for texture */
@@ -155,6 +320,26 @@ h1, h2, h3 {
 @media (prefers-reduced-motion: reduce) {
   html.lenis, html.lenis body { overflow: auto !important; }
   .lenis.lenis-smooth { scroll-behavior: auto !important; }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+  .ambient-motion {
+    display: none;
+  }
+  .hero-ghost,
+  .hero-float,
+  .hero-signal,
+  .motion-card,
+  .motion-chip,
+  .pulse-soft {
+    animation: none !important;
+    transform: none !important;
+  }
 }
 
 :focus-visible {
@@ -175,4 +360,78 @@ h1, h2, h3 {
   height: 2px;
   background: linear-gradient(90deg, var(--color-accent) 0%, transparent 100%);
   border-radius: var(--radius-card) var(--radius-card) 0 0;
+}
+
+@keyframes ambient-drift {
+  from {
+    transform: translate3d(-1rem, -1rem, 0) scale(0.95);
+  }
+  to {
+    transform: translate3d(2rem, 1.5rem, 0) scale(1.08);
+  }
+}
+
+@keyframes ambient-scan {
+  from {
+    transform: translate3d(-8%, -3rem, 0);
+  }
+  to {
+    transform: translate3d(8%, 3rem, 0);
+  }
+}
+
+@keyframes trace-drift {
+  from {
+    opacity: 0.16;
+    transform: translate3d(-1rem, 0, 0) rotate(var(--trace-rotation, 0deg));
+  }
+  to {
+    opacity: 0.5;
+    transform: translate3d(1rem, 0.5rem, 0) rotate(var(--trace-rotation, 0deg));
+  }
+}
+
+@keyframes ghost-breathe {
+  from {
+    opacity: 0.72;
+    transform: translate3d(-1.2rem, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(1.2rem, 0, 0);
+  }
+}
+
+@keyframes hero-float {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, -0.7rem, 0);
+  }
+}
+
+@keyframes signal-pass {
+  0%,
+  100% {
+    opacity: 0.14;
+    transform: translate3d(-1rem, 0, 0) scaleX(0.82);
+  }
+  50% {
+    opacity: 0.52;
+    transform: translate3d(1rem, 0, 0) scaleX(1);
+  }
+}
+
+
+@keyframes pulse-soft {
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: scale(0.94);
+  }
+  50% {
+    opacity: 0.28;
+    transform: scale(1.8);
+  }
 }

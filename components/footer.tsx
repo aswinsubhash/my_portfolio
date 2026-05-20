@@ -3,6 +3,10 @@ import { Mail } from "lucide-react";
 import { personal } from "@/lib/content";
 
 export function Footer() {
+  const year = new Intl.DateTimeFormat("en", { year: "numeric" }).format(
+    new Date(),
+  );
+
   return (
     <footer className="relative border-t border-border bg-bg">
       <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-between gap-4 px-6 py-8 sm:flex-row">
@@ -11,7 +15,7 @@ export function Footer() {
             A
           </span>
           <p className="font-mono text-[11px] text-fg-subtle">
-            © {new Date().getFullYear()} {personal.name}
+            © {year} {personal.name}
           </p>
         </div>
         <p className="font-mono text-[11px] text-fg-subtle">
@@ -29,9 +33,9 @@ export function Footer() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={label}
-              className="inline-flex h-8 w-8 items-center justify-center rounded-sm border border-border text-fg-muted transition-all hover:border-accent/50 hover:text-accent"
+              className="inline-flex h-8 w-8 items-center justify-center rounded-sm border border-border text-fg-muted transition-colors hover:border-accent/50 hover:text-accent"
             >
-              {icon}
+              <span aria-hidden="true">{icon}</span>
             </a>
           ))}
         </div>

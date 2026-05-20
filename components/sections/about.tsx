@@ -18,7 +18,7 @@ export function About() {
             <p className="text-[15px] leading-relaxed text-fg-muted">
               {personal.bio}
             </p>
-            <div className="mt-2 border border-border rounded-[var(--radius-card)] overflow-hidden">
+            <div className="motion-card mt-2 overflow-hidden rounded-[var(--radius-card)] border border-border">
               {[
                 { k: "Base", v: personal.location },
                 { k: "Focus", v: "Flutter · Dart" },
@@ -57,7 +57,7 @@ export function About() {
                     {group.items.map((s) => (
                       <span
                         key={s}
-                        className="inline-flex items-center rounded-sm border border-border bg-bg-elev/50 px-2.5 py-0.5 font-mono text-[11px] tracking-tight text-fg-muted transition-all duration-150 hover:border-accent/50 hover:bg-accent-dim hover:text-fg hover:shadow-[0_0_12px_-4px_var(--color-accent-glow)]"
+                        className="motion-chip inline-flex items-center rounded-sm border border-border bg-bg-elev/50 px-2.5 py-0.5 font-mono text-[11px] tracking-tight text-fg-muted hover:border-accent/50 hover:bg-accent-dim hover:text-fg hover:shadow-[0_0_12px_-4px_var(--color-accent-glow)]"
                       >
                         {s}
                       </span>

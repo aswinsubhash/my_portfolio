@@ -29,10 +29,11 @@ export function Projects() {
 
 function ProjectCard({ project }: { project: Project }) {
   const [open, setOpen] = React.useState(false);
+  const detailsId = React.useId();
 
   return (
     <article className={cn(
-      "card-accent group relative flex h-full flex-col gap-4 rounded-[var(--radius-card)] border border-border bg-bg-card p-6 transition-all duration-200",
+      "card-accent motion-card group relative flex h-full flex-col gap-4 rounded-[var(--radius-card)] border border-border bg-bg-card p-6",
       "hover:border-accent/30 hover:shadow-[0_0_30px_-10px_var(--color-accent-glow)]",
     )}>
       {/* Index + title */}
@@ -63,23 +64,24 @@ function ProjectCard({ project }: { project: Project }) {
       {/* Expand */}
       <AnimatePresence initial={false}>
         {open && (
-          <motion.ul
+          <motion.div
             key="details"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
+            id={detailsId}
+            initial={{ opacity: 0, y: -6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
             transition={{ duration: 0.32, ease: [0.25, 1, 0.5, 1] }}
-            className="overflow-hidden border-t border-border pt-4"
+            className="border-t border-border pt-4"
           >
-            <div className="flex flex-col gap-2">
+            <ul className="flex flex-col gap-2">
               {project.description.map((d, i) => (
                 <li key={i} className="flex gap-3 text-[13px] leading-relaxed text-fg-muted">
                   <span aria-hidden className="mt-[9px] inline-block h-px w-3 shrink-0 bg-accent/50" />
                   <span>{d}</span>
                 </li>
               ))}
-            </div>
-          </motion.ul>
+            </ul>
+          </motion.div>
         )}
       </AnimatePresence>
 
@@ -88,9 +90,10 @@ function ProjectCard({ project }: { project: Project }) {
         onClick={() => setOpen((v) => !v)}
         className="mt-auto inline-flex items-center gap-1.5 self-start font-mono text-[10px] uppercase tracking-[0.16em] text-accent/70 transition-colors hover:text-accent"
         aria-expanded={open}
+        aria-controls={detailsId}
       >
         {open ? "Collapse" : "Details"}
-        <motion.span animate={{ rotate: open ? 180 : 0 }} transition={{ duration: 0.2 }}>
+        <motion.span animate={{ rotate: open ? 180 : 0 }} transition={{ duration: 0.2 }} aria-hidden="true">
           <ChevronDown size={11} />
         </motion.span>
       </button>

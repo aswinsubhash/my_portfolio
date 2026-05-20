@@ -14,10 +14,10 @@ export function Education() {
             <motion.article
               key={e.institution}
               variants={itemVariants}
-              className="card-accent group flex flex-col gap-4 rounded-[var(--radius-card)] border border-border bg-bg-card p-6 transition-all duration-200 hover:border-accent/30"
+              className="card-accent motion-card group flex flex-col gap-4 rounded-[var(--radius-card)] border border-border bg-bg-card p-6 hover:border-accent/30 hover:shadow-[0_0_24px_-14px_var(--color-accent-glow)]"
             >
               <div className="inline-flex h-8 w-8 items-center justify-center rounded-sm border border-border-strong bg-accent/10 text-accent">
-                <GraduationCap size={15} />
+                <GraduationCap size={15} aria-hidden="true" />
               </div>
               <div className="flex flex-col gap-2">
                 <h3 className="text-sm font-semibold leading-snug text-fg">
