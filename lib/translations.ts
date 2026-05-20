@@ -12,7 +12,7 @@ import {
   type Education,
 } from "./content";
 
-type Personal = { [K in keyof typeof enPersonal]: string };
+type Personal = { [K in keyof typeof enPersonal]: typeof enPersonal[K] extends string ? string : typeof enPersonal[K] };
 type NavSection = { id: string; label: string };
 
 export type UI = {
