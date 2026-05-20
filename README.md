@@ -1,55 +1,87 @@
-# Aswin's Portfolio
+# Aswin Subhash Portfolio
 
-A modern, responsive personal portfolio website built with Flutter Web. The application features a clean design with smooth animations, interactive elements, and a fully functional contact form.
+Personal portfolio website for Aswin Subhash, built as a standard root-level Next.js application.
 
-## ✨ Features
+## Stack
 
-### 1. **Home Section (Hero)**
-- **Immersive Background**: A continuous, rotating solar system animation with a "snake" effect that guides the user's eye.
-- **Dynamic Text**: Typing effects and gradient shaders for a premium feel.
-- **Responsive Navigation**: Smooth scrolling to all sections.
+- Next.js App Router
+- React
+- TypeScript
+- Tailwind CSS
+- Motion
+- Lenis
+- next-themes
+- Zod
 
-### 2. **About & Experience**
-- **Timeline View**: An interactive timeline showcasing professional experience with expandable details.
-- **Skill Chips**: A responsive wrap layout displaying technical expertise.
+## Project Structure
 
-### 3. **Projects Showcase**
-- **Interactive Cards**: Hover effects that scale and lift project cards.
-- **Detail View**: Expandable cards to read more about each project without leaving the page.
+```text
+app/                 App Router pages, layout, metadata, sitemap, robots
+app/actions/         Server actions
+components/          Shared UI and page sections
+components/ui/       Reusable UI primitives
+lib/                 Content and utility helpers
+public/              Static assets served from the site root
+```
 
-### 4. **Contact Section**
-- **Google Forms Integration**: A custom-styled form that submits directly to a Google Sheet.
-- **Section-Specific Animations**: "Snake" animations and a star field background that appear *only* in this section.
-- **Validation**: Real-time form validation and success/error feedback.
+## Getting Started
 
-## 🛠️ Tech Stack
+Install dependencies:
 
-- **Framework**: Flutter (Web)
-- **Language**: Dart
-- **Key Packages**:
-  - `flutter_animate`: For complex UI animations.
-  - `font_awesome_flutter`: For brand icons.
-  - `url_launcher`: For opening external links.
-  - `http`: For handling form submissions.
-  - `google_fonts`: For typography (Inter).
+```bash
+npm install
+```
 
-## 🚀 Getting Started
+Run the development server:
 
-1.  **Clone the repository:**
-    ```bash
-    git clone https://github.com/aswinsubhash/my_portfolio.git
-    ```
+```bash
+npm run dev
+```
 
-2.  **Install dependencies:**
-    ```bash
-    flutter pub get
-    ```
+Open [http://localhost:3000](http://localhost:3000).
 
-3.  **Run locally:**
-    ```bash
-    flutter run -d chrome
-    ```
+## Scripts
 
-## 📝 License
+```bash
+npm run dev      # Start local development server
+npm run lint     # Run ESLint
+npm run build    # Create a production build
+npm run start    # Start the production server
+```
 
-This project is open source and available under the [MIT License](LICENSE).
+## Content
+
+Most portfolio content lives in [lib/content.ts](lib/content.ts):
+
+- Personal details
+- Skills
+- Experience
+- Projects
+- Education
+- Navigation sections
+
+Static files live in [public](public):
+
+- `profile.png`
+- `Aswin_Subhash_Resume.pdf`
+
+## Contact Form
+
+The contact form posts to Google Forms from [app/actions/contact.ts](app/actions/contact.ts). Validation is handled with Zod before submission.
+
+## Deployment
+
+Deploy the repository root as a normal Next.js project.
+
+For Vercel:
+
+- Framework preset: Next.js
+- Root directory: repository root
+- Build command: `npm run build`
+- Install command: `npm install`
+
+No custom Flutter-style `vercel.json` rewrite is needed.
+
+## Migration Note
+
+This repository previously contained a Flutter Web implementation. The active project is now the root-level Next.js app.

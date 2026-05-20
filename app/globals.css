@@ -1,0 +1,556 @@
+@import "tailwindcss";
+
+@theme {
+  /* Dark palette — muted graphite console */
+  --color-bg: #080c11;
+  --color-bg-elev: #0d151c;
+  --color-bg-soft: #111d26;
+  --color-bg-card: #0f1921;
+  --color-fg: #dfe8ec;
+  --color-fg-muted: #8fa0aa;
+  --color-fg-subtle: #566775;
+  --color-border: rgba(91, 143, 162, 0.09);
+  --color-border-strong: rgba(6, 182, 212, 0.17);
+
+  /* Cyan accent */
+  --color-accent: #06b6d4;
+  --color-accent-strong: #0891b2;
+  --color-accent-dim: rgba(6, 182, 212, 0.1);
+  --color-accent-glow: rgba(6, 182, 212, 0.16);
+
+  /* Sky secondary */
+  --color-sky: #5b8fa2;
+  --color-sky-dim: rgba(91, 143, 162, 0.1);
+
+  --color-success: #34d399;
+
+  --font-display: var(--font-syne), ui-sans-serif, sans-serif;
+  --font-sans: var(--font-dm-sans), ui-sans-serif, sans-serif;
+  --font-mono: var(--font-ibm-mono), ui-monospace, "SFMono-Regular", monospace;
+  --font-arabic: var(--font-arabic), ui-sans-serif, sans-serif;
+
+  --radius-card: 10px;
+}
+
+/* Japanese overrides */
+:root[lang="ja"] body {
+  font-family: var(--font-japanese), ui-sans-serif, sans-serif;
+}
+
+:root[lang="ja"] h1,
+:root[lang="ja"] h2,
+:root[lang="ja"] h3 {
+  font-family: var(--font-japanese), ui-sans-serif, sans-serif;
+}
+
+:root[lang="ja"] .font-display {
+  font-family: var(--font-japanese), ui-sans-serif, sans-serif;
+}
+
+/* Arabic / RTL overrides */
+:root[dir="rtl"] body {
+  font-family: var(--font-arabic), ui-sans-serif, sans-serif;
+}
+
+:root[dir="rtl"] h1,
+:root[dir="rtl"] h2,
+:root[dir="rtl"] h3 {
+  font-family: var(--font-arabic), ui-sans-serif, sans-serif;
+}
+
+:root[dir="rtl"] .font-display {
+  font-family: var(--font-arabic), ui-sans-serif, sans-serif;
+}
+
+:root[dir="rtl"] .font-mono {
+  font-family: var(--font-ibm-mono), ui-monospace, monospace;
+  direction: ltr;
+  unicode-bidi: embed;
+}
+
+/* Light theme overrides */
+.light {
+  --color-bg: #f8f9fb;
+  --color-bg-elev: #eef1f5;
+  --color-bg-soft: #e4e8ef;
+  --color-bg-card: #ffffff;
+  --color-fg: #0f1923;
+  --color-fg-muted: #4a5a6a;
+  --color-fg-subtle: #8a9aaa;
+  --color-border: rgba(15, 25, 35, 0.08);
+  --color-border-strong: rgba(8, 145, 178, 0.18);
+  --color-accent: #0891b2;
+  --color-accent-strong: #0e7490;
+  --color-accent-dim: rgba(8, 145, 178, 0.1);
+  --color-accent-glow: rgba(8, 145, 178, 0.16);
+  --color-sky: #0284c7;
+  --color-sky-dim: rgba(2, 132, 199, 0.08);
+  --color-success: #059669;
+}
+
+* {
+  border-color: var(--color-border);
+}
+
+html,
+body {
+  background: var(--color-bg);
+  color: var(--color-fg);
+  color-scheme: dark;
+  overflow-x: hidden;
+}
+
+html.light,
+.light body {
+  color-scheme: light;
+}
+
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  text-rendering: optimizeLegibility;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-display);
+  text-wrap: balance;
+}
+
+a,
+button,
+input,
+textarea {
+  touch-action: manipulation;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: #ffffff;
+}
+
+/* Blueprint grid — fine engineering paper */
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(99, 160, 220, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99, 160, 220, 0.04) 1px, transparent 1px),
+    linear-gradient(rgba(99, 160, 220, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99, 160, 220, 0.02) 1px, transparent 1px);
+  background-size: 80px 80px, 80px 80px, 20px 20px, 20px 20px;
+  background-position: -1px -1px, -1px -1px, -1px -1px, -1px -1px;
+}
+.light .bg-grid {
+  background-image:
+    linear-gradient(rgba(15, 25, 35, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 25, 35, 0.04) 1px, transparent 1px),
+    linear-gradient(rgba(15, 25, 35, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15, 25, 35, 0.02) 1px, transparent 1px);
+  background-size: 80px 80px, 80px 80px, 20px 20px, 20px 20px;
+}
+
+/* Atmospheric glow */
+.bg-glow {
+  background:
+    radial-gradient(ellipse 70% 50% at 60% 0%, rgba(6, 182, 212, 0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 20% 80%, rgba(56, 189, 248, 0.05) 0%, transparent 60%);
+}
+.light .bg-glow {
+  background:
+    radial-gradient(ellipse 70% 50% at 60% 0%, rgba(5, 150, 105, 0.05) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 20% 80%, rgba(2, 132, 199, 0.04) 0%, transparent 60%);
+}
+
+/* Refined ambient motion */
+.ambient-motion {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.ambient-motion__glow,
+.ambient-motion__scan,
+.ambient-motion__trace {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+}
+
+.ambient-motion__glow {
+  width: 34rem;
+  height: 34rem;
+  border-radius: 999px;
+  filter: blur(80px);
+  opacity: 0.16;
+  transform: translate3d(0, 0, 0);
+}
+
+.ambient-motion__glow--primary {
+  top: 8%;
+  right: -18rem;
+  background: var(--color-accent-glow);
+  animation: ambient-drift 22s ease-in-out infinite alternate;
+}
+
+.ambient-motion__glow--secondary {
+  left: -20rem;
+  bottom: 6%;
+  background: var(--color-sky-dim);
+  animation: ambient-drift 28s ease-in-out infinite alternate-reverse;
+}
+
+.ambient-motion__scan {
+  left: -12%;
+  width: 124%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.18), transparent);
+  opacity: 0.45;
+  transform: translate3d(0, 0, 0);
+}
+
+.ambient-motion__scan--one {
+  top: 28%;
+  animation: ambient-scan 18s linear infinite;
+}
+
+.ambient-motion__scan--two {
+  top: 72%;
+  animation: ambient-scan 24s linear infinite reverse;
+}
+
+.ambient-motion__trace {
+  width: 16rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.16), transparent);
+  opacity: 0.38;
+  transform-origin: center;
+}
+
+.ambient-motion__trace--one {
+  top: 18%;
+  left: 8%;
+  animation: trace-drift 17s ease-in-out infinite alternate;
+}
+
+.ambient-motion__trace--two {
+  top: 46%;
+  right: 10%;
+  --trace-rotation: 90deg;
+  transform: rotate(90deg);
+  animation: trace-drift 21s ease-in-out infinite alternate-reverse;
+}
+
+.ambient-motion__trace--three {
+  bottom: 18%;
+  left: 30%;
+  animation: trace-drift 26s ease-in-out infinite alternate;
+}
+
+.hero-ghost {
+  animation: ghost-breathe 16s ease-in-out infinite alternate;
+}
+
+.hero-float {
+  animation: hero-float 8s ease-in-out infinite alternate;
+}
+
+.hero-signal {
+  position: absolute;
+  display: block;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.4), transparent);
+  opacity: 0.36;
+  transform-origin: center;
+  animation: signal-pass 8s ease-in-out infinite;
+}
+
+.motion-card {
+  transform: translate3d(0, 0, 0);
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    background-color 180ms ease;
+}
+
+.motion-card:hover,
+.motion-card:focus-within {
+  transform: translate3d(0, -3px, 0);
+}
+
+.motion-card.card-accent::before {
+  transform: scaleX(0.22);
+  transform-origin: left center;
+  transition: transform 260ms ease, opacity 260ms ease;
+}
+
+.motion-card:hover.card-accent::before,
+.motion-card:focus-within.card-accent::before {
+  opacity: 0.9;
+  transform: scaleX(1);
+}
+
+.motion-chip {
+  transform: translate3d(0, 0, 0);
+  transition:
+    transform 160ms ease,
+    background-color 160ms ease,
+    border-color 160ms ease,
+    color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.motion-chip:hover {
+  transform: translate3d(0, -2px, 0);
+}
+
+.pulse-soft {
+  animation: pulse-soft 3.6s ease-in-out infinite;
+}
+
+/* Grain overlay for texture */
+.grain::after {
+  content: "";
+  position: fixed;
+  inset: -50%;
+  width: 200%;
+  height: 200%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.022;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* Label / eyebrow */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.eyebrow::before {
+  content: "";
+  display: inline-block;
+  width: 1.5rem;
+  height: 1px;
+  background: var(--color-accent);
+  flex-shrink: 0;
+}
+
+/* Prompt-style eyebrow variant — replaces accent line with $ sigil */
+.eyebrow--prompt::before { display: none; }
+.eyebrow__sigil {
+  color: var(--color-accent);
+  margin-right: 0.4rem;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+/* Blinking caret (cheap, CSS-only) */
+.cursor-blink {
+  display: inline-block;
+  width: 0.55ch;
+  height: 0.95em;
+  margin-left: 0.12em;
+  background: var(--color-accent);
+  vertical-align: -0.08em;
+  animation: caret-blink 1.05s steps(1) infinite;
+}
+@keyframes caret-blink { 50% { opacity: 0; } }
+
+/* Keyboard badge */
+.kbd {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.5rem;
+  padding: 0 0.4rem;
+  height: 1.3rem;
+  border: 1px solid var(--color-border-strong);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  background: var(--color-bg-elev);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--color-fg-muted);
+  letter-spacing: 0.04em;
+}
+
+/* Terminal window chrome (3 dots) — used atop project cards */
+.terminal-chrome {
+  display: flex;
+  gap: 0.35rem;
+  padding: 0.55rem 0.75rem;
+  border-bottom: 1px solid var(--color-border);
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.02), transparent);
+}
+.terminal-chrome > span {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 999px;
+  opacity: 0.55;
+}
+.terminal-chrome > span:nth-child(1) { background: rgba(244, 113, 113, 0.45); }
+.terminal-chrome > span:nth-child(2) { background: rgba(234, 179, 8, 0.45); }
+.terminal-chrome > span:nth-child(3) { background: var(--color-accent); }
+
+/* Git-log commit hash (above experience entries) */
+.commit-hash {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--color-fg-subtle);
+}
+.commit-hash::before {
+  content: "commit ";
+  color: var(--color-accent);
+  opacity: 0.7;
+}
+
+/* Prompt-prefixed form labels (> name) */
+.prompt-label::before {
+  content: "> ";
+  color: var(--color-accent);
+  opacity: 0.85;
+}
+
+/* Hide native cursor when custom cursor active */
+.cursor-none,
+.cursor-none * {
+  cursor: none !important;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(6, 182, 212, 0.15);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(6, 182, 212, 0.3);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html.lenis, html.lenis body { overflow: auto !important; }
+  .lenis.lenis-smooth { scroll-behavior: auto !important; }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+  .ambient-motion {
+    display: none;
+  }
+  .hero-ghost,
+  .hero-float,
+  .hero-signal,
+  .motion-card,
+  .motion-chip,
+  .pulse-soft {
+    animation: none !important;
+    transform: none !important;
+  }
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Card accent top border variant */
+.card-accent {
+  position: relative;
+}
+.card-accent::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--color-accent) 0%, transparent 100%);
+  border-radius: var(--radius-card) var(--radius-card) 0 0;
+}
+
+@keyframes ambient-drift {
+  from {
+    transform: translate3d(-1rem, -1rem, 0) scale(0.95);
+  }
+  to {
+    transform: translate3d(2rem, 1.5rem, 0) scale(1.08);
+  }
+}
+
+@keyframes ambient-scan {
+  from {
+    transform: translate3d(-8%, -3rem, 0);
+  }
+  to {
+    transform: translate3d(8%, 3rem, 0);
+  }
+}
+
+@keyframes trace-drift {
+  from {
+    opacity: 0.16;
+    transform: translate3d(-1rem, 0, 0) rotate(var(--trace-rotation, 0deg));
+  }
+  to {
+    opacity: 0.5;
+    transform: translate3d(1rem, 0.5rem, 0) rotate(var(--trace-rotation, 0deg));
+  }
+}
+
+@keyframes ghost-breathe {
+  from {
+    opacity: 0.72;
+    transform: translate3d(-1.2rem, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(1.2rem, 0, 0);
+  }
+}
+
+@keyframes hero-float {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, -0.7rem, 0);
+  }
+}
+
+@keyframes signal-pass {
+  0%,
+  100% {
+    opacity: 0.14;
+    transform: translate3d(-1rem, 0, 0) scaleX(0.82);
+  }
+  50% {
+    opacity: 0.52;
+    transform: translate3d(1rem, 0, 0) scaleX(1);
+  }
+}
+
+
+@keyframes pulse-soft {
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: scale(0.94);
+  }
+  50% {
+    opacity: 0.28;
+    transform: scale(1.8);
+  }
+}
