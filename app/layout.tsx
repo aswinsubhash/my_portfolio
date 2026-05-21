@@ -6,8 +6,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { LangProvider } from "@/lib/i18n";
 import { AmbientMotion } from "@/components/ambient-motion";
 import { Cursor } from "@/components/cursor";
-import { FloatingParticles } from "@/components/floating-particles";
-import { ParticleGrid } from "@/components/particle-grid";
+import { SceneCanvas } from "@/components/scene-canvas";
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
 import { personal } from "@/lib/content";
@@ -125,8 +124,7 @@ export default function RootLayout({
         <ThemeProvider>
           <LenisProvider>
             <Cursor />
-            <FloatingParticles />
-            <ParticleGrid />
+            <SceneCanvas />
             <AmbientMotion />
             <Nav />
             <main id="main" className="relative">

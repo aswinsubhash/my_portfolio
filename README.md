@@ -5,23 +5,26 @@ Personal portfolio website for Aswin Subhash, built as a standard root-level Nex
 ## Stack
 
 - Next.js App Router
-- React
+- React 19
 - TypeScript
-- Tailwind CSS
-- Motion
-- Lenis
+- Tailwind CSS v4
+- Motion (Framer Motion)
+- Lenis smooth scroll
 - next-themes
 - Zod
+- Cloudflare Turnstile
+- Vercel Analytics
 
 ## Project Structure
 
 ```text
 app/                 App Router pages, layout, metadata, sitemap, robots
-app/actions/         Server actions
+app/actions/         Server actions (contact form)
 components/          Shared UI and page sections
+components/sections/ Portfolio sections (hero, about, experience, projects, education, contact)
 components/ui/       Reusable UI primitives
-lib/                 Content and utility helpers
-public/              Static assets served from the site root
+lib/                 Content, i18n, hooks, and utilities
+public/              Static assets
 ```
 
 ## Getting Started
@@ -30,6 +33,13 @@ Install dependencies:
 
 ```bash
 npm install
+```
+
+Create `.env.local`:
+
+```
+NEXT_PUBLIC_TURNSTILE_SITE_KEY=   # Cloudflare test key for local dev
+TURNSTILE_SECRET_KEY=<your-secret>
 ```
 
 Run the development server:
@@ -49,29 +59,28 @@ npm run build    # Create a production build
 npm run start    # Start the production server
 ```
 
-## Content
+## Content & i18n
 
-Most portfolio content lives in [lib/content.ts](lib/content.ts):
+All portfolio data lives in `lib/content.ts` (English source of truth). Translations for `en`, `ar`, `ja`, `de` are in `lib/translations.ts`. To update content, edit `lib/content.ts` then mirror changes across all four language blocks in `lib/translations.ts`.
 
-- Personal details
-- Skills
-- Experience
-- Projects
-- Education
-- Navigation sections
-
-Static files live in [public](public):
+Static files live in `public/`:
 
 - `profile.png`
 - `Aswin_Subhash_Resume.pdf`
 
 ## Contact Form
 
-The contact form posts to Google Forms from [app/actions/contact.ts](app/actions/contact.ts). Validation is handled with Zod before submission.
+Flow: `components/sections/contact.tsx` → `app/actions/contact.ts` → Cloudflare Turnstile verify → Google Forms submission.
+
+Zod schema in `lib/contact-form.ts`. Turnstile token is verified server-side before any submission reaches Google Forms.
+
+## Canvas Animation
+
+`components/scene-canvas.tsx` — single canvas layer combining the interactive dot grid and floating particles. One RAF loop, pauses when tab is hidden, caches theme-derived colors via `MutationObserver`.
 
 ## Deployment
 
-Deploy the repository root as a normal Next.js project.
+Active dev branch: `feat/perf-fonts-favicon`. Production: `main` on Vercel.
 
 For Vercel:
 
@@ -80,8 +89,9 @@ For Vercel:
 - Build command: `npm run build`
 - Install command: `npm install`
 
-No custom Flutter-style `vercel.json` rewrite is needed.
+Required Vercel environment variables:
 
-## Migration Note
-
-This repository previously contained a Flutter Web implementation. The active project is now the root-level Next.js app.
+```
+NEXT_PUBLIC_TURNSTILE_SITE_KEY=<real-site-key>
+TURNSTILE_SECRET_KEY=<real-secret-key>
+```

@@ -2,11 +2,25 @@
 
 import { useEffect, useRef } from "react";
 
+interface Particle {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  radius: number;
+  opacity: number;
+}
+
+const PARTICLE_COUNT = 55;
+const CONNECT_DIST = 110;
+const SPEED = 0.35;
+const GRID_SPACING = 45;
+const GRID_RADIUS = 130;
+
 function accentRgb(): string {
   const raw = getComputedStyle(document.documentElement)
     .getPropertyValue("--color-accent")
     .trim();
-  // hex → r,g,b
   const hex = raw.startsWith("#") ? raw.slice(1) : raw;
   const r = parseInt(hex.slice(0, 2), 16);
   const g = parseInt(hex.slice(2, 4), 16);
@@ -18,7 +32,7 @@ function isLight() {
   return document.documentElement.classList.contains("light");
 }
 
-export function ParticleGrid() {
+export function SceneCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -30,9 +44,11 @@ export function ParticleGrid() {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const coarse = window.matchMedia("(pointer: coarse)").matches;
 
-    let mouse = { x: -999, y: -999 };
+    let W = window.innerWidth;
+    let H = window.innerHeight;
     let rafId: number;
     let paused = false;
+    let mouse = { x: -999, y: -999 };
 
     // Cache expensive DOM reads — recompute only on theme change
     let rgb = accentRgb();
@@ -50,46 +66,97 @@ export function ParticleGrid() {
     };
     document.addEventListener("visibilitychange", onVisibility);
 
-    const SPACING = 45;
-    const RADIUS = 130;
-
     function resize() {
-      canvas!.width = window.innerWidth;
-      canvas!.height = window.innerHeight;
+      W = window.innerWidth;
+      H = window.innerHeight;
+      canvas!.width = W;
+      canvas!.height = H;
     }
+
+    function makeParticle(): Particle {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = reduce ? 0 : SPEED * (0.4 + Math.random() * 0.8);
+      return {
+        x: Math.random() * W,
+        y: Math.random() * H,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        radius: 1 + Math.random() * 1.2,
+        opacity: 0.18 + Math.random() * 0.32,
+      };
+    }
+
+    const particles: Particle[] = Array.from({ length: PARTICLE_COUNT }, makeParticle);
 
     function draw() {
       if (paused) return;
-      ctx!.clearRect(0, 0, canvas!.width, canvas!.height);
+      ctx!.clearRect(0, 0, W, H);
 
+      const opacityScale = light ? 0.65 : 1;
+      const lineAlphaScale = light ? 0.7 : 1;
       const BASE_OPACITY = light ? 0.12 : 0.09;
       const HOVER_OPACITY = light ? 0.40 : 0.48;
 
-      const cols = Math.ceil(canvas!.width / SPACING);
-      const rows = Math.ceil(canvas!.height / SPACING);
-
+      // --- Dot grid ---
+      const cols = Math.ceil(W / GRID_SPACING);
+      const rows = Math.ceil(H / GRID_SPACING);
       for (let r = 0; r <= rows; r++) {
         for (let c = 0; c <= cols; c++) {
-          const x = c * SPACING;
-          const y = r * SPACING;
-
+          const x = c * GRID_SPACING;
+          const y = r * GRID_SPACING;
           let opacity = BASE_OPACITY;
-
           if (!reduce && !coarse) {
             const dx = x - mouse.x;
             const dy = y - mouse.y;
             const dist = Math.sqrt(dx * dx + dy * dy);
-            if (dist < RADIUS) {
-              const t = 1 - dist / RADIUS;
+            if (dist < GRID_RADIUS) {
+              const t = 1 - dist / GRID_RADIUS;
               opacity = BASE_OPACITY + (HOVER_OPACITY - BASE_OPACITY) * t * t;
             }
           }
-
           ctx!.beginPath();
           ctx!.arc(x, y, 1.1, 0, Math.PI * 2);
           ctx!.fillStyle = `rgba(${rgb},${opacity})`;
           ctx!.fill();
         }
+      }
+
+      // --- Floating particles: move ---
+      if (!reduce) {
+        for (const p of particles) {
+          p.x += p.vx;
+          p.y += p.vy;
+          if (p.x < 0) p.x += W;
+          if (p.x > W) p.x -= W;
+          if (p.y < 0) p.y += H;
+          if (p.y > H) p.y -= H;
+        }
+      }
+
+      // --- Floating particles: connection lines ---
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < CONNECT_DIST) {
+            const alpha = (1 - dist / CONNECT_DIST) * 0.12 * lineAlphaScale;
+            ctx!.beginPath();
+            ctx!.moveTo(particles[i].x, particles[i].y);
+            ctx!.lineTo(particles[j].x, particles[j].y);
+            ctx!.strokeStyle = `rgba(${rgb},${alpha})`;
+            ctx!.lineWidth = 0.7;
+            ctx!.stroke();
+          }
+        }
+      }
+
+      // --- Floating particles: dots ---
+      for (const p of particles) {
+        ctx!.beginPath();
+        ctx!.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx!.fillStyle = `rgba(${rgb},${p.opacity * opacityScale})`;
+        ctx!.fill();
       }
 
       rafId = requestAnimationFrame(draw);
