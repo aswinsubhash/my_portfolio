@@ -61,8 +61,14 @@ export function SceneCanvas() {
     observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
 
     const onVisibility = () => {
-      paused = document.visibilityState === "hidden";
-      if (!paused) draw();
+      if (document.visibilityState === "hidden") {
+        paused = true;
+        cancelAnimationFrame(rafId);
+      } else if (paused) {
+        paused = false;
+        cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(draw);
+      }
     };
     document.addEventListener("visibilitychange", onVisibility);
 
