@@ -93,7 +93,6 @@ export default function RootLayout({
     "@type": "Person",
     name: personal.name,
     jobTitle: personal.title,
-    email: `mailto:${personal.email}`,
     url: siteUrl,
     sameAs: [personal.github, personal.linkedin],
     address: {

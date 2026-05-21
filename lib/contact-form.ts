@@ -9,6 +9,7 @@ export const contactSchema = z.object({
     .trim()
     .min(10, "Enter at least 10 characters")
     .max(4000, "Keep the message under 4,000 characters"),
+  turnstileToken: z.string().min(1, "Complete the CAPTCHA"),
 });
 
 export type ContactValues = z.infer<typeof contactSchema>;
@@ -24,6 +25,7 @@ export const initialContactValues: ContactValues = {
   email: "",
   subject: "",
   message: "",
+  turnstileToken: "",
 };
 
 const contactFields = new Set<ContactField>([
