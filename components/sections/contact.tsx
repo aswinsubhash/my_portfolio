@@ -21,7 +21,7 @@ import { submitContact } from "@/app/actions/contact";
 const fieldOrder: ContactField[] = ["name", "email", "subject", "message"];
 
 export function Contact() {
-  const { personal, ui } = useContent();
+  const { ui } = useContent();
   const ct = ui.contact;
 
   const [values, setValues] = React.useState<ContactValues>(initialContactValues);
