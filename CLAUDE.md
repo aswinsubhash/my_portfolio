@@ -48,11 +48,7 @@ Schema in `lib/contact-form.ts` (Zod). Includes `turnstileToken` field — valid
 
 ### Canvas Animations
 
-Two `fixed inset-0` canvas layers run on every page:
-- `components/particle-grid.tsx` — interactive dot grid, reacts to mouse
-- `components/floating-particles.tsx` — 55 drifting particles with O(n²) connection lines
-
-Both: pause on `document.visibilitychange` (tab hidden), cache `getComputedStyle` results via `MutationObserver` on `<html class>` (only recompute on theme change), clean up all listeners on unmount.
+Single canvas: `components/scene-canvas.tsx` — combines interactive dot grid (reacts to mouse) and 55 drifting particles with connection lines into one RAF loop. Pauses on `document.visibilitychange` (tab hidden), caches `getComputedStyle` via `MutationObserver` on `<html class>`, cleans up all listeners on unmount.
 
 ### Theme & Scroll
 
