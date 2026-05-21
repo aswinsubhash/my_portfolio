@@ -44,6 +44,23 @@ export function FloatingParticles() {
     let W = window.innerWidth;
     let H = window.innerHeight;
     let rafId: number;
+    let paused = false;
+
+    // Cache expensive DOM reads — recompute only on theme change
+    let rgb = accentRgb();
+    let light = isLight();
+
+    const observer = new MutationObserver(() => {
+      rgb = accentRgb();
+      light = isLight();
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+
+    const onVisibility = () => {
+      paused = document.visibilityState === "hidden";
+      if (!paused) draw();
+    };
+    document.addEventListener("visibilitychange", onVisibility);
 
     function resize() {
       W = window.innerWidth;
@@ -68,10 +85,9 @@ export function FloatingParticles() {
     const particles: Particle[] = Array.from({ length: COUNT }, makeParticle);
 
     function draw() {
+      if (paused) return;
       ctx!.clearRect(0, 0, W, H);
 
-      const light = isLight();
-      const rgb = accentRgb();
       // light mode: slightly lower opacity so particles don't overpower the bg
       const opacityScale = light ? 0.65 : 1;
       const lineAlphaScale = light ? 0.7 : 1;
@@ -123,6 +139,8 @@ export function FloatingParticles() {
     return () => {
       cancelAnimationFrame(rafId);
       window.removeEventListener("resize", resize);
+      document.removeEventListener("visibilitychange", onVisibility);
+      observer.disconnect();
     };
   }, []);
 

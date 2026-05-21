@@ -11,6 +11,7 @@ import { ParticleGrid } from "@/components/particle-grid";
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
 import { personal } from "@/lib/content";
+import { Analytics } from "@vercel/analytics/next";
 
 const syne = Syne({
   variable: "--font-syne",
@@ -135,6 +136,7 @@ export default function RootLayout({
           </LenisProvider>
         </ThemeProvider>
         </LangProvider>
+        <Analytics />
       </body>
     </html>
   );
