@@ -67,7 +67,7 @@ function LangSwitcher() {
 
 export function Nav() {
   const { lang, switchTo } = useLang();
-  const { navSections, ui } = useContent();
+  const { navSections } = useContent();
 
   const [scrolled, setScrolled] = React.useState(false);
   const [open, setOpen] = React.useState(false);

@@ -104,7 +104,7 @@ function FeaturedCard({ project, featuredLabel }: { project: Project; featuredLa
         </ul>
 
         <div className="flex flex-wrap gap-1.5">
-          {project.tags.map((t, i) => (
+          {project.tags.map((t) => (
             <span
               key={t}
               className="rounded-sm border border-border bg-bg-elev/80 px-3 py-1 font-mono text-[11px] tracking-[0.04em] text-fg-muted"
@@ -182,7 +182,7 @@ function CompactCard({ project }: { project: Project }) {
         </p>
 
         <div className="flex flex-wrap gap-1.5">
-          {visibleTags.map((t, i) => (
+          {visibleTags.map((t) => (
             <span
               key={t}
               className="rounded-sm border border-border bg-bg-elev/80 px-2.5 py-0.5 font-mono text-[10px] tracking-[0.04em] text-fg-muted"
