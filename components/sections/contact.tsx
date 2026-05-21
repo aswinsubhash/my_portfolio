@@ -2,8 +2,8 @@
 
 import * as React from "react";
 import { AnimatePresence, motion } from "motion/react";
-import { Check, Loader2, Mail, MapPin, Send } from "lucide-react";
-import { FaGithub, FaLinkedinIn } from "react-icons/fa6";
+import { Check, Loader2, Send } from "lucide-react";
+import { Turnstile } from "@marsidev/react-turnstile";
 import { Section } from "@/components/ui/section";
 import { Reveal } from "@/components/ui/reveal";
 import { cn } from "@/lib/cn";
@@ -109,64 +109,8 @@ export function Contact() {
       description={ct.desc}
       containerClassName="max-w-5xl"
     >
-      <Reveal className="grid items-start gap-6 lg:grid-cols-[0.8fr_1.1fr] lg:gap-10">
-        {/* Left — contact info */}
-        <aside className="card-accent motion-card rounded-[var(--radius-card)] border border-border bg-bg-card/70 p-5 shadow-[0_18px_60px_-48px_var(--color-accent-glow)] backdrop-blur-sm sm:p-6">
-          <div className="flex flex-col gap-5">
-            <div className="flex items-start justify-between gap-4">
-              <div>
-                <p className="font-display text-lg font-semibold tracking-tight text-fg">
-                  {ct.directLine}
-                </p>
-                <p className="mt-1 text-sm leading-relaxed text-fg-muted">
-                  {ct.directLineDesc}
-                </p>
-              </div>
-              <div className="inline-flex shrink-0 items-center gap-2 rounded-sm border border-success/30 bg-success/10 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.14em] text-success">
-                <span aria-hidden="true" className="relative flex h-1.5 w-1.5">
-                  <span className="pulse-soft absolute inline-flex h-full w-full rounded-full bg-success opacity-40" />
-                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-success" />
-                </span>
-                {ct.open}
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-2">
-              <ContactRow href={`mailto:${personal.email}`} icon={<Mail size={13} aria-hidden="true" />} label="Email">
-                {personal.email}
-              </ContactRow>
-              <ContactRow icon={<MapPin size={13} aria-hidden="true" />} label="Base">
-                {personal.location}
-              </ContactRow>
-            </div>
-
-            <div className="flex items-center justify-between gap-4 border-t border-border pt-5">
-              <p className="font-mono text-[11px] leading-relaxed text-fg-subtle">
-                {ct.repliesWithin}
-              </p>
-              <div className="flex shrink-0 gap-2">
-                {[
-                  { href: personal.github, label: "GitHub", icon: <FaGithub size={14} /> },
-                  { href: personal.linkedin, label: "LinkedIn", icon: <FaLinkedinIn size={13} /> },
-                  { href: `mailto:${personal.email}`, label: "Email", icon: <Mail size={13} /> },
-                ].map(({ href, label, icon }) => (
-                  <a
-                    key={label}
-                    href={href}
-                    target={href.startsWith("mailto:") ? undefined : "_blank"}
-                    rel={href.startsWith("mailto:") ? undefined : "noopener noreferrer"}
-                    aria-label={label}
-                    className="inline-flex h-9 w-9 items-center justify-center rounded-sm border border-border bg-bg/40 text-fg-muted transition-colors hover:border-accent/50 hover:bg-accent-dim hover:text-accent"
-                  >
-                    <span aria-hidden="true">{icon}</span>
-                  </a>
-                ))}
-              </div>
-            </div>
-          </div>
-        </aside>
-
-        {/* Right — form */}
+      <Reveal className="max-w-2xl">
+        {/* Form */}
         <div className="card-accent motion-card relative rounded-[var(--radius-card)] border border-border bg-bg-card/80 p-5 shadow-[0_24px_80px_-54px_var(--color-accent-glow)] focus-within:border-accent/40 focus-within:shadow-[0_24px_80px_-48px_var(--color-accent-glow)] sm:p-6">
           <div className="mb-5 flex flex-col gap-1 border-b border-border pb-5">
             <h3 className="font-display text-xl font-semibold tracking-tight text-fg">
@@ -208,13 +152,20 @@ export function Contact() {
                 <Field label={ct.fields.subject} name="subject" value={values.subject} placeholder={ct.placeholders.subject} autoComplete="off" error={fieldErrors.subject} onBlur={handleBlur} onChange={handleChange} />
                 <Field label={ct.fields.message} name="message" value={values.message} placeholder={ct.placeholders.message} textarea autoComplete="off" error={fieldErrors.message} onBlur={handleBlur} onChange={handleChange} />
 
+                <Turnstile
+                  siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
+                  onSuccess={(token) => handleChange("turnstileToken", token)}
+                  onExpire={() => handleChange("turnstileToken", "")}
+                  options={{ theme: "dark", size: "flexible" }}
+                />
+
                 {formError && (
                   <p className="text-xs text-rose-400" role="status" aria-live="polite">{formError}</p>
                 )}
 
                 <button
                   type="submit"
-                  disabled={pending}
+                  disabled={pending || !values.turnstileToken}
                   className="motion-chip mt-1 inline-flex h-11 items-center justify-center gap-2 rounded-sm bg-accent font-mono text-xs uppercase tracking-[0.14em] text-white hover:bg-accent-strong active:scale-[0.98] disabled:opacity-60"
                 >
                   {pending ? (
@@ -232,24 +183,6 @@ export function Contact() {
   );
 }
 
-function ContactRow({ icon, label, href, children }: {
-  icon: React.ReactNode; label: string; href?: string; children: React.ReactNode;
-}) {
-  const className = "motion-card group flex items-center gap-3 rounded-sm border border-border/70 bg-bg/30 px-3 py-3 text-sm hover:border-accent/30 hover:bg-accent-dim";
-  const content = (
-    <>
-      <span className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-sm border border-border bg-bg-card text-fg-muted transition-colors group-hover:border-accent/40 group-hover:text-accent">
-        {icon}
-      </span>
-      <span className="min-w-0">
-        <span className="block font-mono text-[10px] uppercase tracking-[0.16em] text-fg-subtle">{label}</span>
-        <span className="mt-0.5 block break-words text-fg-muted transition-colors group-hover:text-fg">{children}</span>
-      </span>
-    </>
-  );
-  if (href) return <a href={href} className={className}>{content}</a>;
-  return <div className={className}>{content}</div>;
-}
 
 function Field({ label, name, value, placeholder, type = "text", inputMode, autoComplete, spellCheck, textarea, error, onBlur, onChange }: {
   label: string; name: ContactField; value: string; placeholder: string;

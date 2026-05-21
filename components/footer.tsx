@@ -1,7 +1,6 @@
 "use client";
 
 import { FaGithub, FaLinkedinIn } from "react-icons/fa6";
-import { Mail } from "lucide-react";
 import { useContent } from "@/lib/useContent";
 
 export function Footer() {
@@ -24,7 +23,6 @@ export function Footer() {
           {[
             { href: personal.github, label: "GitHub", icon: <FaGithub size={13} /> },
             { href: personal.linkedin, label: "LinkedIn", icon: <FaLinkedinIn size={12} /> },
-            { href: `mailto:${personal.email}`, label: "Email", icon: <Mail size={13} /> },
           ].map(({ href, label, icon }) => (
             <a
               key={label}

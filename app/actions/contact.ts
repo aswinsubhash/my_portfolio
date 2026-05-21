@@ -35,6 +35,22 @@ export async function submitContact(
     [ENTRY.message]: parsed.data.message,
   });
 
+  const verifyRes = await fetch(
+    "https://challenges.cloudflare.com/turnstile/v0/siteverify",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({
+        secret: process.env.TURNSTILE_SECRET_KEY ?? "",
+        response: parsed.data.turnstileToken,
+      }),
+    },
+  );
+  const verify = (await verifyRes.json()) as { success: boolean };
+  if (!verify.success) {
+    return { status: "error", message: "CAPTCHA verification failed. Please try again." };
+  }
+
   try {
     await fetch(GOOGLE_FORM_URL, {
       method: "POST",
@@ -45,7 +61,7 @@ export async function submitContact(
   } catch {
     return {
       status: "error",
-      message: "Couldn't send right now. Please email me directly.",
+      message: "Couldn't send right now. Please try again later.",
     };
   }
 }
