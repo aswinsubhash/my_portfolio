@@ -39,7 +39,7 @@ function LangSwitcher() {
       </button>
 
       {open && (
-        <div className="absolute end-0 top-full z-50 mt-1 min-w-[168px] overflow-hidden rounded border border-border bg-bg-card/95 py-1 shadow-[0_8px_32px_-8px_rgba(0,0,0,0.5)] backdrop-blur-sm">
+        <div className="absolute end-0 top-full z-50 min-w-[168px] overflow-hidden rounded border border-border bg-bg-card/95 py-1 shadow-[0_8px_32px_-8px_rgba(0,0,0,0.5)] backdrop-blur-sm">
           {LANGS.map(({ code, label, native }) => (
             <button
               key={code}

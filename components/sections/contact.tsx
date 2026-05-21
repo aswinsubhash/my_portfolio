@@ -202,11 +202,11 @@ function Field({ label, name, value, placeholder, type = "text", inputMode, auto
     <label htmlFor={id} className="flex flex-col gap-1.5">
       <span className="prompt-label font-mono text-[10px] uppercase tracking-[0.18em] text-fg-subtle">{label}</span>
       {textarea ? (
-        <textarea id={id} name={name} value={value ?? ""} placeholder={placeholder} rows={5} required autoComplete={autoComplete} aria-invalid={Boolean(error)} aria-describedby={error ? errorId : undefined} onBlur={() => onBlur(name)} onChange={(e) => onChange(name, e.target.value)} className={cn(base, "resize-y")} />
+        <textarea id={id} name={name} value={value ?? ""} placeholder={placeholder} rows={5} autoComplete={autoComplete} aria-invalid={Boolean(error)} aria-describedby={error ? errorId : undefined} onBlur={() => onBlur(name)} onChange={(e) => onChange(name, e.target.value)} className={cn(base, "resize-y")} />
       ) : (
-        <input id={id} name={name} type={type} inputMode={inputMode} value={value ?? ""} placeholder={placeholder} required autoComplete={autoComplete} spellCheck={spellCheck} aria-invalid={Boolean(error)} aria-describedby={error ? errorId : undefined} onBlur={() => onBlur(name)} onChange={(e) => onChange(name, e.target.value)} className={base} />
+        <input id={id} name={name} type={type} inputMode={inputMode} value={value ?? ""} placeholder={placeholder} autoComplete={autoComplete} spellCheck={spellCheck} aria-invalid={Boolean(error)} aria-describedby={error ? errorId : undefined} onBlur={() => onBlur(name)} onChange={(e) => onChange(name, e.target.value)} className={base} />
       )}
-      {error && <span id={errorId} className="sr-only" role="status" aria-live="polite">{error}</span>}
+      {error && <span id={errorId} className="font-mono text-[10px] text-rose-400" role="status" aria-live="polite">{error}</span>}
     </label>
   );
 }

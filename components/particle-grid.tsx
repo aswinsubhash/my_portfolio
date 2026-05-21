@@ -32,6 +32,23 @@ export function ParticleGrid() {
 
     let mouse = { x: -999, y: -999 };
     let rafId: number;
+    let paused = false;
+
+    // Cache expensive DOM reads — recompute only on theme change
+    let rgb = accentRgb();
+    let light = isLight();
+
+    const observer = new MutationObserver(() => {
+      rgb = accentRgb();
+      light = isLight();
+    });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
+
+    const onVisibility = () => {
+      paused = document.visibilityState === "hidden";
+      if (!paused) draw();
+    };
+    document.addEventListener("visibilitychange", onVisibility);
 
     const SPACING = 45;
     const RADIUS = 130;
@@ -42,10 +59,9 @@ export function ParticleGrid() {
     }
 
     function draw() {
+      if (paused) return;
       ctx!.clearRect(0, 0, canvas!.width, canvas!.height);
 
-      const light = isLight();
-      const rgb = accentRgb();
       const BASE_OPACITY = light ? 0.12 : 0.09;
       const HOVER_OPACITY = light ? 0.40 : 0.48;
 
@@ -92,6 +108,8 @@ export function ParticleGrid() {
       cancelAnimationFrame(rafId);
       window.removeEventListener("resize", resize);
       window.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("visibilitychange", onVisibility);
+      observer.disconnect();
     };
   }, []);
 
