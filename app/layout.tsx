@@ -6,11 +6,10 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { LangProvider } from "@/lib/i18n";
 import { AmbientMotion } from "@/components/ambient-motion";
 import { Cursor } from "@/components/cursor";
-import { FloatingParticles } from "@/components/floating-particles";
-import { ParticleGrid } from "@/components/particle-grid";
+import { SceneCanvas } from "@/components/scene-canvas";
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
-import { personal } from "@/lib/content";
+import { personal, skills } from "@/lib/content";
 import { Analytics } from "@vercel/analytics/next";
 
 const syne = Syne({
@@ -94,13 +93,25 @@ export default function RootLayout({
     "@type": "Person",
     name: personal.name,
     jobTitle: personal.title,
+    description: personal.tagline,
     url: siteUrl,
+    image: `${siteUrl}/opengraph-image`,
     sameAs: [personal.github, personal.linkedin],
+    knowsAbout: skills.flatMap((s) => s.items),
     address: {
       "@type": "PostalAddress",
       addressLocality: "Dubai",
       addressCountry: "AE",
     },
+  };
+
+  const websiteJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: personal.name,
+    url: siteUrl,
+    inLanguage: ["en", "ar", "ja", "de"],
+    author: { "@type": "Person", name: personal.name, url: siteUrl },
   };
 
   return (
@@ -121,12 +132,15 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        />
         <LangProvider>
         <ThemeProvider>
           <LenisProvider>
             <Cursor />
-            <FloatingParticles />
-            <ParticleGrid />
+            <SceneCanvas />
             <AmbientMotion />
             <Nav />
             <main id="main" className="relative">
