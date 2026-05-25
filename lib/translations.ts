@@ -24,10 +24,6 @@ export type UI = {
     eyebrow: string;
     title: string;
     desc: string;
-    directLine: string;
-    directLineDesc: string;
-    open: string;
-    repliesWithin: string;
     sendMessage: string;
     sendMessageDesc: string;
     fields: { name: string; email: string; subject: string; message: string };
@@ -279,10 +275,6 @@ const ar: Translations = {
       eyebrow: "05 · تواصل",
       title: "لنتحدث.",
       desc: "متاح للأدوار والمشاريع المستقلة والتحدث عن المنتجات.",
-      directLine: "خط مباشر",
-      directLineDesc: "الأفضل لبناء التطبيقات وإصلاح الإنتاج والعمل طويل الأمد.",
-      open: "متاح",
-      repliesWithin: "يرد خلال 24 ساعة.",
       sendMessage: "أرسل رسالة",
       sendMessageDesc: "شارك السياق والجدول الزمني أو تفاصيل الدور وسأرد بالخطوة التالية.",
       fields: { name: "الاسم", email: "البريد الإلكتروني", subject: "الموضوع", message: "الرسالة" },
@@ -327,10 +319,6 @@ const enUI: UI = {
     eyebrow: "05 · Contact",
     title: "Let's talk.",
     desc: "Open to roles, freelance builds, and product conversations.",
-    directLine: "Direct Line",
-    directLineDesc: "Best for app builds, production fixes, and long-term product work.",
-    open: "Open",
-    repliesWithin: "Replies within 24 hours.",
     sendMessage: "Send a Message",
     sendMessageDesc: "Share the context, timeline, or role details and I'll reply with the next step.",
     fields: { name: "Name", email: "Email", subject: "Subject", message: "Message" },
@@ -593,10 +581,6 @@ const ja: Translations = {
       eyebrow: "05 · 連絡先",
       title: "話しましょう。",
       desc: "役職、フリーランス、プロダクトの話し合いを歓迎します。",
-      directLine: "直通連絡",
-      directLineDesc: "アプリ開発、本番修正、長期プロダクト作業に最適です。",
-      open: "対応中",
-      repliesWithin: "24時間以内に返信します。",
       sendMessage: "メッセージを送る",
       sendMessageDesc: "コンテキスト、スケジュール、または役職の詳細を共有してください。次のステップをお伝えします。",
       fields: { name: "お名前", email: "メールアドレス", subject: "件名", message: "メッセージ" },
@@ -850,10 +834,6 @@ const de: Translations = {
       eyebrow: "05 · Kontakt",
       title: "Lass uns reden.",
       desc: "Offen für Stellen, Freelance-Projekte und Produktgespräche.",
-      directLine: "Direkter Kontakt",
-      directLineDesc: "Am besten für App-Entwicklung, Produktionsfixes und langfristige Produktarbeit.",
-      open: "Verfügbar",
-      repliesWithin: "Antwortet innerhalb von 24 Stunden.",
       sendMessage: "Nachricht senden",
       sendMessageDesc: "Teile Kontext, Zeitplan oder Stellendetails mit und ich antworte mit dem nächsten Schritt.",
       fields: { name: "Name", email: "E-Mail", subject: "Betreff", message: "Nachricht" },
