@@ -190,6 +190,7 @@ export function Nav() {
                   {label}
                 </button>
               ))}
+              <ThemeToggle className="ms-auto" />
             </div>
           </nav>
         </motion.div>

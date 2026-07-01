@@ -27,6 +27,18 @@ export type Education = {
   duration: string;
 };
 
+export type CertificationCategory = "ai-agentic" | "mobile-cs";
+
+export type Certification = {
+  title: string;
+  issuer: string;
+  issued: string;
+  category: CertificationCategory;
+  accent: string;
+  credentialId?: string;
+  skills?: string[];
+};
+
 export const personal = {
   name: "Aswin Subhash",
   location: "Dubai, UAE",
@@ -34,11 +46,11 @@ export const personal = {
   subtitle: "Flutter Expert · Cross-Platform Specialist",
   tagline:
     "High-performance mobile applications. Clean architecture, scalable systems, production-grade delivery for Android & iOS.",
-  bio: "2.5+ years building high-performance, scalable mobile applications with Flutter and Dart. Strong in clean architecture, state management, CI/CD automation, secure API integrations, and performance optimization. Track record of crash-free, production-grade apps with fast load times and efficient deployments. Experienced collaborating across teams, building real-time systems, and shipping to both Google Play and App Store.",
+  bio: "3+ years building high-performance, scalable mobile applications with Flutter and Dart. Strong in clean architecture, state management, CI/CD automation, secure API integrations, and performance optimization. Track record of crash-free, production-grade apps with fast load times and efficient deployments. Experienced collaborating across teams, building real-time systems, and shipping to both Google Play and App Store.",
   email: "aswinofficial3@gmail.com",
   github: "https://github.com/aswinsubhash",
   linkedin: "https://www.linkedin.com/in/aswinsubhash",
-  resume: "/Aswin_Subhash_Resume.pdf",
+  resume: "/Aswin_Subhash_Mobile_Application_Developer_CV_2026.pdf",
   available: true,
 } as const;
 
@@ -105,14 +117,14 @@ export const experience: Experience[] = [
       "Designed and implemented a scalable clean architecture across presentation, domain, and data layers, powering a feature-rich application with dual-flavor UAE and Iraq builds from a single codebase.",
       "Delivered end-to-end authentication, shipment and vehicle tracking, finance workflows, pricing and terms logic, and a Sell Your Car flow with VIN search and shareable listings.",
       "Implemented pagination, search, sorting, and filtering across modules, with market-specific app identities, assets, and business logic.",
-      "Established a robust Flutter foundation using BLoC, Dio, GetIt, go_router, structured error handling, token-based authentication, environment switching, and ARB localization for Arabic, Kurdish, Pashto, Farsi, and English with full RTL/LTR support.",
+      "Established a robust Flutter foundation using BLoC, Dio, GetIt, go_router, structured error handling, token-based authentication, environment switching, and ARB localization for Arabic, Kurdish, Pashto, Farsi, Georgian and English with full RTL/LTR support.",
       "Led an AI-augmented development workflow using Claude Code, multi-agent analysis, Codex generation, Ollama cloud models, automated commit messages, PR descriptions, and pre-commit reviews to accelerate delivery and improve code quality.",
       "Owned planning, system design, architecture, and implementation to ensure scalability and maintainability across multiple markets.",
     ],
   },
   {
-    company: "JIITAK Facilitating Pvt Ltd",
-    location: "Kochi, Kerala",
+    company: "JIITAK Inc",
+    location: "Fukuoka, Japan",
     role: "Flutter Developer",
     duration: "Jan 2024 – Oct 2025",
     description: [
@@ -154,17 +166,17 @@ export const projects: Project[] = [
   {
     title: "M1 Shipping",
     summary:
-      "Vehicle logistics platform for UAE, Oman & Iraq — migrated from native Android/iOS to Flutter in 30 days. Dual-flavor builds, full RTL/LTR, 5-language support.",
+      "Vehicle logistics platform for UAE, Oman & Iraq — migrated from native Android/iOS to Flutter in 30 days. Dual-flavor builds, full RTL/LTR, 6-language support.",
     description: [
       "Led end-to-end migration of a production Android (Kotlin) and iOS (Swift) app to Flutter in 30 days, delivering a feature-rich vehicle logistics platform across UAE, Oman, and Iraq.",
       "Architected dual-flavor UAE/Iraq builds from a single codebase using clean architecture across presentation, domain, and data layers.",
       "Delivered shipment & vehicle tracking, finance workflows, pricing and terms logic, and a Sell Your Car flow with VIN search and shareable listings.",
-      "Built full RTL/LTR localization in Arabic, Kurdish, Pashto, Farsi, and English using ARB files.",
+      "Built full RTL/LTR localization in Arabic, Kurdish, Pashto, Farsi, Georgian and English using ARB files.",
       "Implemented BLoC, Dio, GetIt, go_router with token-based auth, environment switching, and structured error handling.",
     ],
     tags: ["Flutter", "Clean Architecture", "Multi-flavor", "RTL/LTR", "BLoC"],
     accent: "cyan",
-    highlights: ["30-day delivery", "UAE · Oman · Iraq", "5 languages"],
+    highlights: ["30-day delivery", "UAE · Oman · Iraq", "6 languages"],
     links: {
       playStore: "https://play.google.com/store/apps/details?id=com.m1shipping.android&hl=en_US",
       appStore: "https://apps.apple.com/ae/app/m1-shipping/id6505103589",
@@ -238,6 +250,34 @@ export const projects: Project[] = [
     tags: ["Flutter", "360° View", "QR", "Multi-app System"],
     accent: "indigo",
   },
+  {
+    title: "M1 Cam",
+    summary:
+      "Warehouse capture app for M1 Shipping teams — sign in, search lots, VINs, or containers, capture media, manage documents, save GPS location, and complete loading tasks.",
+    description: [
+      "Built a Flutter capture flow for warehouse staff to authenticate through the M1 reports API and resume work from a persisted local session.",
+      "Supported Lot No., VIN, and Container workflows with featured, vehicle, damage, loading, and offloading media capture.",
+      "Implemented shipment document, invoice, B/L, and other document uploads with local picking constrained to PDF and DOCX files.",
+      "Added GPS location capture, loading-completion actions for supported container workflows, offline reachability UI, and session-clearing logout.",
+    ],
+    tags: ["Flutter", "Media Capture", "Documents", "GPS", "Connectivity"],
+    accent: "amber",
+    highlights: ["Warehouse workflow", "Lot · VIN · Container", "PDF/DOCX uploads"],
+  },
+  {
+    title: "M1 Yard",
+    summary:
+      "Mobile operations app for selected-yard workflows — gate-pass verification, VIN scanning, vehicle movements, GPS location updates, stock browsing, and stock audits.",
+    description: [
+      "Built a Flutter operations app with feature-first Clean Architecture, BLoC state management, authenticated API workflows, and yard-scoped local persistence.",
+      "Implemented session restore, yard selection, VIN QR/barcode scanning, vehicle lookup, movement recording, GPS location read/save, and M1 gate-pass verification.",
+      "Delivered stock dashboards, customer-level counts, debounced server-side vehicle search, full vehicle records, cached media carousels, and fullscreen zoom.",
+      "Added active-audit start/continue flows, manual or scanned VIN audit entry, found/missing/extra counts, audit completion, Excel report download, and coordinated token refresh on 401 responses.",
+    ],
+    tags: ["Flutter", "Clean Architecture", "BLoC", "Barcode", "Stock Audits"],
+    accent: "violet",
+    highlights: ["Yard operations", "VIN scanning", "Excel audit reports"],
+  },
 ];
 
 export const education: Education[] = [
@@ -259,11 +299,160 @@ export const education: Education[] = [
   },
 ];
 
+export const certifications: Certification[] = [
+  {
+    title: "Future of AI",
+    issuer: "BlueDot Impact",
+    issued: "Jun 2026",
+    credentialId: "reczloms9vqvNvPMKw",
+    category: "ai-agentic",
+    accent: "blue",
+  },
+  {
+    title: "Introduction to Model Context Protocol",
+    issuer: "Anthropic",
+    issued: "Jun 2026",
+    credentialId: "8t7ivr84q2jt",
+    category: "ai-agentic",
+    accent: "stone",
+  },
+  {
+    title: "Agents and Workflows",
+    issuer: "OpenAI",
+    issued: "Jun 2026",
+    credentialId: "8efns37995",
+    category: "ai-agentic",
+    accent: "emerald",
+  },
+  {
+    title: "Applied AI Foundations",
+    issuer: "OpenAI",
+    issued: "Jun 2026",
+    credentialId: "mv1hi4x93n",
+    category: "ai-agentic",
+    accent: "emerald",
+  },
+  {
+    title: "AI Foundations",
+    issuer: "OpenAI",
+    issued: "Jun 2026",
+    credentialId: "6mfkgq2433",
+    category: "ai-agentic",
+    accent: "emerald",
+  },
+  {
+    title: "Certificate of completion: Claude code 101",
+    issuer: "Anthropic",
+    issued: "Jun 2026",
+    credentialId: "zwtkfzwdgs35",
+    category: "ai-agentic",
+    accent: "stone",
+  },
+  {
+    title: "Certificate of completion: AI Capabilities and Limitations",
+    issuer: "Anthropic",
+    issued: "Jun 2026",
+    credentialId: "vwva6vxm7f2y",
+    category: "ai-agentic",
+    accent: "stone",
+  },
+  {
+    title: "Claude Code in Action",
+    issuer: "Anthropic",
+    issued: "Jun 2026",
+    credentialId: "59ggyk7ndjmp",
+    category: "ai-agentic",
+    accent: "stone",
+  },
+  {
+    title: "Certificate of completion: Introduction to agent skills",
+    issuer: "Anthropic",
+    issued: "Jun 2026",
+    credentialId: "nqebewtwqqm6",
+    category: "ai-agentic",
+    accent: "stone",
+  },
+  {
+    title: "Give Your AI Agent Skills",
+    issuer: "LinkedIn",
+    issued: "Jun 2026",
+    category: "ai-agentic",
+    accent: "sky",
+    skills: ["AI Agents", "Agentic AI Development"],
+  },
+  {
+    title: "Agentic AI Fundamentals: Architectures, Frameworks, and Applications",
+    issuer: "LinkedIn",
+    issued: "Jun 2026",
+    category: "ai-agentic",
+    accent: "sky",
+    skills: ["AI for Business"],
+  },
+  {
+    title: "Building AI That Remembers: Architecting Reliable, Context-Aware Enterprise Agents",
+    issuer: "LinkedIn",
+    issued: "Jun 2026",
+    category: "ai-agentic",
+    accent: "sky",
+    skills: [
+      "Artificial Intelligence (AI)",
+      "AI Policy",
+      "Governance",
+      "Regulation",
+    ],
+  },
+  {
+    title: "Agentic AI: Build Your First Agentic AI System",
+    issuer: "LinkedIn",
+    issued: "Jun 2026",
+    category: "ai-agentic",
+    accent: "sky",
+    skills: ["Artificial Intelligence (AI)", "AI Agents"],
+  },
+  {
+    title: "Java Data Structures and Algorithms",
+    issuer: "Udemy",
+    issued: "Oct 2023",
+    credentialId: "UC-878c8b2e-151e-4a9a-9a39-a5d656287500",
+    category: "mobile-cs",
+    accent: "violet",
+    skills: ["Data Structure and Algorithms"],
+  },
+  {
+    title: "Flutter Bloc Essential Course",
+    issuer: "Udemy",
+    issued: "Oct 2023",
+    credentialId: "UC-37bf235e-8d03-4ed6-bc53-61f9b503382e",
+    category: "mobile-cs",
+    accent: "violet",
+    skills: ["Bloc State Management"],
+  },
+  {
+    title: "Flutter Provider Essential Course",
+    issuer: "Udemy",
+    issued: "Aug 2023",
+    credentialId: "UC-91858f78-67ce-4035-8e84-5bf91ebc21a8.pdf",
+    category: "mobile-cs",
+    accent: "violet",
+    skills: ["Provider State Management"],
+  },
+  {
+    title: "Flutter Complete Course [2023] Edition",
+    issuer: "Udemy",
+    issued: "Jun 2023",
+    credentialId: "UC-1a43d7ad-035e-47d9-9446-9716cd3004b1",
+    category: "mobile-cs",
+    accent: "violet",
+    skills: ["Flutter"],
+  },
+];
+
 export const navSections = [
   { id: "home", label: "Home" },
   { id: "about", label: "About" },
   { id: "experience", label: "Experience" },
   { id: "projects", label: "Projects" },
   { id: "education", label: "Education" },
+  { id: "certifications", label: "Certifications" },
   { id: "contact", label: "Contact" },
 ] as const;

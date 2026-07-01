@@ -236,4 +236,6 @@ const accentDot: Record<string, string> = {
   emerald: "bg-emerald-400",
   rose: "bg-rose-400",
   indigo: "bg-indigo-400",
+  amber: "bg-amber-400",
+  violet: "bg-violet-400",
 };
