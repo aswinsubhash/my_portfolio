@@ -1,5 +1,6 @@
 "use client";
 
+import * as React from "react";
 import { motion } from "motion/react";
 import { useTheme } from "next-themes";
 import { Moon, Sun } from "lucide-react";
@@ -11,14 +12,20 @@ type ThemeToggleProps = {
 
 export function ThemeToggle({ className }: ThemeToggleProps) {
   const { resolvedTheme, theme, setTheme } = useTheme();
+  const mounted = React.useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false,
+  );
   const currentTheme = resolvedTheme ?? theme;
-  const isDark = currentTheme === "dark";
+  const isDark = mounted && currentTheme === "dark";
+  const label = isDark ? "Switch to light theme" : "Switch to dark theme";
 
   return (
     <button
       type="button"
       dir="ltr"
-      aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
+      aria-label={label}
       aria-pressed={isDark}
       onClick={() => setTheme(isDark ? "light" : "dark")}
       className={cn(
@@ -26,7 +33,7 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
         className,
       )}
     >
-      <span className="sr-only">{isDark ? "Switch to light theme" : "Switch to dark theme"}</span>
+      <span className="sr-only">{label}</span>
       <span
         aria-hidden="true"
         className="absolute inset-y-1 start-1 w-6 rounded-[2px] bg-amber-300/10 transition-opacity duration-300 dark:opacity-0"
