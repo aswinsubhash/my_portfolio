@@ -5,11 +5,14 @@ import {
   experience as enExperience,
   projects as enProjects,
   education as enEducation,
+  certifications as enCertifications,
   navSections as enNav,
   type SkillGroup,
   type Experience,
   type Project,
   type Education,
+  type Certification,
+  type CertificationCategory,
 } from "./content";
 
 type Personal = { [K in keyof typeof enPersonal]: typeof enPersonal[K] extends string ? string : typeof enPersonal[K] };
@@ -20,14 +23,19 @@ export type UI = {
   experience: { eyebrow: string; title: string };
   projects: { eyebrow: string; title: string; desc: string };
   education: { eyebrow: string; title: string };
+  certifications: {
+    eyebrow: string;
+    title: string;
+    desc: string;
+    issued: string;
+    credentialId: string;
+    skills: string;
+    categories: Record<CertificationCategory, string>;
+  };
   contact: {
     eyebrow: string;
     title: string;
     desc: string;
-    directLine: string;
-    directLineDesc: string;
-    open: string;
-    repliesWithin: string;
     sendMessage: string;
     sendMessageDesc: string;
     fields: { name: string; email: string; subject: string; message: string };
@@ -53,6 +61,7 @@ export type Translations = {
   experience: Experience[];
   projects: Project[];
   education: Education[];
+  certifications: Certification[];
   navSections: NavSection[];
   ui: UI;
 };
@@ -65,7 +74,7 @@ const ar: Translations = {
     subtitle: "خبير Flutter · متخصص متعدد المنصات",
     tagline:
       "تطبيقات جوال عالية الأداء. معمارية نظيفة، أنظمة قابلة للتوسع، تسليم احترافي لـ Android و iOS.",
-    bio: "أكثر من سنتين ونصف في بناء تطبيقات جوال عالية الأداء باستخدام Flutter وDart. خبرة قوية في المعمارية النظيفة وإدارة الحالة وأتمتة CI/CD وتكامل الـ APIs الآمنة وتحسين الأداء. سجل حافل بتطبيقات خالية من الأعطال وجاهزة للإنتاج مع أوقات تحميل سريعة ونشر فعّال. خبرة في العمل ضمن فرق متعددة، وبناء أنظمة في الوقت الفعلي، وإطلاق تطبيقات على Google Play وApp Store.",
+    bio: "أكثر من 3 سنوات في بناء تطبيقات جوال عالية الأداء باستخدام Flutter وDart. خبرة قوية في المعمارية النظيفة وإدارة الحالة وأتمتة CI/CD وتكامل الـ APIs الآمنة وتحسين الأداء. سجل حافل بتطبيقات خالية من الأعطال وجاهزة للإنتاج مع أوقات تحميل سريعة ونشر فعّال. خبرة في العمل ضمن فرق متعددة، وبناء أنظمة في الوقت الفعلي، وإطلاق تطبيقات على Google Play وApp Store.",
   },
 
   skills: [
@@ -104,14 +113,14 @@ const ar: Translations = {
         "صمّم وطبّق معمارية نظيفة قابلة للتوسع عبر طبقات العرض والمجال والبيانات، لتطبيق غني بالميزات بنيات ثنائية النكهة للإمارات والعراق من قاعدة كود واحدة.",
         "نفّذ المصادقة الكاملة وتتبع الشحنات والمركبات وسير عمل المالية ومنطق الأسعار والشروط وتدفق بيع السيارة مع بحث VIN وقوائم قابلة للمشاركة.",
         "طبّق الترقيم والبحث والفرز والتصفية عبر الوحدات، مع هويات تطبيقية وأصول ومنطق أعمال خاص بكل سوق.",
-        "أرسى أساسًا متينًا باستخدام BLoC وDio وGetIt وgo_router مع مصادقة قائمة على الرمز وتبديل البيئات ومعالجة منظمة للأخطاء وتعريب ARB للعربية والكردية والباشتو والفارسية والإنجليزية مع دعم RTL/LTR كامل.",
+        "أرسى أساسًا متينًا باستخدام BLoC وDio وGetIt وgo_router مع مصادقة قائمة على الرمز وتبديل البيئات ومعالجة منظمة للأخطاء وتعريب ARB للعربية والكردية والباشتو والفارسية والجورجية والإنجليزية مع دعم RTL/LTR كامل.",
         "قاد سير عمل مُعزَّزًا بالذكاء الاصطناعي باستخدام Claude Code وتحليل متعدد الوكلاء وتوليد Codex ونماذج Ollama السحابية لتسريع التسليم وتحسين جودة الكود.",
         "تولّى التخطيط وتصميم الأنظمة والمعمارية والتنفيذ لضمان قابلية التوسع والصيانة عبر أسواق متعددة.",
       ],
     },
     {
-      company: "JIITAK Facilitating Pvt Ltd",
-      location: "كوتشي، كيرالا",
+      company: "JIITAK Inc",
+      location: "فوكوكا، اليابان",
       role: "مطوّر Flutter",
       duration: "يناير 2024 – أكتوبر 2025",
       description: [
@@ -153,17 +162,17 @@ const ar: Translations = {
     {
       title: "M1 Shipping",
       summary:
-        "منصة لوجستية للمركبات في الإمارات وعُمان والعراق — تم ترحيلها من Android/iOS الأصلي إلى Flutter في 30 يومًا. بنيات ثنائية النكهة، دعم كامل RTL/LTR، 5 لغات.",
+        "منصة لوجستية للمركبات في الإمارات وعُمان والعراق — تم ترحيلها من Android/iOS الأصلي إلى Flutter في 30 يومًا. بنيات ثنائية النكهة، دعم كامل RTL/LTR، 6 لغات.",
       description: [
         "قاد ترحيل تطبيق Android (Kotlin) وiOS (Swift) كاملًا إلى Flutter في 30 يومًا، مسلّمًا منصة لوجستية للمركبات غنية بالميزات عبر الإمارات وعُمان والعراق.",
         "صمّم بنيات ثنائية النكهة للإمارات/العراق من قاعدة كود واحدة باستخدام معمارية نظيفة عبر طبقات العرض والمجال والبيانات.",
         "سلّم تتبع الشحنات والمركبات وسير عمل المالية ومنطق الأسعار والشروط وتدفق بيع السيارة مع بحث VIN وقوائم قابلة للمشاركة.",
-        "بنى تعريبًا كاملًا RTL/LTR بالعربية والكردية والباشتو والفارسية والإنجليزية باستخدام ملفات ARB.",
+        "بنى تعريبًا كاملًا RTL/LTR بالعربية والكردية والباشتو والفارسية والجورجية والإنجليزية باستخدام ملفات ARB.",
         "طبّق BLoC وDio وGetIt وgo_router مع مصادقة قائمة على الرمز وتبديل البيئات ومعالجة منظمة للأخطاء.",
       ],
       tags: ["Flutter", "Clean Architecture", "Multi-flavor", "RTL/LTR", "BLoC"],
       accent: "cyan",
-      highlights: ["30-day delivery", "UAE · Oman · Iraq", "5 languages"],
+      highlights: ["30-day delivery", "UAE · Oman · Iraq", "6 languages"],
       links: {
         playStore: "https://play.google.com/store/apps/details?id=com.m1shipping.android&hl=en_US",
         appStore: "https://apps.apple.com/ae/app/m1-shipping/id6505103589",
@@ -237,6 +246,34 @@ const ar: Translations = {
       tags: ["Flutter", "360° View", "QR", "Multi-app System"],
       accent: "indigo",
     },
+    {
+      title: "M1 Cam",
+      summary:
+        "تطبيق التقاط ميداني لمستودعات M1 Shipping — تسجيل الدخول، البحث عن Lot أو VIN أو Container، التقاط الوسائط، إدارة المستندات، حفظ GPS، وإكمال مهام التحميل.",
+      description: [
+        "بنى تدفق التقاط Flutter لموظفي المستودعات مع مصادقة عبر M1 reports API واستعادة العمل من جلسة محلية محفوظة.",
+        "دعم مسارات Lot No. وVIN وContainer مع التقاط الصورة الرئيسية وصور المركبة والأضرار والتحميل والتفريغ.",
+        "نفّذ رفع مستندات الشحن والفواتير وB/L والمستندات الأخرى مع تقييد اختيار الملفات المحلي إلى PDF وDOCX.",
+        "أضاف التقاط موقع GPS، إجراءات إكمال التحميل لمسارات الحاويات المدعومة، واجهة حالة عدم الاتصال، وتسجيل خروج يمسح الجلسة.",
+      ],
+      tags: ["Flutter", "Media Capture", "Documents", "GPS", "Connectivity"],
+      accent: "amber",
+      highlights: ["Warehouse workflow", "Lot · VIN · Container", "PDF/DOCX uploads"],
+    },
+    {
+      title: "M1 Yard",
+      summary:
+        "تطبيق عمليات جوال لسير العمل داخل الساحة المحددة — تحقق من تصاريح البوابة، مسح VIN، حركة المركبات، تحديث GPS، تصفح المخزون، وتدقيق المخزون.",
+      description: [
+        "بنى تطبيق عمليات Flutter بمعمارية Clean Architecture حسب الميزات، وإدارة حالة BLoC، وتدفقات API موثقة، وتخزين محلي مقيّد بالساحة.",
+        "نفّذ استعادة الجلسة، اختيار الساحة، مسح VIN عبر QR/barcode، البحث عن المركبة، تسجيل الحركة، قراءة/حفظ موقع GPS، والتحقق من تصاريح بوابة M1.",
+        "سلّم لوحات مخزون، أعدادًا حسب العميل، بحث مركبات خادميًا مؤجلًا، سجلات مركبات كاملة، عروض وسائط مخزنة، وتكبيرًا بملء الشاشة.",
+        "أضاف بدء/متابعة التدقيق النشط، إدخال VIN يدويًا أو بالمسح، عدادات الموجود/المفقود/الإضافي، إكمال التدقيق، تنزيل تقرير Excel، وتحديث رمز منسق عند 401.",
+      ],
+      tags: ["Flutter", "Clean Architecture", "BLoC", "Barcode", "Stock Audits"],
+      accent: "violet",
+      highlights: ["Yard operations", "VIN scanning", "Excel audit reports"],
+    },
   ],
 
   education: [
@@ -257,12 +294,15 @@ const ar: Translations = {
     },
   ],
 
+  certifications: enCertifications,
+
   navSections: [
     { id: "home", label: "الرئيسية" },
     { id: "about", label: "عن" },
     { id: "experience", label: "الخبرات" },
     { id: "projects", label: "المشاريع" },
     { id: "education", label: "التعليم" },
+    { id: "certifications", label: "الشهادات" },
     { id: "contact", label: "تواصل" },
   ],
 
@@ -272,17 +312,25 @@ const ar: Translations = {
     projects: {
       eyebrow: "03 · المشاريع",
       title: "منتجات مُطلقة.",
-      desc: "5 تطبيقات في الإنتاج. تعمل في الإمارات واليابان والمملكة العربية السعودية وأكثر.",
+      desc: "7 تطبيقات في الإنتاج. تعمل في الإمارات واليابان والمملكة العربية السعودية وأكثر.",
     },
     education: { eyebrow: "04 · التعليم", title: "السجل الأكاديمي." },
+    certifications: {
+      eyebrow: "05 · الشهادات",
+      title: "الشهادات.",
+      desc: "شهادات في الذكاء الاصطناعي وسير عمل الوكلاء وFlutter وعلوم الحاسب تدعم العمل المنتج.",
+      issued: "تاريخ الإصدار",
+      credentialId: "معرّف الشهادة",
+      skills: "المهارات",
+      categories: {
+        "ai-agentic": "الذكاء الاصطناعي والوكلاء",
+        "mobile-cs": "الجوال وعلوم الحاسب",
+      },
+    },
     contact: {
-      eyebrow: "05 · تواصل",
+      eyebrow: "06 · تواصل",
       title: "لنتحدث.",
       desc: "متاح للأدوار والمشاريع المستقلة والتحدث عن المنتجات.",
-      directLine: "خط مباشر",
-      directLineDesc: "الأفضل لبناء التطبيقات وإصلاح الإنتاج والعمل طويل الأمد.",
-      open: "متاح",
-      repliesWithin: "يرد خلال 24 ساعة.",
       sendMessage: "أرسل رسالة",
       sendMessageDesc: "شارك السياق والجدول الزمني أو تفاصيل الدور وسأرد بالخطوة التالية.",
       fields: { name: "الاسم", email: "البريد الإلكتروني", subject: "الموضوع", message: "الرسالة" },
@@ -307,7 +355,7 @@ const ar: Translations = {
       status: "الحالة",
       available: "متاح",
       focusVal: "Flutter · Dart",
-      expVal: "+2.5 سنوات",
+      expVal: "+3 سنوات",
       platformsVal: "Android · iOS",
     },
     featured: "[ مميز ]",
@@ -320,17 +368,25 @@ const enUI: UI = {
   projects: {
     eyebrow: "03 · Projects",
     title: "Shipped products.",
-    desc: "5 production apps. Live across UAE, Japan, Saudi Arabia, and beyond.",
+    desc: "7 production apps. Live across UAE, Japan, Saudi Arabia, and beyond.",
   },
   education: { eyebrow: "04 · Education", title: "Academic record." },
+  certifications: {
+    eyebrow: "05 · Certifications",
+    title: "Certifications.",
+    desc: "AI, agentic workflow, Flutter, and computer-science credentials that back the shipped work.",
+    issued: "Issued",
+    credentialId: "Credential ID",
+    skills: "Skills",
+    categories: {
+      "ai-agentic": "AI & Agentic",
+      "mobile-cs": "Mobile & Computer Science",
+    },
+  },
   contact: {
-    eyebrow: "05 · Contact",
+    eyebrow: "06 · Contact",
     title: "Let's talk.",
     desc: "Open to roles, freelance builds, and product conversations.",
-    directLine: "Direct Line",
-    directLineDesc: "Best for app builds, production fixes, and long-term product work.",
-    open: "Open",
-    repliesWithin: "Replies within 24 hours.",
     sendMessage: "Send a Message",
     sendMessageDesc: "Share the context, timeline, or role details and I'll reply with the next step.",
     fields: { name: "Name", email: "Email", subject: "Subject", message: "Message" },
@@ -355,7 +411,7 @@ const enUI: UI = {
     status: "status",
     available: "Available",
     focusVal: "Flutter · Dart",
-    expVal: "2.5+ years",
+    expVal: "3+ years",
     platformsVal: "Android · iOS",
   },
   featured: "[ featured ]",
@@ -367,6 +423,7 @@ const en: Translations = {
   experience: enExperience,
   projects: enProjects,
   education: enEducation,
+  certifications: enCertifications,
   navSections: enNav as unknown as NavSection[],
   ui: enUI,
 };
@@ -379,7 +436,7 @@ const ja: Translations = {
     subtitle: "Flutterエキスパート · クロスプラットフォームスペシャリスト",
     tagline:
       "高性能モバイルアプリ。クリーンアーキテクチャ、スケーラブルなシステム、AndroidとiOSへのプロフェッショナルな納品。",
-    bio: "2.5年以上、FlutterとDartで高性能モバイルアプリを開発してきました。クリーンアーキテクチャ、状態管理、CI/CDオートメーション、セキュアなAPI統合、パフォーマンス最適化に豊富な経験を持ちます。クラッシュフリーでプロダクション対応のアプリ、高速な読み込み、効率的なデプロイを実現してきた確かな実績があります。チームでの協力、リアルタイムシステムの構築、Google PlayおよびApp Storeへのアプリリリース経験があります。",
+    bio: "3年以上、FlutterとDartで高性能モバイルアプリを開発してきました。クリーンアーキテクチャ、状態管理、CI/CDオートメーション、セキュアなAPI統合、パフォーマンス最適化に豊富な経験を持ちます。クラッシュフリーでプロダクション対応のアプリ、高速な読み込み、効率的なデプロイを実現してきた確かな実績があります。チームでの協力、リアルタイムシステムの構築、Google PlayおよびApp Storeへのアプリリリース経験があります。",
   },
 
   skills: [
@@ -417,15 +474,15 @@ const ja: Translations = {
         "M1 ShippingのAndroid（Kotlin）・iOS（Swift）アプリをFlutterに完全移行。UAE・オマーン・イラクで稼働する車両物流プラットフォームを30日で納品。",
         "クリーンアーキテクチャ（Presentation/Domain/Data層）を採用し、単一コードベースからUAE/イラク向けデュアルフレーバーアーキテクチャを設計・実装。",
         "貨物・車両追跡、財務ワークフロー、価格条件ロジック、VIN検索付き車両販売フロー、共有可能なリストを完全に実装。",
-        "ARBファイルによるアラビア語・クルド語・パシュトー語・ペルシャ語・英語の完全RTL/LTRローカライゼーションを構築。",
+        "ARBファイルによるアラビア語・クルド語・パシュトー語・ペルシャ語・ジョージア語・英語の完全RTL/LTRローカライゼーションを構築。",
         "BLoC・Dio・GetIt・go_routerをトークンベース認証・環境切り替え・構造化エラーハンドリングとともに実装。",
         "Claude Code・マルチエージェント分析・Codex生成・OllamaローカルモデルによるAI強化ワークフローを主導し、納品速度とコード品質を向上。",
         "複数市場にわたるスケーラビリティと保守性を確保するため、計画・システム設計・アーキテクチャ・実装を担当。",
       ],
     },
     {
-      company: "JIITAK Facilitating Pvt Ltd",
-      location: "コーチ、ケーララ州",
+      company: "JIITAK Inc",
+      location: "福岡、日本",
       role: "Flutterエンジニア",
       duration: "2024年1月 – 2025年10月",
       description: [
@@ -467,17 +524,17 @@ const ja: Translations = {
     {
       title: "M1 Shipping",
       summary:
-        "UAE・オマーン・イラク向け車両物流プラットフォーム — Android/iOSネイティブから30日でFlutterに移行。デュアルフレーバー、完全RTL/LTR対応、5言語サポート。",
+        "UAE・オマーン・イラク向け車両物流プラットフォーム — Android/iOSネイティブから30日でFlutterに移行。デュアルフレーバー、完全RTL/LTR対応、6言語サポート。",
       description: [
         "Android（Kotlin）・iOS（Swift）アプリを30日でFlutterに完全移行し、UAE・オマーン・イラクをカバーする機能豊富な車両物流プラットフォームを納品。",
         "単一コードベースからクリーンアーキテクチャ（Presentation/Domain/Data層）でUAE/イラク向けデュアルフレーバーアーキテクチャを設計。",
         "貨物・車両追跡、財務ワークフロー、価格条件ロジック、VIN検索付き車両販売フロー、共有可能なリストを実装。",
-        "ARBファイルによるアラビア語・クルド語・パシュトー語・ペルシャ語・英語の完全RTL/LTRローカライゼーションを構築。",
+        "ARBファイルによるアラビア語・クルド語・パシュトー語・ペルシャ語・ジョージア語・英語の完全RTL/LTRローカライゼーションを構築。",
         "BLoC・Dio・GetIt・go_routerをトークンベース認証・環境切り替え・構造化エラーハンドリングとともに実装。",
       ],
       tags: ["Flutter", "Clean Architecture", "Multi-flavor", "RTL/LTR", "BLoC"],
       accent: "cyan",
-      highlights: ["30日で納品", "UAE · オマーン · イラク", "5言語対応"],
+      highlights: ["30日で納品", "UAE · オマーン · イラク", "6言語対応"],
       links: {
         playStore: "https://play.google.com/store/apps/details?id=com.m1shipping.android&hl=en_US",
         appStore: "https://apps.apple.com/ae/app/m1-shipping/id6505103589",
@@ -551,6 +608,34 @@ const ja: Translations = {
       tags: ["Flutter", "360° View", "QR", "Multi-app System"],
       accent: "indigo",
     },
+    {
+      title: "M1 Cam",
+      summary:
+        "M1 Shipping倉庫向けキャプチャアプリ — ログイン、Lot・VIN・Container検索、メディア撮影、書類管理、GPS保存、積込完了までを一つのモバイルフローで実行。",
+      description: [
+        "M1 reports APIによる認証とローカル保存セッションからの復帰に対応した、倉庫スタッフ向けFlutterキャプチャフローを構築。",
+        "Lot No.・VIN・Containerワークフローに対応し、メイン画像、車両画像、損傷画像、積込画像、荷下ろし画像の撮影を実装。",
+        "出荷書類、請求書、B/L、その他書類のアップロードを実装し、ローカルファイル選択をPDFとDOCXに制限。",
+        "GPS位置情報の記録、対応コンテナワークフローの積込完了処理、オフライン状態UI、セッションを消去するログアウトを追加。",
+      ],
+      tags: ["Flutter", "Media Capture", "Documents", "GPS", "Connectivity"],
+      accent: "amber",
+      highlights: ["Warehouse workflow", "Lot · VIN · Container", "PDF/DOCX uploads"],
+    },
+    {
+      title: "M1 Yard",
+      summary:
+        "選択したヤード内の業務向けモバイル運用アプリ — ゲートパス確認、VINスキャン、車両移動、GPS位置更新、在庫閲覧、在庫監査に対応。",
+      description: [
+        "機能ファーストのClean Architecture、BLoC状態管理、認証付きAPIフロー、ヤード単位のローカル永続化を備えたFlutter運用アプリを構築。",
+        "セッション復元、ヤード選択、VINのQR/バーコードスキャン、車両検索、移動記録、GPS位置の読み取り・保存、M1ゲートパス確認を実装。",
+        "在庫ダッシュボード、顧客別台数、デバウンス付きサーバー検索、詳細車両レコード、キャッシュ画像カルーセル、フルスクリーンズームを提供。",
+        "監査の開始/継続、手入力またはスキャンによるVIN監査、発見/不足/余剰台数、監査完了、Excelレポートダウンロード、401時の協調トークン更新を追加。",
+      ],
+      tags: ["Flutter", "Clean Architecture", "BLoC", "Barcode", "Stock Audits"],
+      accent: "violet",
+      highlights: ["Yard operations", "VIN scanning", "Excel audit reports"],
+    },
   ],
 
   education: [
@@ -571,12 +656,15 @@ const ja: Translations = {
     },
   ],
 
+  certifications: enCertifications,
+
   navSections: [
     { id: "home", label: "ホーム" },
     { id: "about", label: "概要" },
     { id: "experience", label: "経歴" },
     { id: "projects", label: "プロジェクト" },
     { id: "education", label: "学歴" },
+    { id: "certifications", label: "認定資格" },
     { id: "contact", label: "連絡先" },
   ],
 
@@ -586,17 +674,25 @@ const ja: Translations = {
     projects: {
       eyebrow: "03 · プロジェクト",
       title: "リリース済みプロダクト。",
-      desc: "5つの本番アプリ。UAE・日本・サウジアラビアなどで稼働中。",
+      desc: "7つの本番アプリ。UAE・日本・サウジアラビアなどで稼働中。",
     },
     education: { eyebrow: "04 · 学歴", title: "学歴記録。" },
+    certifications: {
+      eyebrow: "05 · 認定資格",
+      title: "認定資格。",
+      desc: "AI、エージェントワークフロー、Flutter、コンピュータサイエンスの実務を裏付ける資格です。",
+      issued: "発行",
+      credentialId: "認定ID",
+      skills: "スキル",
+      categories: {
+        "ai-agentic": "AI・エージェント",
+        "mobile-cs": "モバイル・コンピュータサイエンス",
+      },
+    },
     contact: {
-      eyebrow: "05 · 連絡先",
+      eyebrow: "06 · 連絡先",
       title: "話しましょう。",
       desc: "役職、フリーランス、プロダクトの話し合いを歓迎します。",
-      directLine: "直通連絡",
-      directLineDesc: "アプリ開発、本番修正、長期プロダクト作業に最適です。",
-      open: "対応中",
-      repliesWithin: "24時間以内に返信します。",
       sendMessage: "メッセージを送る",
       sendMessageDesc: "コンテキスト、スケジュール、または役職の詳細を共有してください。次のステップをお伝えします。",
       fields: { name: "お名前", email: "メールアドレス", subject: "件名", message: "メッセージ" },
@@ -621,7 +717,7 @@ const ja: Translations = {
       status: "状態",
       available: "対応可能",
       focusVal: "Flutter · Dart",
-      expVal: "2.5年以上",
+      expVal: "3年以上",
       platformsVal: "Android · iOS",
     },
     featured: "[ 注目 ]",
@@ -636,7 +732,7 @@ const de: Translations = {
     subtitle: "Flutter-Experte · Cross-Platform-Spezialist",
     tagline:
       "Hochleistungs-Mobile-Apps. Saubere Architektur, skalierbare Systeme, professionelle Lieferung für Android & iOS.",
-    bio: "Über 2,5 Jahre Erfahrung in der Entwicklung hochleistungsfähiger, skalierbarer Mobile-Apps mit Flutter und Dart. Fundierte Kenntnisse in Clean Architecture, State Management, CI/CD-Automatisierung, sicheren API-Integrationen und Performance-Optimierung. Nachgewiesene Erfolge bei absturzfreien, produktionsreifen Apps mit schnellen Ladezeiten und effizienten Deployments. Erfahrung in der Teamarbeit, beim Aufbau von Echtzeitsystemen und beim Launch auf Google Play und App Store.",
+    bio: "Über 3 Jahre Erfahrung in der Entwicklung hochleistungsfähiger, skalierbarer Mobile-Apps mit Flutter und Dart. Fundierte Kenntnisse in Clean Architecture, State Management, CI/CD-Automatisierung, sicheren API-Integrationen und Performance-Optimierung. Nachgewiesene Erfolge bei absturzfreien, produktionsreifen Apps mit schnellen Ladezeiten und effizienten Deployments. Erfahrung in der Teamarbeit, beim Aufbau von Echtzeitsystemen und beim Launch auf Google Play und App Store.",
   },
 
   skills: [
@@ -674,15 +770,15 @@ const de: Translations = {
         "Leitete die vollständige Migration einer Android- (Kotlin) und iOS- (Swift) App zu Flutter für M1 Shipping, eine Fahrzeuglogistikplattform in den VAE, Oman und dem Irak – Projektabschluss in 30 Tagen.",
         "Entwarf und implementierte eine skalierbare Clean Architecture (Presentation/Domain/Data) mit Dual-Flavor-Builds für VAE/Irak aus einer einzigen Codebasis.",
         "Lieferte vollständige Fracht- und Fahrzeugverfolgung, Finanz-Workflows, Preiskonditionen-Logik, Fahrzeugverkaufsflow mit VIN-Suche und teilbaren Listings.",
-        "Baute vollständige RTL/LTR-Lokalisierung in Arabisch, Kurdisch, Paschtu, Persisch und Englisch mit ARB-Dateien.",
+        "Baute vollständige RTL/LTR-Lokalisierung in Arabisch, Kurdisch, Paschtu, Persisch, Georgisch und Englisch mit ARB-Dateien.",
         "Implementierte BLoC, Dio, GetIt und go_router mit tokenbasierter Authentifizierung, Umgebungswechsel und strukturiertem Fehler-Handling.",
         "Führte einen KI-gestützten Workflow mit Claude Code, Multi-Agenten-Analyse, Codex-Generierung und lokalen Ollama-Modellen zur Beschleunigung der Lieferung und Verbesserung der Codequalität.",
         "Verantwortlich für Planung, Systemdesign, Architektur und Implementierung zur Sicherstellung von Skalierbarkeit und Wartbarkeit über mehrere Märkte hinweg.",
       ],
     },
     {
-      company: "JIITAK Facilitating Pvt Ltd",
-      location: "Kochi, Kerala",
+      company: "JIITAK Inc",
+      location: "Fukuoka, Japan",
       role: "Flutter-Entwickler",
       duration: "Jan. 2024 – Okt. 2025",
       description: [
@@ -724,17 +820,17 @@ const de: Translations = {
     {
       title: "M1 Shipping",
       summary:
-        "Fahrzeuglogistikplattform für VAE, Oman und Irak – migriert von nativem Android/iOS zu Flutter in 30 Tagen. Dual-Flavor-Builds, vollständige RTL/LTR-Unterstützung, 5 Sprachen.",
+        "Fahrzeuglogistikplattform für VAE, Oman und Irak – migriert von nativem Android/iOS zu Flutter in 30 Tagen. Dual-Flavor-Builds, vollständige RTL/LTR-Unterstützung, 6 Sprachen.",
       description: [
         "Leitete die vollständige Migration von Android (Kotlin) und iOS (Swift) zu Flutter in 30 Tagen und lieferte eine funktionsreiche Fahrzeuglogistikplattform für VAE, Oman und den Irak.",
         "Entwarf Dual-Flavor-Architektur für VAE/Irak aus einer einzigen Codebasis mit Clean Architecture (Presentation/Domain/Data).",
         "Lieferte Fracht- und Fahrzeugverfolgung, Finanz-Workflows, Preiskonditionen, Fahrzeugverkaufsflow mit VIN-Suche und teilbare Listings.",
-        "Baute vollständige RTL/LTR-Lokalisierung in Arabisch, Kurdisch, Paschtu, Persisch und Englisch mit ARB-Dateien.",
+        "Baute vollständige RTL/LTR-Lokalisierung in Arabisch, Kurdisch, Paschtu, Persisch, Georgisch und Englisch mit ARB-Dateien.",
         "Implementierte BLoC, Dio, GetIt und go_router mit tokenbasierter Auth, Umgebungswechsel und strukturiertem Fehler-Handling.",
       ],
       tags: ["Flutter", "Clean Architecture", "Multi-flavor", "RTL/LTR", "BLoC"],
       accent: "cyan",
-      highlights: ["30-Tage-Lieferung", "VAE · Oman · Irak", "5 Sprachen"],
+      highlights: ["30-Tage-Lieferung", "VAE · Oman · Irak", "6 Sprachen"],
       links: {
         playStore: "https://play.google.com/store/apps/details?id=com.m1shipping.android&hl=en_US",
         appStore: "https://apps.apple.com/ae/app/m1-shipping/id6505103589",
@@ -808,6 +904,34 @@ const de: Translations = {
       tags: ["Flutter", "360° View", "QR", "Multi-app System"],
       accent: "indigo",
     },
+    {
+      title: "M1 Cam",
+      summary:
+        "Warehouse-Capture-App für M1 Shipping-Teams – Anmeldung, Suche nach Lot, VIN oder Container, Medienerfassung, Dokumentenverwaltung, GPS-Speicherung und Abschluss von Ladeaufgaben.",
+      description: [
+        "Baute einen Flutter-Capture-Flow für Warehouse-Mitarbeiter mit Authentifizierung über die M1 reports API und Wiederaufnahme über eine lokal gespeicherte Session.",
+        "Unterstützte Lot No.-, VIN- und Container-Workflows mit Hauptbild, Fahrzeugbildern, Schadensbildern sowie Lade- und Entladebildern.",
+        "Implementierte Uploads für Versanddokumente, Rechnungen, B/L und weitere Dokumente mit lokaler Dateiauswahl, beschränkt auf PDF und DOCX.",
+        "Ergänzte GPS-Standorterfassung, Ladeabschluss für unterstützte Container-Workflows, Offline-Status-UI und Logout mit Session-Bereinigung.",
+      ],
+      tags: ["Flutter", "Media Capture", "Documents", "GPS", "Connectivity"],
+      accent: "amber",
+      highlights: ["Warehouse workflow", "Lot · VIN · Container", "PDF/DOCX uploads"],
+    },
+    {
+      title: "M1 Yard",
+      summary:
+        "Mobile Operations-App für ausgewählte Yard-Workflows – Gate-Pass-Prüfung, VIN-Scanning, Fahrzeugbewegungen, GPS-Updates, Bestandsübersicht und Stock Audits.",
+      description: [
+        "Baute eine Flutter-Operations-App mit feature-first Clean Architecture, BLoC-State-Management, authentifizierten API-Workflows und yard-bezogener lokaler Persistenz.",
+        "Implementierte Session-Restore, Yard-Auswahl, VIN-QR/Barcode-Scanning, Fahrzeugsuche, Bewegungsaufzeichnung, GPS-Lesen/Speichern und M1-Gate-Pass-Prüfung.",
+        "Lieferte Bestandsdashboards, kundenbezogene Fahrzeugzahlen, debounced serverseitige Fahrzeugsuche, vollständige Fahrzeugakten, gecachte Medienkarussells und Fullscreen-Zoom.",
+        "Ergänzte Audit-Start/Fortsetzung, manuelle oder gescannte VIN-Erfassung, Gefunden/Fehlend/Extra-Zähler, Audit-Abschluss, Excel-Report-Download und koordinierte Token-Aktualisierung bei 401.",
+      ],
+      tags: ["Flutter", "Clean Architecture", "BLoC", "Barcode", "Stock Audits"],
+      accent: "violet",
+      highlights: ["Yard operations", "VIN scanning", "Excel audit reports"],
+    },
   ],
 
   education: [
@@ -828,12 +952,15 @@ const de: Translations = {
     },
   ],
 
+  certifications: enCertifications,
+
   navSections: [
     { id: "home", label: "Start" },
     { id: "about", label: "Über" },
     { id: "experience", label: "Erfahrung" },
     { id: "projects", label: "Projekte" },
     { id: "education", label: "Bildung" },
+    { id: "certifications", label: "Zertifikate" },
     { id: "contact", label: "Kontakt" },
   ],
 
@@ -843,17 +970,25 @@ const de: Translations = {
     projects: {
       eyebrow: "03 · Projekte",
       title: "Ausgelieferte Produkte.",
-      desc: "5 Produktions-Apps. Live in den VAE, Japan, Saudi-Arabien und darüber hinaus.",
+      desc: "7 Produktions-Apps. Live in den VAE, Japan, Saudi-Arabien und darüber hinaus.",
     },
     education: { eyebrow: "04 · Bildung", title: "Akademischer Werdegang." },
+    certifications: {
+      eyebrow: "05 · Zertifikate",
+      title: "Zertifikate.",
+      desc: "Nachweise für KI, agentische Workflows, Flutter und Informatikgrundlagen, die die ausgelieferte Arbeit stützen.",
+      issued: "Ausgestellt",
+      credentialId: "Zertifikats-ID",
+      skills: "Skills",
+      categories: {
+        "ai-agentic": "KI & Agentic",
+        "mobile-cs": "Mobile & Informatik",
+      },
+    },
     contact: {
-      eyebrow: "05 · Kontakt",
+      eyebrow: "06 · Kontakt",
       title: "Lass uns reden.",
       desc: "Offen für Stellen, Freelance-Projekte und Produktgespräche.",
-      directLine: "Direkter Kontakt",
-      directLineDesc: "Am besten für App-Entwicklung, Produktionsfixes und langfristige Produktarbeit.",
-      open: "Verfügbar",
-      repliesWithin: "Antwortet innerhalb von 24 Stunden.",
       sendMessage: "Nachricht senden",
       sendMessageDesc: "Teile Kontext, Zeitplan oder Stellendetails mit und ich antworte mit dem nächsten Schritt.",
       fields: { name: "Name", email: "E-Mail", subject: "Betreff", message: "Nachricht" },
@@ -878,7 +1013,7 @@ const de: Translations = {
       status: "Status",
       available: "Verfügbar",
       focusVal: "Flutter · Dart",
-      expVal: "2,5+ Jahre",
+      expVal: "3+ Jahre",
       platformsVal: "Android · iOS",
     },
     featured: "[ hervorgehoben ]",
