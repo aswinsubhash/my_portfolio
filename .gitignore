@@ -29,6 +29,7 @@ pnpm-debug.log*
 .vercel/
 .agents/
 .claude/
+graphify-out/
 .metadata
 coverage/
 migrate_working_dir/
