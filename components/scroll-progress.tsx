@@ -1,11 +1,11 @@
 "use client";
 
 import { motion, useReducedMotion, useSpring } from "motion/react";
-import { useLenisScroll } from "@/lib/lenis-context";
+import { useWindowScroll } from "@/lib/use-window-scroll";
 
 export function ScrollProgress() {
   const reduce = useReducedMotion();
-  const { progress } = useLenisScroll();
+  const { progress } = useWindowScroll();
   const scaleX = useSpring(progress, {
     stiffness: reduce ? 1000 : 120,
     damping: reduce ? 100 : 28,

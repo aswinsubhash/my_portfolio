@@ -56,17 +56,11 @@ The Zod schema lives in `lib/contact-form.ts` and includes `turnstileToken`.
 
 The client disables submit until Turnstile resolves, and the server action verifies the token against Cloudflare `siteverify`. Native HTML `required` attributes are intentionally absent because Zod handles validation.
 
-### Canvas Animations
-
-Single canvas layer: `components/scene-canvas.tsx` — combines interactive dot grid (reacts to mouse) and drifting particles with connection lines into one RAF loop.
-
-Pauses on `document.visibilitychange`, caches `getComputedStyle` values, refreshes theme-derived colors through a `MutationObserver` on `<html class>`, cleans up all listeners on unmount.
-
 ### Theme and Scroll
 
 Theme handling uses `next-themes` through `components/theme-provider.tsx`.
 
-Smooth scrolling uses Lenis through `components/lenis-provider.tsx`. Lenis intercepts native scroll, so direct `scrollIntoView` or `window.scrollTo` calls may not behave as expected. Prefer the Lenis API or existing nav link behavior.
+Scrolling is native. Nav scrolled state and the top progress bar read scroll via `lib/use-window-scroll.ts`.
 
 ### Styling
 
@@ -75,7 +69,7 @@ This project uses Tailwind CSS v4. Design tokens are CSS custom properties such 
 - `var(--color-accent)`
 - `var(--color-accent-glow)`
 
-The accent color drives canvas particles, borders, and glow effects.
+The accent color drives borders and glow effects.
 
 ## Deployment
 

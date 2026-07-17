@@ -2,11 +2,8 @@ import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { Syne, DM_Sans, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
-import { LenisProvider } from "@/components/lenis-provider";
 import { ThemeProvider } from "@/components/theme-provider";
 import { LangProvider } from "@/lib/i18n";
-import { AmbientMotion } from "@/components/ambient-motion";
-import { SceneCanvas } from "@/components/scene-canvas";
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
 import { ScrollProgress } from "@/components/scroll-progress";
@@ -123,7 +120,7 @@ export default function RootLayout({
       className={`${syne.variable} ${dmSans.variable} ${ibmMono.variable} antialiased`}
       suppressHydrationWarning
     >
-      <body className="grain relative min-h-screen bg-bg text-fg">
+      <body className="relative min-h-screen bg-bg text-fg">
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-sm focus:bg-accent focus:px-4 focus:py-2 focus:font-mono focus:text-xs focus:uppercase focus:tracking-[0.14em] focus:text-white"
@@ -144,17 +141,13 @@ export default function RootLayout({
         />
         <LangProvider>
         <ThemeProvider>
-          <LenisProvider>
-            <ScrollProgress />
-            <CardGlowTracker />
-            <SceneCanvas />
-            <AmbientMotion />
-            <Nav />
-            <main id="main" className="relative">
-              {children}
-            </main>
-            <Footer />
-          </LenisProvider>
+          <ScrollProgress />
+          <CardGlowTracker />
+          <Nav />
+          <main id="main" className="relative">
+            {children}
+          </main>
+          <Footer />
         </ThemeProvider>
         </LangProvider>
         <Analytics />

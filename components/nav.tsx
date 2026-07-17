@@ -7,7 +7,7 @@ import { cn } from "@/lib/cn";
 import { personal } from "@/lib/content";
 import { useLang, type Lang } from "@/lib/i18n";
 import { useContent } from "@/lib/useContent";
-import { useLenisScroll } from "@/lib/lenis-context";
+import { useWindowScroll } from "@/lib/use-window-scroll";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 const LANGS: { code: Lang; label: string; native: string }[] = [
@@ -116,7 +116,7 @@ function LangSwitcher() {
 export function Nav() {
   const { lang, switchTo } = useLang();
   const { navSections } = useContent();
-  const { scrollY } = useLenisScroll();
+  const { scrollY } = useWindowScroll();
 
   const scrolled = scrollY > 20;
   const [open, setOpen] = React.useState(false);

@@ -9,7 +9,6 @@ Personal portfolio website for Aswin Subhash, built as a standard root-level Nex
 - TypeScript
 - Tailwind CSS v4
 - Motion (Framer Motion)
-- Lenis smooth scroll
 - next-themes
 - Zod
 - Cloudflare Turnstile
@@ -73,10 +72,6 @@ Static files live in `public/`:
 Flow: `components/sections/contact.tsx` → `app/actions/contact.ts` → Cloudflare Turnstile verify → Google Forms submission.
 
 Zod schema in `lib/contact-form.ts`. Turnstile token is verified server-side before any submission reaches Google Forms.
-
-## Canvas Animation
-
-`components/scene-canvas.tsx` — single canvas layer combining the interactive dot grid and floating particles. One RAF loop, pauses when tab is hidden, caches theme-derived colors via `MutationObserver`.
 
 ## Deployment
 
