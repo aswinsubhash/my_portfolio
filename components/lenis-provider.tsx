@@ -8,10 +8,23 @@ export function LenisProvider({ children }: { children: React.ReactNode }) {
   const [scrollState, setScrollState] = React.useState({ scrollY: 0, progress: 0 });
 
   React.useEffect(() => {
-    const reduce =
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) return;
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const coarse = window.matchMedia("(pointer: coarse)").matches;
+
+    // Native scroll on touch / reduced-motion — Lenis fights iOS IntersectionObserver.
+    if (reduce || coarse) {
+      const onNativeScroll = () => {
+        const scrollY = window.scrollY || document.documentElement.scrollTop;
+        const max = Math.max(
+          1,
+          document.documentElement.scrollHeight - window.innerHeight,
+        );
+        setScrollState({ scrollY, progress: scrollY / max });
+      };
+      onNativeScroll();
+      window.addEventListener("scroll", onNativeScroll, { passive: true });
+      return () => window.removeEventListener("scroll", onNativeScroll);
+    }
 
     const lenis = new Lenis({
       duration: 1.15,

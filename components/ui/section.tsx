@@ -3,7 +3,7 @@
 import * as React from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { cn } from "@/lib/cn";
-import { createRevealVariants } from "@/components/ui/reveal";
+import { createRevealVariants, revealViewport } from "@/components/ui/reveal";
 
 type SectionProps = React.HTMLAttributes<HTMLElement> & {
   id: string;
@@ -57,7 +57,7 @@ export function Section({
               <motion.div
                 initial="hidden"
                 whileInView="show"
-                viewport={{ once: true, margin: "-60px" }}
+                viewport={revealViewport}
                 variants={createRevealVariants(reduce, "fadeStart")}
                 transition={{ delay: reduce ? 0 : 0.05 }}
               >
@@ -75,8 +75,8 @@ export function Section({
               <motion.h2
                 initial="hidden"
                 whileInView="show"
-                viewport={{ once: true, margin: "-60px" }}
-                variants={createRevealVariants(reduce, "clipReveal")}
+                viewport={revealViewport}
+                variants={createRevealVariants(reduce, "fadeUp")}
                 transition={{ delay: reduce ? 0 : 0.1 }}
                 className="font-display text-balance text-4xl font-bold tracking-tight text-fg sm:text-5xl lg:text-[3.25rem]"
               >
@@ -87,7 +87,7 @@ export function Section({
               <motion.p
                 initial="hidden"
                 whileInView="show"
-                viewport={{ once: true, margin: "-60px" }}
+                viewport={revealViewport}
                 variants={createRevealVariants(reduce, "fadeUp")}
                 transition={{ delay: reduce ? 0 : 0.18 }}
                 className="max-w-2xl text-pretty text-[15px] leading-relaxed text-fg-muted"

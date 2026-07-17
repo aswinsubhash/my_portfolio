@@ -15,6 +15,9 @@ export type RevealVariant =
 
 const EASE = [0.25, 1, 0.5, 1] as const;
 
+/** Shared in-view config — avoid tight negative margins that stall on mobile Safari. */
+export const revealViewport = { once: true, amount: 0.15 as const };
+
 export function createRevealVariants(
   reduce: boolean | null,
   variant: RevealVariant = "fadeUp",
@@ -23,6 +26,11 @@ export function createRevealVariants(
   let resolved = variant;
   if (rtl && (variant === "fadeStart" || variant === "fadeEnd")) {
     resolved = variant === "fadeStart" ? "fadeEnd" : "fadeStart";
+  }
+
+  // clip-path reveals stick invisible on iOS Safari; map to fadeUp.
+  if (resolved === "clipReveal") {
+    resolved = "fadeUp";
   }
 
   const duration = reduce ? 0.01 : 0.6;
@@ -54,14 +62,6 @@ export function createRevealVariants(
           filter: reduce ? "blur(0px)" : "blur(10px)",
         },
         show: { ...baseShow, filter: "blur(0px)" },
-      };
-    case "clipReveal":
-      return {
-        hidden: {
-          opacity: 0,
-          clipPath: reduce ? "inset(0 0 0 0)" : "inset(0 0 100% 0)",
-        },
-        show: { ...baseShow, clipPath: "inset(0 0 0 0)" },
       };
     case "fadeUp":
     default:
@@ -139,7 +139,7 @@ export function Reveal({
     <motion.div
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, margin: "-60px" }}
+      viewport={revealViewport}
       variants={variants}
       className={cn(className)}
     >
@@ -175,7 +175,7 @@ export const Stagger = React.forwardRef<
       ref={ref}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, margin: "-60px" }}
+      viewport={revealViewport}
       variants={variants}
       className={cn(className)}
     >

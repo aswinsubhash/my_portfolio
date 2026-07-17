@@ -66,7 +66,7 @@ export function Certifications() {
               layout
               initial={{ opacity: 0, y: reduce ? 0 : 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-60px" }}
+              viewport={{ once: true, amount: 0.15 }}
               transition={{
                 duration: reduce ? 0.01 : 0.6,
                 delay: reduce ? 0 : groupIdx * 0.1,

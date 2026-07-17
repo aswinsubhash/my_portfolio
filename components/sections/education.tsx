@@ -18,7 +18,7 @@ export function Education() {
             key={e.institution}
             initial={{ opacity: 0, x: reduce ? 0 : -16 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-40px" }}
+            viewport={{ once: true, amount: 0.15 }}
             transition={{
               duration: reduce ? 0.01 : 0.5,
               delay: reduce ? 0 : i * 0.06,
