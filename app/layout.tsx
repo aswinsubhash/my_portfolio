@@ -6,10 +6,11 @@ import { LenisProvider } from "@/components/lenis-provider";
 import { ThemeProvider } from "@/components/theme-provider";
 import { LangProvider } from "@/lib/i18n";
 import { AmbientMotion } from "@/components/ambient-motion";
-import { Cursor } from "@/components/cursor";
 import { SceneCanvas } from "@/components/scene-canvas";
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
+import { ScrollProgress } from "@/components/scroll-progress";
+import { CardGlowTracker } from "@/components/card-glow-tracker";
 import { personal, skills } from "@/lib/content";
 import { Analytics } from "@vercel/analytics/next";
 
@@ -39,7 +40,7 @@ const siteUrl = "https://aswinsubhash.vercel.app";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `${personal.name} — ${personal.title}`,
+    default: `${personal.name} - ${personal.title}`,
     template: `%s · ${personal.name}`,
   },
   description: personal.tagline,
@@ -60,20 +61,20 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: siteUrl,
     siteName: personal.name,
-    title: `${personal.name} — ${personal.title}`,
+    title: `${personal.name} - ${personal.title}`,
     description: personal.tagline,
     images: [
       {
         url: `${siteUrl}/opengraph-image`,
         width: 1200,
         height: 630,
-        alt: `${personal.name} — ${personal.title}`,
+        alt: `${personal.name} - ${personal.title}`,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${personal.name} — ${personal.title}`,
+    title: `${personal.name} - ${personal.title}`,
     description: personal.tagline,
     images: [`${siteUrl}/opengraph-image`],
   },
@@ -144,7 +145,8 @@ export default function RootLayout({
         <LangProvider>
         <ThemeProvider>
           <LenisProvider>
-            <Cursor />
+            <ScrollProgress />
+            <CardGlowTracker />
             <SceneCanvas />
             <AmbientMotion />
             <Nav />

@@ -3,7 +3,7 @@
 import * as React from "react";
 import { motion } from "motion/react";
 import { useTheme } from "next-themes";
-import { Moon, Sun } from "lucide-react";
+import { Moon, Sun } from "@phosphor-icons/react";
 import { cn } from "@/lib/cn";
 
 type ThemeToggleProps = {
@@ -21,13 +21,23 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
   const isDark = mounted && currentTheme === "dark";
   const label = isDark ? "Switch to light theme" : "Switch to dark theme";
 
+  const handleToggle = () => {
+    setTheme(isDark ? "light" : "dark");
+    if (typeof document !== "undefined") {
+      document.documentElement.classList.add("theme-flash");
+      window.setTimeout(() => {
+        document.documentElement.classList.remove("theme-flash");
+      }, 220);
+    }
+  };
+
   return (
     <button
       type="button"
       dir="ltr"
       aria-label={label}
       aria-pressed={isDark}
-      onClick={() => setTheme(isDark ? "light" : "dark")}
+      onClick={handleToggle}
       className={cn(
         "group relative inline-flex h-8 w-14 items-center rounded-sm border border-border bg-bg-elev p-1 text-fg-muted transition-[border-color,background-color,color,box-shadow] duration-300 hover:border-accent/50 hover:text-accent hover:shadow-[0_0_24px_-14px_var(--color-accent-glow)]",
         className,
@@ -57,7 +67,7 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
           }}
           transition={{ duration: 0.22, ease: "easeOut" }}
         >
-          <Sun size={13} />
+          <Sun size={13} weight="bold" />
         </motion.span>
         <motion.span
           className="absolute"
@@ -68,7 +78,7 @@ export function ThemeToggle({ className }: ThemeToggleProps) {
           }}
           transition={{ duration: 0.22, ease: "easeOut" }}
         >
-          <Moon size={13} />
+          <Moon size={13} weight="bold" />
         </motion.span>
       </motion.span>
     </button>

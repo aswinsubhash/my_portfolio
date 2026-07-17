@@ -107,7 +107,7 @@ const ar: Translations = {
       company: "Marhaba Group of Companies | Marhaba Auctions",
       location: "دبي، الإمارات · حضوري",
       role: "مطوّر Flutter | سير عمل ذكاء اصطناعي",
-      duration: "مارس 2026 – الحاضر",
+      duration: "مارس 2026 - الحاضر",
       description: [
         "قاد ترحيل تطبيق Android (Kotlin) وiOS (Swift) إلى Flutter لشركة M1 Shipping، منصة لوجستية للمركبات تعمل في الإمارات وعُمان والعراق، مع تسليم المشروع كاملًا في 30 يومًا.",
         "صمّم وطبّق معمارية نظيفة قابلة للتوسع عبر طبقات العرض والمجال والبيانات، لتطبيق غني بالميزات بنيات ثنائية النكهة للإمارات والعراق من قاعدة كود واحدة.",
@@ -122,7 +122,7 @@ const ar: Translations = {
       company: "JIITAK Inc",
       location: "فوكوكا، اليابان",
       role: "مطوّر Flutter",
-      duration: "يناير 2024 – أكتوبر 2025",
+      duration: "يناير 2024 - أكتوبر 2025",
       description: [
         "طوّر تطبيقات Flutter عالية الأداء لعملاء يابانيين بمعدل 99% جلسات خالية من الأعطال وأوقات تحميل أسرع بنسبة 40% عبر تحسين الكود والأصول.",
         "طبّق تحديثات OTA عبر Shorebird، محققًا انخفاضًا بنسبة 95% في وقت تسليم الإصدارات.",
@@ -137,7 +137,7 @@ const ar: Translations = {
       company: "Norq Technologies",
       location: "كوتشي، كيرالا",
       role: "مطوّر Flutter",
-      duration: "سبتمبر 2023 – ديسمبر 2023",
+      duration: "سبتمبر 2023 - ديسمبر 2023",
       description: [
         "طوّر منصة تتبع مركبات في الوقت الفعلي لعميل قطري باستخدام Flutter وSocket.io وGoogle Maps، مع تحديثات موقع فورية بدقة دون الثانية وتصور المسارات وتحديد النطاقات الجغرافية وإعادة تشغيل سجل الرحلات.",
         "حسّن منطق تحديث الموقع وبث البيانات، مما رفع دقة التتبع وكفاءة مراقبة الأسطول بنسبة 40%.",
@@ -149,7 +149,7 @@ const ar: Translations = {
       company: "Brototype",
       location: "تريفاندروم، كيرالا",
       role: "متدرب تطوير Flutter",
-      duration: "يوليو 2022 – فبراير 2023",
+      duration: "يوليو 2022 - فبراير 2023",
       description: [
         "أكمل برنامجًا مكثفًا لمدة 6 أشهر في تطوير Flutter مع خبرة عملية في مشاريع فعلية.",
         "اكتسب مهارات عملية قوية في تطوير تطبيقات الجوال وتنفيذ واجهات المستخدم وتكامل REST APIs.",
@@ -162,7 +162,7 @@ const ar: Translations = {
     {
       title: "M1 Shipping",
       summary:
-        "منصة لوجستية للمركبات في الإمارات وعُمان والعراق — تم ترحيلها من Android/iOS الأصلي إلى Flutter في 30 يومًا. بنيات ثنائية النكهة، دعم كامل RTL/LTR، 6 لغات.",
+        "منصة لوجستية للمركبات في الإمارات وعُمان والعراق - تم ترحيلها من Android/iOS الأصلي إلى Flutter في 30 يومًا. بنيات ثنائية النكهة، دعم كامل RTL/LTR، 6 لغات.",
       description: [
         "قاد ترحيل تطبيق Android (Kotlin) وiOS (Swift) كاملًا إلى Flutter في 30 يومًا، مسلّمًا منصة لوجستية للمركبات غنية بالميزات عبر الإمارات وعُمان والعراق.",
         "صمّم بنيات ثنائية النكهة للإمارات/العراق من قاعدة كود واحدة باستخدام معمارية نظيفة عبر طبقات العرض والمجال والبيانات.",
@@ -199,14 +199,14 @@ const ar: Translations = {
     {
       title: "Look Meal",
       summary:
-        "تطبيق بحث عن التغذية والطعام — بحث السعرات الحرارية والمكونات والمنتجات المعبأة، مع تصفية متقدمة وتجميعات طعام مخصصة.",
+        "تطبيق بحث عن التغذية والطعام - بحث السعرات الحرارية والمكونات والمنتجات المعبأة، مع تصفية متقدمة وتجميعات طعام مخصصة.",
       description: [
         "أنشأ تطبيق بحث تغذية متعدد المنصات يتيح للمستخدمين البحث عن السعرات الحرارية والمعلومات الغذائية للأطباق والمكونات والمنتجات المعبأة مع فرز وتصفية متقدمة.",
         "طبّق مكافآت جمع الطوابع والمشاركة الاجتماعية داخل التطبيق وتجميعات الطعام المخصصة.",
         "نُشر على Play Store وApp Store، محققًا تبنّيًا ثابتًا في اليابان.",
       ],
       tags: ["Flutter", "REST APIs", "Search", "Gamification"],
-      accent: "emerald",
+      accent: "sky",
       links: {
         playStore: "https://play.google.com/store/apps/details?id=com.allright.lookmeal&hl=en_US",
         appStore: "https://apps.apple.com/jp/app/%E3%83%AB%E3%83%83%E3%82%AF%E3%83%9F%E3%83%BC%E3%83%AB-%E3%82%AB%E3%83%AD%E3%83%AA%E3%83%BC-%E6%A0%84%E9%A4%8A%E7%B4%A0-pfc-%E3%83%80%E3%82%A4%E3%82%A8%E3%83%83%E3%83%88-%E5%A4%96%E9%A3%9F/id6478847606",
@@ -226,7 +226,7 @@ const ar: Translations = {
         "نُشر على Play Store وApp Store مع تبنٍّ متزايد بين مديري الأساطيل في المملكة العربية السعودية.",
       ],
       tags: ["Flutter", "Socket.io", "Google Maps", "Geofencing", "Analytics"],
-      accent: "rose",
+      accent: "cyan",
       links: {
         playStore: "https://play.google.com/store/apps/details?id=com.tabehgps.app&hl=en_US",
         appStore: "https://apps.apple.com/us/app/tabeh-gps/id6736398833",
@@ -235,7 +235,7 @@ const ar: Translations = {
     {
       title: "Rental Anshin Kun",
       summary:
-        "نظام تقارير أضرار بزاوية 360° — تطبيقا السكان والمفتشين المترابطان مع مشاهدات بانورامية ورفع مدمج بـ QR لإدارة العقارات اليابانية.",
+        "نظام تقارير أضرار بزاوية 360° - تطبيقا السكان والمفتشين المترابطان مع مشاهدات بانورامية ورفع مدمج بـ QR لإدارة العقارات اليابانية.",
       description: [
         "بنى نظامًا متكاملًا من تطبيقَي السكان والمفتشين لتقارير أضرار العقارات المركزية في اليابان.",
         "طبّق مشاهدات بانورامية بزاوية 360° تتيح للمستخدمين تحديد مواقع الأضرار بدقة.",
@@ -244,12 +244,12 @@ const ar: Translations = {
         "بسّط التواصل وحسّن دقة التقارير عبر فرق إدارة عقارية متعددة.",
       ],
       tags: ["Flutter", "360° View", "QR", "Multi-app System"],
-      accent: "indigo",
+      accent: "sky",
     },
     {
       title: "M1 Cam",
       summary:
-        "تطبيق التقاط ميداني لمستودعات M1 Shipping — تسجيل الدخول، البحث عن Lot أو VIN أو Container، التقاط الوسائط، إدارة المستندات، حفظ GPS، وإكمال مهام التحميل.",
+        "تطبيق التقاط ميداني لمستودعات M1 Shipping - تسجيل الدخول، البحث عن Lot أو VIN أو Container، التقاط الوسائط، إدارة المستندات، حفظ GPS، وإكمال مهام التحميل.",
       description: [
         "بنى تدفق التقاط Flutter لموظفي المستودعات مع مصادقة عبر M1 reports API واستعادة العمل من جلسة محلية محفوظة.",
         "دعم مسارات Lot No. وVIN وContainer مع التقاط الصورة الرئيسية وصور المركبة والأضرار والتحميل والتفريغ.",
@@ -257,13 +257,13 @@ const ar: Translations = {
         "أضاف التقاط موقع GPS، إجراءات إكمال التحميل لمسارات الحاويات المدعومة، واجهة حالة عدم الاتصال، وتسجيل خروج يمسح الجلسة.",
       ],
       tags: ["Flutter", "Media Capture", "Documents", "GPS", "Connectivity"],
-      accent: "amber",
+      accent: "teal",
       highlights: ["Warehouse workflow", "Lot · VIN · Container", "PDF/DOCX uploads"],
     },
     {
       title: "M1 Yard",
       summary:
-        "تطبيق عمليات جوال لسير العمل داخل الساحة المحددة — تحقق من تصاريح البوابة، مسح VIN، حركة المركبات، تحديث GPS، تصفح المخزون، وتدقيق المخزون.",
+        "تطبيق عمليات جوال لسير العمل داخل الساحة المحددة - تحقق من تصاريح البوابة، مسح VIN، حركة المركبات، تحديث GPS، تصفح المخزون، وتدقيق المخزون.",
       description: [
         "بنى تطبيق عمليات Flutter بمعمارية Clean Architecture حسب الميزات، وإدارة حالة BLoC، وتدفقات API موثقة، وتخزين محلي مقيّد بالساحة.",
         "نفّذ استعادة الجلسة، اختيار الساحة، مسح VIN عبر QR/barcode، البحث عن المركبة، تسجيل الحركة، قراءة/حفظ موقع GPS، والتحقق من تصاريح بوابة M1.",
@@ -271,7 +271,7 @@ const ar: Translations = {
         "أضاف بدء/متابعة التدقيق النشط، إدخال VIN يدويًا أو بالمسح، عدادات الموجود/المفقود/الإضافي، إكمال التدقيق، تنزيل تقرير Excel، وتحديث رمز منسق عند 401.",
       ],
       tags: ["Flutter", "Clean Architecture", "BLoC", "Barcode", "Stock Audits"],
-      accent: "violet",
+      accent: "cyan",
       highlights: ["Yard operations", "VIN scanning", "Excel audit reports"],
     },
   ],
@@ -280,12 +280,12 @@ const ar: Translations = {
     {
       degree: "بكالوريوس هندسة في علوم الحاسب",
       institution: "Rohini College of Engineering & Technology, Kanyakumari (Anna University)",
-      duration: "2017 – 2021",
+      duration: "2017 - 2021",
     },
     {
-      degree: "الثانوية العليا — تخصص علوم",
+      degree: "الثانوية العليا - تخصص علوم",
       institution: "S.N English Medium School",
-      duration: "2015 – 2017",
+      duration: "2015 - 2017",
     },
     {
       degree: "شهادة إتمام المرحلة الثانوية (S.S.L.C)",
@@ -307,16 +307,16 @@ const ar: Translations = {
   ],
 
   ui: {
-    about: { eyebrow: "01 · عن", title: "مهندس يُنجز." },
-    experience: { eyebrow: "02 · الخبرات", title: "حيث بنيت." },
+    about: { eyebrow: "عن", title: "مهندس يُنجز." },
+    experience: { eyebrow: "الخبرات", title: "حيث بنيت." },
     projects: {
-      eyebrow: "03 · المشاريع",
+      eyebrow: "المشاريع",
       title: "منتجات مُطلقة.",
       desc: "7 تطبيقات في الإنتاج. تعمل في الإمارات واليابان والمملكة العربية السعودية وأكثر.",
     },
-    education: { eyebrow: "04 · التعليم", title: "السجل الأكاديمي." },
+    education: { eyebrow: "التعليم", title: "السجل الأكاديمي." },
     certifications: {
-      eyebrow: "05 · الشهادات",
+      eyebrow: "الشهادات",
       title: "الشهادات.",
       desc: "شهادات في الذكاء الاصطناعي وسير عمل الوكلاء وFlutter وعلوم الحاسب تدعم العمل المنتج.",
       issued: "تاريخ الإصدار",
@@ -328,7 +328,7 @@ const ar: Translations = {
       },
     },
     contact: {
-      eyebrow: "06 · تواصل",
+      eyebrow: "تواصل",
       title: "لنتحدث.",
       desc: "متاح للأدوار والمشاريع المستقلة والتحدث عن المنتجات.",
       sendMessage: "أرسل رسالة",
@@ -363,16 +363,16 @@ const ar: Translations = {
 };
 
 const enUI: UI = {
-  about: { eyebrow: "01 · About", title: "Engineer who ships." },
-  experience: { eyebrow: "02 · Experience", title: "Where I've built." },
+  about: { eyebrow: "About", title: "Engineer who ships." },
+  experience: { eyebrow: "Experience", title: "Where I've built." },
   projects: {
-    eyebrow: "03 · Projects",
+    eyebrow: "Projects",
     title: "Shipped products.",
     desc: "7 production apps. Live across UAE, Japan, Saudi Arabia, and beyond.",
   },
-  education: { eyebrow: "04 · Education", title: "Academic record." },
+  education: { eyebrow: "Education", title: "Academic record." },
   certifications: {
-    eyebrow: "05 · Certifications",
+    eyebrow: "Certifications",
     title: "Certifications.",
     desc: "AI, agentic workflow, Flutter, and computer-science credentials that back the shipped work.",
     issued: "Issued",
@@ -384,7 +384,7 @@ const enUI: UI = {
     },
   },
   contact: {
-    eyebrow: "06 · Contact",
+    eyebrow: "Contact",
     title: "Let's talk.",
     desc: "Open to roles, freelance builds, and product conversations.",
     sendMessage: "Send a Message",
@@ -469,7 +469,7 @@ const ja: Translations = {
       company: "Marhaba Group of Companies | Marhaba Auctions",
       location: "ドバイ、UAE · 出社",
       role: "Flutterエンジニア | AIワークフロー",
-      duration: "2026年3月 – 現在",
+      duration: "2026年3月 - 現在",
       description: [
         "M1 ShippingのAndroid（Kotlin）・iOS（Swift）アプリをFlutterに完全移行。UAE・オマーン・イラクで稼働する車両物流プラットフォームを30日で納品。",
         "クリーンアーキテクチャ（Presentation/Domain/Data層）を採用し、単一コードベースからUAE/イラク向けデュアルフレーバーアーキテクチャを設計・実装。",
@@ -484,7 +484,7 @@ const ja: Translations = {
       company: "JIITAK Inc",
       location: "福岡、日本",
       role: "Flutterエンジニア",
-      duration: "2024年1月 – 2025年10月",
+      duration: "2024年1月 - 2025年10月",
       description: [
         "日本企業クライアント向けに高性能Flutterアプリを開発。クラッシュフリーセッション率99%を達成し、コード・アセット最適化で読み込み速度を40%改善。",
         "Shorebirdを用いたOTAアップデートを実装し、リリース配信時間を95%削減。",
@@ -499,7 +499,7 @@ const ja: Translations = {
       company: "Norq Technologies",
       location: "コーチ、ケーララ州",
       role: "Flutterエンジニア",
-      duration: "2023年9月 – 2023年12月",
+      duration: "2023年9月 - 2023年12月",
       description: [
         "カタールのクライアント向けにFlutter・Socket.io・Google Mapsを使用したリアルタイム車両追跡プラットフォームを開発。サブ秒精度の位置情報更新、ルート可視化、ジオフェンシング、運行履歴再生を実装。",
         "位置情報更新ロジックとデータストリーミングを最適化し、追跡精度とフリート監視効率を40%向上。",
@@ -511,7 +511,7 @@ const ja: Translations = {
       company: "Brototype",
       location: "トリバンドラム、ケーララ州",
       role: "Flutter開発インターン",
-      duration: "2022年7月 – 2023年2月",
+      duration: "2022年7月 - 2023年2月",
       description: [
         "実プロジェクトの実務経験を積む6ヶ月の集中的なFlutter開発プログラムを修了。",
         "モバイルアプリ開発・UI実装・REST API統合の実践的スキルを習得。",
@@ -524,7 +524,7 @@ const ja: Translations = {
     {
       title: "M1 Shipping",
       summary:
-        "UAE・オマーン・イラク向け車両物流プラットフォーム — Android/iOSネイティブから30日でFlutterに移行。デュアルフレーバー、完全RTL/LTR対応、6言語サポート。",
+        "UAE・オマーン・イラク向け車両物流プラットフォーム - Android/iOSネイティブから30日でFlutterに移行。デュアルフレーバー、完全RTL/LTR対応、6言語サポート。",
       description: [
         "Android（Kotlin）・iOS（Swift）アプリを30日でFlutterに完全移行し、UAE・オマーン・イラクをカバーする機能豊富な車両物流プラットフォームを納品。",
         "単一コードベースからクリーンアーキテクチャ（Presentation/Domain/Data層）でUAE/イラク向けデュアルフレーバーアーキテクチャを設計。",
@@ -543,7 +543,7 @@ const ja: Translations = {
     {
       title: "Okinawa Navi",
       summary:
-        "沖縄地域情報アプリ — 最新ニュース、天気アラート、イベント情報、レストラン情報を提供。Androidで1万ダウンロード以上。",
+        "沖縄地域情報アプリ - 最新ニュース、天気アラート、イベント情報、レストラン情報を提供。Androidで1万ダウンロード以上。",
       description: [
         "沖縄向けの地域情報アプリを開発。最新ニュース、天気アラート、イベント情報、レストラン情報を提供。",
         "外部記事・動画・地域コンテンツをシームレスに読み込むアプリ内WebViewを実装。",
@@ -561,14 +561,14 @@ const ja: Translations = {
     {
       title: "Look Meal",
       summary:
-        "栄養・食品検索アプリ — カロリー・食材・パッケージ食品の検索、高度なフィルタリング、カスタム食品コレクション機能を提供。",
+        "栄養・食品検索アプリ - カロリー・食材・パッケージ食品の検索、高度なフィルタリング、カスタム食品コレクション機能を提供。",
       description: [
         "料理・食材・パッケージ食品のカロリーと栄養情報を高度な並び替え・フィルタリングで検索できるクロスプラットフォーム栄養検索アプリを開発。",
         "スタンプラリー報酬・アプリ内ソーシャルシェア・カスタム食品コレクション機能を実装。",
         "Play StoreおよびApp Storeに配信し、日本での安定したユーザー獲得を達成。",
       ],
       tags: ["Flutter", "REST APIs", "Search", "Gamification"],
-      accent: "emerald",
+      accent: "sky",
       links: {
         playStore: "https://play.google.com/store/apps/details?id=com.allright.lookmeal&hl=en_US",
         appStore: "https://apps.apple.com/jp/app/%E3%83%AB%E3%83%83%E3%82%AF%E3%83%9F%E3%83%BC%E3%83%AB-%E3%82%AB%E3%83%AD%E3%83%AA%E3%83%BC-%E6%A0%84%E9%A4%8A%E7%B4%A0-pfc-%E3%83%80%E3%82%A4%E3%82%A8%E3%83%83%E3%83%88-%E5%A4%96%E9%A3%9F/id6478847606",
@@ -577,7 +577,7 @@ const ja: Translations = {
     {
       title: "Tabeh GPS",
       summary:
-        "スマートかつセキュアなリアルタイム車両追跡 — サブ秒GPS精度、ジオフェンシング、燃料アラート、運行履歴再生。サウジアラビアのフリート管理者に利用されています。",
+        "スマートかつセキュアなリアルタイム車両追跡 - サブ秒GPS精度、ジオフェンシング、燃料アラート、運行履歴再生。サウジアラビアのフリート管理者に利用されています。",
       description: [
         "Flutterを使ったリアルタイム車両追跡アプリを開発。精密なGPS更新、運行履歴再生、燃料アラート、ジオフェンシング監視を実装。",
         "ルート履歴・運行履歴再生機能を実装し、ユーザーが詳細なデータで過去の運行を確認できるように。",
@@ -588,7 +588,7 @@ const ja: Translations = {
         "Play StoreおよびApp Storeに配信し、サウジアラビアのフリート管理者の間で導入が拡大中。",
       ],
       tags: ["Flutter", "Socket.io", "Google Maps", "Geofencing", "Analytics"],
-      accent: "rose",
+      accent: "cyan",
       links: {
         playStore: "https://play.google.com/store/apps/details?id=com.tabehgps.app&hl=en_US",
         appStore: "https://apps.apple.com/us/app/tabeh-gps/id6736398833",
@@ -597,7 +597,7 @@ const ja: Translations = {
     {
       title: "Rental Anshin Kun",
       summary:
-        "360度損傷報告システム — 入居者・検査員向け連携アプリ、パノラマビュー、QRコード付き統合写真アップロードで日本の不動産管理をサポート。",
+        "360度損傷報告システム - 入居者・検査員向け連携アプリ、パノラマビュー、QRコード付き統合写真アップロードで日本の不動産管理をサポート。",
       description: [
         "日本の不動産損傷報告を集中管理する入居者・検査員連携アプリを構築。",
         "ユーザーが損傷箇所を正確に特定できる360度パノラマビューを実装。",
@@ -606,12 +606,12 @@ const ja: Translations = {
         "複数の不動産管理チームにわたるコミュニケーションを効率化し、レポート精度を向上。",
       ],
       tags: ["Flutter", "360° View", "QR", "Multi-app System"],
-      accent: "indigo",
+      accent: "sky",
     },
     {
       title: "M1 Cam",
       summary:
-        "M1 Shipping倉庫向けキャプチャアプリ — ログイン、Lot・VIN・Container検索、メディア撮影、書類管理、GPS保存、積込完了までを一つのモバイルフローで実行。",
+        "M1 Shipping倉庫向けキャプチャアプリ - ログイン、Lot・VIN・Container検索、メディア撮影、書類管理、GPS保存、積込完了までを一つのモバイルフローで実行。",
       description: [
         "M1 reports APIによる認証とローカル保存セッションからの復帰に対応した、倉庫スタッフ向けFlutterキャプチャフローを構築。",
         "Lot No.・VIN・Containerワークフローに対応し、メイン画像、車両画像、損傷画像、積込画像、荷下ろし画像の撮影を実装。",
@@ -619,13 +619,13 @@ const ja: Translations = {
         "GPS位置情報の記録、対応コンテナワークフローの積込完了処理、オフライン状態UI、セッションを消去するログアウトを追加。",
       ],
       tags: ["Flutter", "Media Capture", "Documents", "GPS", "Connectivity"],
-      accent: "amber",
+      accent: "teal",
       highlights: ["Warehouse workflow", "Lot · VIN · Container", "PDF/DOCX uploads"],
     },
     {
       title: "M1 Yard",
       summary:
-        "選択したヤード内の業務向けモバイル運用アプリ — ゲートパス確認、VINスキャン、車両移動、GPS位置更新、在庫閲覧、在庫監査に対応。",
+        "選択したヤード内の業務向けモバイル運用アプリ - ゲートパス確認、VINスキャン、車両移動、GPS位置更新、在庫閲覧、在庫監査に対応。",
       description: [
         "機能ファーストのClean Architecture、BLoC状態管理、認証付きAPIフロー、ヤード単位のローカル永続化を備えたFlutter運用アプリを構築。",
         "セッション復元、ヤード選択、VINのQR/バーコードスキャン、車両検索、移動記録、GPS位置の読み取り・保存、M1ゲートパス確認を実装。",
@@ -633,7 +633,7 @@ const ja: Translations = {
         "監査の開始/継続、手入力またはスキャンによるVIN監査、発見/不足/余剰台数、監査完了、Excelレポートダウンロード、401時の協調トークン更新を追加。",
       ],
       tags: ["Flutter", "Clean Architecture", "BLoC", "Barcode", "Stock Audits"],
-      accent: "violet",
+      accent: "cyan",
       highlights: ["Yard operations", "VIN scanning", "Excel audit reports"],
     },
   ],
@@ -642,12 +642,12 @@ const ja: Translations = {
     {
       degree: "コンピュータサイエンス工学 学士",
       institution: "Rohini College of Engineering & Technology, Kanyakumari (Anna University)",
-      duration: "2017 – 2021",
+      duration: "2017 - 2021",
     },
     {
-      degree: "高校卒業 — 理系",
+      degree: "高校卒業 - 理系",
       institution: "S.N English Medium School",
-      duration: "2015 – 2017",
+      duration: "2015 - 2017",
     },
     {
       degree: "中学卒業証書 (S.S.L.C)",
@@ -669,16 +669,16 @@ const ja: Translations = {
   ],
 
   ui: {
-    about: { eyebrow: "01 · 概要", title: "作るエンジニア。" },
-    experience: { eyebrow: "02 · 経歴", title: "積み上げた場所。" },
+    about: { eyebrow: "概要", title: "作るエンジニア。" },
+    experience: { eyebrow: "経歴", title: "積み上げた場所。" },
     projects: {
-      eyebrow: "03 · プロジェクト",
+      eyebrow: "プロジェクト",
       title: "リリース済みプロダクト。",
       desc: "7つの本番アプリ。UAE・日本・サウジアラビアなどで稼働中。",
     },
-    education: { eyebrow: "04 · 学歴", title: "学歴記録。" },
+    education: { eyebrow: "学歴", title: "学歴記録。" },
     certifications: {
-      eyebrow: "05 · 認定資格",
+      eyebrow: "認定資格",
       title: "認定資格。",
       desc: "AI、エージェントワークフロー、Flutter、コンピュータサイエンスの実務を裏付ける資格です。",
       issued: "発行",
@@ -690,7 +690,7 @@ const ja: Translations = {
       },
     },
     contact: {
-      eyebrow: "06 · 連絡先",
+      eyebrow: "連絡先",
       title: "話しましょう。",
       desc: "役職、フリーランス、プロダクトの話し合いを歓迎します。",
       sendMessage: "メッセージを送る",
@@ -765,9 +765,9 @@ const de: Translations = {
       company: "Marhaba Group of Companies | Marhaba Auctions",
       location: "Dubai, VAE · Vor Ort",
       role: "Flutter-Entwickler | KI-Workflow",
-      duration: "März 2026 – Heute",
+      duration: "März 2026 - Heute",
       description: [
-        "Leitete die vollständige Migration einer Android- (Kotlin) und iOS- (Swift) App zu Flutter für M1 Shipping, eine Fahrzeuglogistikplattform in den VAE, Oman und dem Irak – Projektabschluss in 30 Tagen.",
+        "Leitete die vollständige Migration einer Android- (Kotlin) und iOS- (Swift) App zu Flutter für M1 Shipping, eine Fahrzeuglogistikplattform in den VAE, Oman und dem Irak - Projektabschluss in 30 Tagen.",
         "Entwarf und implementierte eine skalierbare Clean Architecture (Presentation/Domain/Data) mit Dual-Flavor-Builds für VAE/Irak aus einer einzigen Codebasis.",
         "Lieferte vollständige Fracht- und Fahrzeugverfolgung, Finanz-Workflows, Preiskonditionen-Logik, Fahrzeugverkaufsflow mit VIN-Suche und teilbaren Listings.",
         "Baute vollständige RTL/LTR-Lokalisierung in Arabisch, Kurdisch, Paschtu, Persisch, Georgisch und Englisch mit ARB-Dateien.",
@@ -780,7 +780,7 @@ const de: Translations = {
       company: "JIITAK Inc",
       location: "Fukuoka, Japan",
       role: "Flutter-Entwickler",
-      duration: "Jan. 2024 – Okt. 2025",
+      duration: "Jan. 2024 - Okt. 2025",
       description: [
         "Entwickelte hochleistungsfähige Flutter-Apps für japanische Kunden mit 99 % absturzfreien Sitzungen und 40 % schnelleren Ladezeiten durch Code- und Asset-Optimierung.",
         "Implementierte OTA-Updates über Shorebird und reduzierte die Release-Lieferzeit um 95 %.",
@@ -795,9 +795,9 @@ const de: Translations = {
       company: "Norq Technologies",
       location: "Kochi, Kerala",
       role: "Flutter-Entwickler",
-      duration: "Sept. 2023 – Dez. 2023",
+      duration: "Sept. 2023 - Dez. 2023",
       description: [
-        "Entwickelte eine Echtzeit-Fahrzeugverfolgungsplattform für einen katarischen Kunden mit Flutter, Socket.io und Google Maps – Sub-Sekunden-GPS-Updates, Routenvisualisierung, Geofencing und Fahrthistorie-Wiedergabe.",
+        "Entwickelte eine Echtzeit-Fahrzeugverfolgungsplattform für einen katarischen Kunden mit Flutter, Socket.io und Google Maps - Sub-Sekunden-GPS-Updates, Routenvisualisierung, Geofencing und Fahrthistorie-Wiedergabe.",
         "Optimierte Standortaktualisierungslogik und Daten-Streaming und verbesserte Tracking-Genauigkeit und Flottenüberwachungseffizienz um 40 %.",
         "Implementierte modulare Architektur, reduzierte API-Anfragen um 25 % und verbesserte Karten-Rendering.",
         "Arbeitete mit Server-Teams zusammen, um skalierbare Socket-Event-Flows zu entwerfen und Systemzuverlässigkeit unter Last zu gewährleisten.",
@@ -807,7 +807,7 @@ const de: Translations = {
       company: "Brototype",
       location: "Thiruvananthapuram, Kerala",
       role: "Flutter-Entwicklungspraktikant",
-      duration: "Juli 2022 – Feb. 2023",
+      duration: "Juli 2022 - Feb. 2023",
       description: [
         "Absolvierte ein intensives 6-monatiges Flutter-Entwicklungsprogramm mit praktischer Erfahrung an realen Projekten.",
         "Erwarb fundierte praktische Kenntnisse in Mobile-App-Entwicklung, UI-Implementierung und REST-API-Integration.",
@@ -820,7 +820,7 @@ const de: Translations = {
     {
       title: "M1 Shipping",
       summary:
-        "Fahrzeuglogistikplattform für VAE, Oman und Irak – migriert von nativem Android/iOS zu Flutter in 30 Tagen. Dual-Flavor-Builds, vollständige RTL/LTR-Unterstützung, 6 Sprachen.",
+        "Fahrzeuglogistikplattform für VAE, Oman und Irak - migriert von nativem Android/iOS zu Flutter in 30 Tagen. Dual-Flavor-Builds, vollständige RTL/LTR-Unterstützung, 6 Sprachen.",
       description: [
         "Leitete die vollständige Migration von Android (Kotlin) und iOS (Swift) zu Flutter in 30 Tagen und lieferte eine funktionsreiche Fahrzeuglogistikplattform für VAE, Oman und den Irak.",
         "Entwarf Dual-Flavor-Architektur für VAE/Irak aus einer einzigen Codebasis mit Clean Architecture (Presentation/Domain/Data).",
@@ -857,14 +857,14 @@ const de: Translations = {
     {
       title: "Look Meal",
       summary:
-        "Ernährungs- und Lebensmittel-Such-App – Kaloriensuche für Gerichte, Zutaten und verpackte Produkte mit erweiterter Filterung und benutzerdefinierten Sammlungen.",
+        "Ernährungs- und Lebensmittel-Such-App - Kaloriensuche für Gerichte, Zutaten und verpackte Produkte mit erweiterter Filterung und benutzerdefinierten Sammlungen.",
       description: [
         "Entwickelte eine plattformübergreifende Ernährungssuch-App, mit der Nutzer Kalorien und Nährwertinfos für Gerichte, Zutaten und verpackte Produkte mit erweiterter Sortierung und Filterung suchen können.",
         "Implementierte Stempel-Sammel-Belohnungen, In-App-Social-Sharing und benutzerdefinierte Lebensmittelsammlungen.",
         "Im Play Store und App Store mit stabiler Nutzerbasis in Japan veröffentlicht.",
       ],
       tags: ["Flutter", "REST APIs", "Search", "Gamification"],
-      accent: "emerald",
+      accent: "sky",
       links: {
         playStore: "https://play.google.com/store/apps/details?id=com.allright.lookmeal&hl=en_US",
         appStore: "https://apps.apple.com/jp/app/%E3%83%AB%E3%83%83%E3%82%AF%E3%83%9F%E3%83%BC%E3%83%AB-%E3%82%AB%E3%83%AD%E3%83%AA%E3%83%BC-%E6%A0%84%E9%A4%8A%E7%B4%A0-pfc-%E3%83%80%E3%82%A4%E3%82%A8%E3%83%83%E3%83%88-%E5%A4%96%E9%A3%9F/id6478847606",
@@ -884,7 +884,7 @@ const de: Translations = {
         "Im Play Store und App Store mit wachsender Verbreitung bei Flottenmanagern in Saudi-Arabien veröffentlicht.",
       ],
       tags: ["Flutter", "Socket.io", "Google Maps", "Geofencing", "Analytics"],
-      accent: "rose",
+      accent: "cyan",
       links: {
         playStore: "https://play.google.com/store/apps/details?id=com.tabehgps.app&hl=en_US",
         appStore: "https://apps.apple.com/us/app/tabeh-gps/id6736398833",
@@ -893,7 +893,7 @@ const de: Translations = {
     {
       title: "Rental Anshin Kun",
       summary:
-        "360°-Schadenserfassungssystem – verknüpfte Mieter- und Prüfer-Apps mit Panoramaansichten und QR-basiertem Foto-Upload für japanisches Immobilienmanagement.",
+        "360°-Schadenserfassungssystem - verknüpfte Mieter- und Prüfer-Apps mit Panoramaansichten und QR-basiertem Foto-Upload für japanisches Immobilienmanagement.",
       description: [
         "Baute ein integriertes System aus Mieter- und Prüfer-App für zentrale Immobilienschadensberichte in Japan.",
         "Implementierte 360°-Panoramaansichten zur präzisen Lokalisierung von Schäden durch Nutzer.",
@@ -902,12 +902,12 @@ const de: Translations = {
         "Vereinfachte Kommunikation und verbesserte Berichtsgenauigkeit über mehrere Immobilienverwaltungsteams.",
       ],
       tags: ["Flutter", "360° View", "QR", "Multi-app System"],
-      accent: "indigo",
+      accent: "sky",
     },
     {
       title: "M1 Cam",
       summary:
-        "Warehouse-Capture-App für M1 Shipping-Teams – Anmeldung, Suche nach Lot, VIN oder Container, Medienerfassung, Dokumentenverwaltung, GPS-Speicherung und Abschluss von Ladeaufgaben.",
+        "Warehouse-Capture-App für M1 Shipping-Teams - Anmeldung, Suche nach Lot, VIN oder Container, Medienerfassung, Dokumentenverwaltung, GPS-Speicherung und Abschluss von Ladeaufgaben.",
       description: [
         "Baute einen Flutter-Capture-Flow für Warehouse-Mitarbeiter mit Authentifizierung über die M1 reports API und Wiederaufnahme über eine lokal gespeicherte Session.",
         "Unterstützte Lot No.-, VIN- und Container-Workflows mit Hauptbild, Fahrzeugbildern, Schadensbildern sowie Lade- und Entladebildern.",
@@ -915,13 +915,13 @@ const de: Translations = {
         "Ergänzte GPS-Standorterfassung, Ladeabschluss für unterstützte Container-Workflows, Offline-Status-UI und Logout mit Session-Bereinigung.",
       ],
       tags: ["Flutter", "Media Capture", "Documents", "GPS", "Connectivity"],
-      accent: "amber",
+      accent: "teal",
       highlights: ["Warehouse workflow", "Lot · VIN · Container", "PDF/DOCX uploads"],
     },
     {
       title: "M1 Yard",
       summary:
-        "Mobile Operations-App für ausgewählte Yard-Workflows – Gate-Pass-Prüfung, VIN-Scanning, Fahrzeugbewegungen, GPS-Updates, Bestandsübersicht und Stock Audits.",
+        "Mobile Operations-App für ausgewählte Yard-Workflows - Gate-Pass-Prüfung, VIN-Scanning, Fahrzeugbewegungen, GPS-Updates, Bestandsübersicht und Stock Audits.",
       description: [
         "Baute eine Flutter-Operations-App mit feature-first Clean Architecture, BLoC-State-Management, authentifizierten API-Workflows und yard-bezogener lokaler Persistenz.",
         "Implementierte Session-Restore, Yard-Auswahl, VIN-QR/Barcode-Scanning, Fahrzeugsuche, Bewegungsaufzeichnung, GPS-Lesen/Speichern und M1-Gate-Pass-Prüfung.",
@@ -929,7 +929,7 @@ const de: Translations = {
         "Ergänzte Audit-Start/Fortsetzung, manuelle oder gescannte VIN-Erfassung, Gefunden/Fehlend/Extra-Zähler, Audit-Abschluss, Excel-Report-Download und koordinierte Token-Aktualisierung bei 401.",
       ],
       tags: ["Flutter", "Clean Architecture", "BLoC", "Barcode", "Stock Audits"],
-      accent: "violet",
+      accent: "cyan",
       highlights: ["Yard operations", "VIN scanning", "Excel audit reports"],
     },
   ],
@@ -938,12 +938,12 @@ const de: Translations = {
     {
       degree: "Bachelor of Engineering in Informatik",
       institution: "Rohini College of Engineering & Technology, Kanyakumari (Anna University)",
-      duration: "2017 – 2021",
+      duration: "2017 - 2021",
     },
     {
-      degree: "Abitur – Naturwissenschaften",
+      degree: "Abitur - Naturwissenschaften",
       institution: "S.N English Medium School",
-      duration: "2015 – 2017",
+      duration: "2015 - 2017",
     },
     {
       degree: "Mittlere Reife (S.S.L.C)",
@@ -965,16 +965,16 @@ const de: Translations = {
   ],
 
   ui: {
-    about: { eyebrow: "01 · Über", title: "Ingenieur, der liefert." },
-    experience: { eyebrow: "02 · Erfahrung", title: "Wo ich gebaut habe." },
+    about: { eyebrow: "Über", title: "Ingenieur, der liefert." },
+    experience: { eyebrow: "Erfahrung", title: "Wo ich gebaut habe." },
     projects: {
-      eyebrow: "03 · Projekte",
+      eyebrow: "Projekte",
       title: "Ausgelieferte Produkte.",
       desc: "7 Produktions-Apps. Live in den VAE, Japan, Saudi-Arabien und darüber hinaus.",
     },
-    education: { eyebrow: "04 · Bildung", title: "Akademischer Werdegang." },
+    education: { eyebrow: "Bildung", title: "Akademischer Werdegang." },
     certifications: {
-      eyebrow: "05 · Zertifikate",
+      eyebrow: "Zertifikate",
       title: "Zertifikate.",
       desc: "Nachweise für KI, agentische Workflows, Flutter und Informatikgrundlagen, die die ausgelieferte Arbeit stützen.",
       issued: "Ausgestellt",
@@ -986,7 +986,7 @@ const de: Translations = {
       },
     },
     contact: {
-      eyebrow: "06 · Kontakt",
+      eyebrow: "Kontakt",
       title: "Lass uns reden.",
       desc: "Offen für Stellen, Freelance-Projekte und Produktgespräche.",
       sendMessage: "Nachricht senden",

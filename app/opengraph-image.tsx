@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
-export const alt = "Aswin Subhash — Mobile Application Developer";
+export const alt = "Aswin Subhash - Mobile Application Developer";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -10,7 +10,7 @@ export default function Image() {
     (
       <div
         style={{
-          background: "#080c11",
+          background: "#0a0c10",
           width: "100%",
           height: "100%",
           display: "flex",
@@ -27,7 +27,7 @@ export default function Image() {
             position: "absolute",
             inset: 0,
             backgroundImage:
-              "linear-gradient(rgba(6,182,212,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(6,182,212,0.04) 1px, transparent 1px)",
+              "linear-gradient(rgba(96,165,250,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(96,165,250,0.04) 1px, transparent 1px)",
             backgroundSize: "60px 60px",
             display: "flex",
           }}
@@ -48,19 +48,19 @@ export default function Image() {
             style={{
               width: 36,
               height: 36,
-              border: "1.5px solid rgba(6,182,212,0.45)",
-              background: "rgba(6,182,212,0.1)",
+              border: "1.5px solid rgba(96,165,250,0.45)",
+              background: "rgba(96,165,250,0.1)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              color: "#06b6d4",
+              color: "#60a5fa",
               fontSize: 16,
               fontWeight: 700,
             }}
           >
             A
           </div>
-          <span style={{ color: "#566775", fontSize: 13, letterSpacing: "0.12em" }}>
+          <span style={{ color: "#6b7380", fontSize: 13, letterSpacing: "0.12em" }}>
             aswinsubhash.vercel.app
           </span>
         </div>
@@ -68,7 +68,7 @@ export default function Image() {
         {/* Eyebrow */}
         <div
           style={{
-            color: "#06b6d4",
+            color: "#60a5fa",
             fontSize: 14,
             letterSpacing: "0.22em",
             marginBottom: 28,
@@ -81,7 +81,7 @@ export default function Image() {
         {/* Name */}
         <div
           style={{
-            color: "#dfe8ec",
+            color: "#e8eaed",
             fontSize: 80,
             fontWeight: 800,
             lineHeight: 1,
@@ -91,13 +91,13 @@ export default function Image() {
           }}
         >
           Aswin Subhash
-          <span style={{ color: "#06b6d4" }}>.</span>
+          <span style={{ color: "#60a5fa" }}>.</span>
         </div>
 
         {/* Title */}
         <div
           style={{
-            color: "#8fa0aa",
+            color: "#9aa3b2",
             fontSize: 28,
             marginBottom: 52,
             display: "flex",
@@ -112,9 +112,9 @@ export default function Image() {
             <div
               key={tag}
               style={{
-                border: "1px solid rgba(6,182,212,0.25)",
-                background: "rgba(6,182,212,0.07)",
-                color: "#8fa0aa",
+                border: "1px solid rgba(96,165,250,0.25)",
+                background: "rgba(96,165,250,0.07)",
+                color: "#9aa3b2",
                 padding: "7px 16px",
                 fontSize: 13,
                 letterSpacing: "0.08em",

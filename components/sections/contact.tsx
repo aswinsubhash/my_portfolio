@@ -1,8 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { AnimatePresence, motion } from "motion/react";
-import { Check, Loader2, Send } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { Check, CircleNotch, PaperPlaneTilt } from "@phosphor-icons/react";
 import { Turnstile } from "@marsidev/react-turnstile";
 import { Section } from "@/components/ui/section";
 import { Reveal } from "@/components/ui/reveal";
@@ -23,6 +23,7 @@ const fieldOrder: ContactField[] = ["name", "email", "subject", "message"];
 export function Contact() {
   const { ui } = useContent();
   const ct = ui.contact;
+  const reduce = useReducedMotion();
 
   const [values, setValues] = React.useState<ContactValues>(initialContactValues);
   const [fieldErrors, setFieldErrors] = React.useState<ContactFieldErrors>({});
@@ -40,7 +41,11 @@ export function Contact() {
   const updateFieldError = React.useCallback((field: ContactField, error?: string) => {
     setFieldErrors((current) => {
       const next = { ...current };
-      if (error) { next[field] = error; } else { delete next[field]; }
+      if (error) {
+        next[field] = error;
+      } else {
+        delete next[field];
+      }
       return next;
     });
   }, []);
@@ -48,7 +53,10 @@ export function Contact() {
   const validateField = React.useCallback(
     (field: ContactField, nextValues: ContactValues) => {
       const parsed = contactSchema.safeParse(nextValues);
-      if (parsed.success) { updateFieldError(field); return true; }
+      if (parsed.success) {
+        updateFieldError(field);
+        return true;
+      }
       const errors = getContactFieldErrors(parsed.error);
       updateFieldError(field, errors[field]);
       return !errors[field];
@@ -94,8 +102,11 @@ export function Contact() {
         }
         const errors = result.fieldErrors ?? {};
         setFieldErrors(errors);
-        if (Object.keys(errors).length) { focusFirstError(errors); }
-        else { setFormError(result.message); }
+        if (Object.keys(errors).length) {
+          focusFirstError(errors);
+        } else {
+          setFormError(result.message);
+        }
       })();
     });
   };
@@ -109,8 +120,7 @@ export function Contact() {
       description={ct.desc}
       containerClassName="max-w-5xl"
     >
-      <Reveal className="max-w-2xl">
-        {/* Form */}
+      <Reveal className="max-w-2xl" variant="scaleIn">
         <div className="card-accent motion-card relative rounded-[var(--radius-card)] border border-border bg-bg-card/80 p-5 shadow-[0_24px_80px_-54px_var(--color-accent-glow)] focus-within:border-accent/40 focus-within:shadow-[0_24px_80px_-48px_var(--color-accent-glow)] sm:p-6">
           <div className="mb-5 flex flex-col gap-1 border-b border-border pb-5">
             <h3 className="font-display text-xl font-semibold tracking-tight text-fg">
@@ -123,18 +133,42 @@ export function Contact() {
             {sent ? (
               <motion.div
                 key="ok"
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 12, scale: reduce ? 1 : 0.96 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -12 }}
-                className="flex flex-col items-center gap-3 py-8 text-center"
+                className="flex flex-col items-center gap-4 py-8 text-center"
                 role="status"
                 aria-live="polite"
               >
-                <div className="inline-flex h-10 w-10 items-center justify-center rounded-sm border border-success/40 bg-success/10 text-success">
-                  <Check size={18} aria-hidden="true" />
-                </div>
-                <h3 className="font-display text-xl font-bold tracking-tight text-fg">{ct.sent}</h3>
+                <motion.div
+                  initial={{ scale: reduce ? 1 : 0 }}
+                  animate={{ scale: 1 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 22, delay: 0.1 }}
+                  className="inline-flex h-12 w-12 items-center justify-center rounded-sm border border-success/40 bg-success/10 text-success"
+                >
+                  <Check size={22} weight="bold" aria-hidden="true" />
+                </motion.div>
+                <h3 className="font-display text-xl font-bold tracking-tight text-fg">
+                  {ct.sent}
+                </h3>
                 <p className="max-w-xs text-sm text-fg-muted">{ct.sentDesc}</p>
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: reduce ? 0 : 0.4 }}
+                  className="mt-2 w-full max-w-sm rounded-sm border border-border bg-bg-elev/60 p-4 text-start font-mono text-[11px] leading-relaxed text-fg-muted"
+                >
+                  <p>
+                    <span className="text-success">ACK</span> 200 OK
+                  </p>
+                  <p className="mt-1 text-fg-subtle">
+                    <span className="text-accent">&gt;</span> message queued for delivery
+                  </p>
+                  <p className="text-fg-subtle">
+                    <span className="text-accent">&gt;</span> connection established
+                    <span className="cursor-blink ms-1" aria-hidden="true" />
+                  </p>
+                </motion.div>
               </motion.div>
             ) : (
               <motion.form
@@ -146,11 +180,51 @@ export function Contact() {
                 className="flex flex-col gap-4"
               >
                 <div className="grid gap-4 sm:grid-cols-2">
-                  <Field label={ct.fields.name} name="name" value={values.name} placeholder={ct.placeholders.name} autoComplete="name" error={fieldErrors.name} onBlur={handleBlur} onChange={handleChange} />
-                  <Field label={ct.fields.email} name="email" type="email" inputMode="email" value={values.email} placeholder={ct.placeholders.email} autoComplete="email" spellCheck={false} error={fieldErrors.email} onBlur={handleBlur} onChange={handleChange} />
+                  <Field
+                    label={ct.fields.name}
+                    name="name"
+                    value={values.name}
+                    placeholder={ct.placeholders.name}
+                    autoComplete="name"
+                    error={fieldErrors.name}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                  />
+                  <Field
+                    label={ct.fields.email}
+                    name="email"
+                    type="email"
+                    inputMode="email"
+                    value={values.email}
+                    placeholder={ct.placeholders.email}
+                    autoComplete="email"
+                    spellCheck={false}
+                    error={fieldErrors.email}
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                  />
                 </div>
-                <Field label={ct.fields.subject} name="subject" value={values.subject} placeholder={ct.placeholders.subject} autoComplete="off" error={fieldErrors.subject} onBlur={handleBlur} onChange={handleChange} />
-                <Field label={ct.fields.message} name="message" value={values.message} placeholder={ct.placeholders.message} textarea autoComplete="off" error={fieldErrors.message} onBlur={handleBlur} onChange={handleChange} />
+                <Field
+                  label={ct.fields.subject}
+                  name="subject"
+                  value={values.subject}
+                  placeholder={ct.placeholders.subject}
+                  autoComplete="off"
+                  error={fieldErrors.subject}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                />
+                <Field
+                  label={ct.fields.message}
+                  name="message"
+                  value={values.message}
+                  placeholder={ct.placeholders.message}
+                  textarea
+                  autoComplete="off"
+                  error={fieldErrors.message}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                />
 
                 <Turnstile
                   siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY!}
@@ -160,18 +234,25 @@ export function Contact() {
                 />
 
                 {formError && (
-                  <p className="text-xs text-rose-400" role="status" aria-live="polite">{formError}</p>
+                  <p className="text-xs text-rose-400" role="status" aria-live="polite">
+                    {formError}
+                  </p>
                 )}
 
                 <button
                   type="submit"
                   disabled={pending || !values.turnstileToken}
-                  className="motion-chip mt-1 inline-flex h-11 items-center justify-center gap-2 rounded-sm bg-accent font-mono text-xs uppercase tracking-[0.14em] text-white hover:bg-accent-strong active:scale-[0.98] disabled:opacity-60"
+                  className="mt-1 inline-flex h-11 w-full items-center justify-center gap-2 rounded-sm bg-accent font-mono text-xs uppercase tracking-[0.14em] text-white transition-[background-color,transform] duration-150 hover:bg-accent-strong active:scale-[0.98] disabled:opacity-60 sm:w-auto sm:px-8"
                 >
                   {pending ? (
-                    <><Loader2 size={13} aria-hidden="true" className="animate-spin" /> {ct.sending}</>
+                    <>
+                      <CircleNotch size={13} weight="bold" aria-hidden="true" className="animate-spin" />{" "}
+                      {ct.sending}
+                    </>
                   ) : (
-                    <>{ct.send} <Send size={13} aria-hidden="true" /></>
+                    <>
+                      {ct.send} <PaperPlaneTilt size={13} weight="bold" aria-hidden="true" />
+                    </>
                   )}
                 </button>
               </motion.form>
@@ -183,30 +264,82 @@ export function Contact() {
   );
 }
 
-
-function Field({ label, name, value, placeholder, type = "text", inputMode, autoComplete, spellCheck, textarea, error, onBlur, onChange }: {
-  label: string; name: ContactField; value: string; placeholder: string;
-  type?: string; inputMode?: React.HTMLAttributes<HTMLInputElement>["inputMode"];
-  autoComplete?: string; spellCheck?: boolean; textarea?: boolean;
-  error?: string; onBlur: (field: ContactField) => void; onChange: (field: ContactField, value: string) => void;
+function Field({
+  label,
+  name,
+  value,
+  placeholder,
+  type = "text",
+  inputMode,
+  autoComplete,
+  spellCheck,
+  textarea,
+  error,
+  onBlur,
+  onChange,
+}: {
+  label: string;
+  name: ContactField;
+  value: string;
+  placeholder: string;
+  type?: string;
+  inputMode?: React.HTMLAttributes<HTMLInputElement>["inputMode"];
+  autoComplete?: string;
+  spellCheck?: boolean;
+  textarea?: boolean;
+  error?: string;
+  onBlur: (field: ContactField) => void;
+  onChange: (field: ContactField, value: string) => void;
 }) {
   const id = `contact-${name}`;
   const errorId = `${id}-error`;
   const base = cn(
-    "w-full rounded-sm border bg-bg-soft/35 px-4 py-2.5 font-mono text-sm text-fg placeholder:text-fg-muted/60 transition-all duration-150",
+    "field-focus-pulse w-full rounded-sm border bg-bg-soft/35 px-4 py-2.5 font-mono text-sm text-fg placeholder:text-fg-muted/60 transition-all duration-150",
     error
       ? "border-accent shadow-[0_0_0_1px_var(--color-accent),0_0_14px_var(--color-accent-glow)] focus:border-accent focus:shadow-[0_0_0_1px_var(--color-accent),0_0_20px_var(--color-accent-glow)]"
       : "border-border-strong/70 hover:border-border-strong focus:border-accent/70 focus:shadow-[0_0_10px_var(--color-accent-glow)]",
   );
   return (
     <label htmlFor={id} className="flex flex-col gap-1.5">
-      <span className="prompt-label font-mono text-[10px] uppercase tracking-[0.18em] text-fg-subtle">{label}</span>
+      <span className="prompt-label font-mono text-[10px] uppercase tracking-[0.18em] text-fg-subtle">
+        {label}
+      </span>
       {textarea ? (
-        <textarea id={id} name={name} value={value ?? ""} placeholder={placeholder} rows={5} autoComplete={autoComplete} aria-invalid={Boolean(error)} aria-describedby={error ? errorId : undefined} onBlur={() => onBlur(name)} onChange={(e) => onChange(name, e.target.value)} className={cn(base, "resize-y")} />
+        <textarea
+          id={id}
+          name={name}
+          value={value ?? ""}
+          placeholder={placeholder}
+          rows={5}
+          autoComplete={autoComplete}
+          aria-invalid={Boolean(error)}
+          aria-describedby={error ? errorId : undefined}
+          onBlur={() => onBlur(name)}
+          onChange={(e) => onChange(name, e.target.value)}
+          className={cn(base, "resize-y")}
+        />
       ) : (
-        <input id={id} name={name} type={type} inputMode={inputMode} value={value ?? ""} placeholder={placeholder} autoComplete={autoComplete} spellCheck={spellCheck} aria-invalid={Boolean(error)} aria-describedby={error ? errorId : undefined} onBlur={() => onBlur(name)} onChange={(e) => onChange(name, e.target.value)} className={base} />
+        <input
+          id={id}
+          name={name}
+          type={type}
+          inputMode={inputMode}
+          value={value ?? ""}
+          placeholder={placeholder}
+          autoComplete={autoComplete}
+          spellCheck={spellCheck}
+          aria-invalid={Boolean(error)}
+          aria-describedby={error ? errorId : undefined}
+          onBlur={() => onBlur(name)}
+          onChange={(e) => onChange(name, e.target.value)}
+          className={base}
+        />
       )}
-      {error && <span id={errorId} className="font-mono text-[10px] text-rose-400" role="status" aria-live="polite">{error}</span>}
+      {error && (
+        <span id={errorId} className="font-mono text-[10px] text-rose-400" role="status" aria-live="polite">
+          {error}
+        </span>
+      )}
     </label>
   );
 }

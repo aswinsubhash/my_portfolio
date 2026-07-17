@@ -50,7 +50,7 @@ export function SceneCanvas() {
     let paused = false;
     let mouse = { x: -999, y: -999 };
 
-    // Cache expensive DOM reads — recompute only on theme change
+    // Cache expensive DOM reads - recompute only on theme change
     let rgb = accentRgb();
     let light = isLight();
 

@@ -1,5 +1,9 @@
+"use client";
+
 import * as React from "react";
+import { motion, useReducedMotion } from "motion/react";
 import { cn } from "@/lib/cn";
+import { createRevealVariants } from "@/components/ui/reveal";
 
 type SectionProps = React.HTMLAttributes<HTMLElement> & {
   id: string;
@@ -21,34 +25,75 @@ export function Section({
   children,
   ...rest
 }: SectionProps) {
+  const reduce = useReducedMotion();
+
   return (
     <section
       id={id}
-      className={cn("relative scroll-mt-20 px-6 py-24 sm:py-32", className)}
+      className={cn(
+        "section-shell relative scroll-mt-20 px-6 pt-24 pb-28 sm:pt-32 sm:pb-36",
+        className,
+      )}
       {...rest}
     >
-      <div className={cn("mx-auto flex w-full max-w-6xl flex-col gap-12", containerClassName)}>
+      <div
+        aria-hidden="true"
+        className="section-divider pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/25 to-transparent"
+      />
+      <div
+        aria-hidden="true"
+        className="section-vignette pointer-events-none absolute inset-0 -z-10"
+      />
+
+      <div
+        className={cn(
+          "mx-auto flex w-full max-w-6xl flex-col gap-12",
+          containerClassName,
+        )}
+      >
         {(eyebrow || title || description) && (
-          <header className="flex flex-col gap-3">
+          <header className="relative flex flex-col gap-3">
             {eyebrow && (
-              eyebrowSigil ? (
-                <span className="eyebrow eyebrow--prompt">
-                  <span className="eyebrow__sigil">{eyebrowSigil}</span>
-                  {eyebrow}
-                </span>
-              ) : (
-                <span className="eyebrow">{eyebrow}</span>
-              )
+              <motion.div
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, margin: "-60px" }}
+                variants={createRevealVariants(reduce, "fadeStart")}
+                transition={{ delay: reduce ? 0 : 0.05 }}
+              >
+                {eyebrowSigil ? (
+                  <span className="eyebrow eyebrow--prompt">
+                    <span className="eyebrow__sigil">{eyebrowSigil}</span>
+                    {eyebrow}
+                  </span>
+                ) : (
+                  <span className="eyebrow">{eyebrow}</span>
+                )}
+              </motion.div>
             )}
             {title && (
-              <h2 className="font-display text-balance text-4xl font-bold tracking-tight text-fg sm:text-5xl">
+              <motion.h2
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, margin: "-60px" }}
+                variants={createRevealVariants(reduce, "clipReveal")}
+                transition={{ delay: reduce ? 0 : 0.1 }}
+                className="font-display text-balance text-4xl font-bold tracking-tight text-fg sm:text-5xl lg:text-[3.25rem]"
+              >
                 {title}
-              </h2>
+              </motion.h2>
             )}
             {description && (
-              <p className="max-w-2xl text-pretty text-[15px] leading-relaxed text-fg-muted">
+              <motion.p
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, margin: "-60px" }}
+                variants={createRevealVariants(reduce, "fadeUp")}
+                transition={{ delay: reduce ? 0 : 0.18 }}
+                className="max-w-2xl text-pretty text-[15px] leading-relaxed text-fg-muted"
+              >
                 {description}
-              </p>
+              </motion.p>
             )}
           </header>
         )}

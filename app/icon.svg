@@ -1,10 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
   <!-- Dark background -->
-  <rect width="32" height="32" rx="4" fill="#080c11"/>
-  <!-- Cyan tint fill -->
-  <rect width="32" height="32" rx="4" fill="#06b6d4" fill-opacity="0.1"/>
-  <!-- Cyan border -->
-  <rect x="0.75" y="0.75" width="30.5" height="30.5" rx="3.25" fill="none" stroke="#06b6d4" stroke-opacity="0.45" stroke-width="1.5"/>
+  <rect width="32" height="32" rx="4" fill="#0a0c10"/>
+  <!-- Cobalt tint fill -->
+  <rect width="32" height="32" rx="4" fill="#60a5fa" fill-opacity="0.1"/>
+  <!-- Cobalt border -->
+  <rect x="0.75" y="0.75" width="30.5" height="30.5" rx="3.25" fill="none" stroke="#60a5fa" stroke-opacity="0.45" stroke-width="1.5"/>
   <!-- A -->
-  <text x="16" y="23" font-family="'Courier New', Courier, monospace" font-size="19" font-weight="700" fill="#06b6d4" text-anchor="middle">A</text>
+  <text x="16" y="23" font-family="'Courier New', Courier, monospace" font-size="19" font-weight="700" fill="#60a5fa" text-anchor="middle">A</text>
 </svg>
