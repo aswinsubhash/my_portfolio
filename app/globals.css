@@ -128,24 +128,6 @@ textarea {
     radial-gradient(ellipse 50% 40% at 20% 80%, rgba(59, 130, 246, 0.04) 0%, transparent 60%);
 }
 
-.hero-ghost {
-  animation: ghost-breathe 16s ease-in-out infinite alternate;
-}
-
-.hero-float {
-  animation: hero-float 8s ease-in-out infinite alternate;
-}
-
-.hero-signal {
-  position: absolute;
-  display: block;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(96, 165, 250, 0.35), transparent);
-  opacity: 0.36;
-  transform-origin: center;
-  animation: signal-pass 8s ease-in-out infinite;
-}
-
 .motion-card {
   transform: translate3d(0, 0, 0);
   transition:
@@ -271,22 +253,6 @@ textarea {
 /* Timeline draw */
 .timeline-line {
   transform-origin: top center;
-}
-
-/* Skill chip pop */
-.skill-chip-pop {
-  animation: chip-pop 0.45s cubic-bezier(0.25, 1, 0.5, 1) both;
-}
-
-@keyframes chip-pop {
-  from {
-    opacity: 0;
-    transform: scale(0.85) translateY(6px);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
 }
 
 /* Form focus pulse */
@@ -490,9 +456,6 @@ textarea {
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
   }
-  .hero-ghost,
-  .hero-float,
-  .hero-signal,
   .motion-card,
   .motion-chip,
   .pulse-soft,
@@ -524,39 +487,6 @@ textarea {
   background: linear-gradient(90deg, var(--color-accent) 0%, transparent 100%);
   border-radius: var(--radius-card) var(--radius-card) 0 0;
 }
-
-@keyframes ghost-breathe {
-  from {
-    opacity: 0.72;
-    transform: translate3d(-1.2rem, 0, 0);
-  }
-  to {
-    opacity: 1;
-    transform: translate3d(1.2rem, 0, 0);
-  }
-}
-
-@keyframes hero-float {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(0, -0.7rem, 0);
-  }
-}
-
-@keyframes signal-pass {
-  0%,
-  100% {
-    opacity: 0.14;
-    transform: translate3d(-1rem, 0, 0) scaleX(0.82);
-  }
-  50% {
-    opacity: 0.52;
-    transform: translate3d(1rem, 0, 0) scaleX(1);
-  }
-}
-
 
 @keyframes pulse-soft {
   0%,

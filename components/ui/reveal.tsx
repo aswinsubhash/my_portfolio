@@ -28,8 +28,8 @@ export function createRevealVariants(
     resolved = variant === "fadeStart" ? "fadeEnd" : "fadeStart";
   }
 
-  // clip-path reveals stick invisible on iOS Safari; map to fadeUp.
-  if (resolved === "clipReveal") {
+  // clip-path sticks invisible on iOS; filter blur is scroll-janky — both → fadeUp.
+  if (resolved === "clipReveal" || resolved === "blurIn") {
     resolved = "fadeUp";
   }
 
@@ -54,14 +54,6 @@ export function createRevealVariants(
       return {
         hidden: { opacity: 0, scale: reduce ? 1 : 0.92 },
         show: { ...baseShow, scale: 1 },
-      };
-    case "blurIn":
-      return {
-        hidden: {
-          opacity: 0,
-          filter: reduce ? "blur(0px)" : "blur(10px)",
-        },
-        show: { ...baseShow, filter: "blur(0px)" },
       };
     case "fadeUp":
     default:
